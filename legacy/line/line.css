@@ -420,9 +420,11 @@ body {
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-gap-sm);
+  flex-wrap: wrap;
 }
 
 .line-table__label {
+  white-space: nowrap;
   font-family: 'Inter', sans-serif;
   font-size: var(--type-body-size);
   line-height: var(--type-body-line);
