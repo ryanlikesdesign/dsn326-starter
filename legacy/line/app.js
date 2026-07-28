@@ -173,23 +173,21 @@
     const actions = el('div', 'line-ticket__actions');
 
     if (ticket.status === 'bumped') {
-      const recall = el('button', 'rail-button rail-button--primary line-act-recall', 'Recall');
+      const recall = el('button', 'rail-button rail-button--primary line-act', 'Recall');
       recall.type = 'button';
       recall.addEventListener('click', () => recallTicket(ticket.id));
       actions.appendChild(recall);
     } else {
-      const bump = el('button', 'rail-button rail-button--primary line-act-bump', 'Bump');
+      const bump = el('button', 'rail-button rail-button--primary line-act', 'Bump');
       bump.type = 'button';
       bump.addEventListener('click', () => bumpTicket(ticket.id));
       actions.appendChild(bump);
     }
 
-    const danger = el('div', 'line-ticket__danger');
-    const voidBtn = el('button', 'rail-button rail-button--primary line-act-void', 'Void');
+    const voidBtn = el('button', 'rail-button rail-button--primary line-act', 'Void');
     voidBtn.type = 'button';
     voidBtn.addEventListener('click', () => voidTicket(ticket.id));
-    danger.appendChild(voidBtn);
-    actions.appendChild(danger);
+    actions.appendChild(voidBtn);
 
     node.appendChild(actions);
 

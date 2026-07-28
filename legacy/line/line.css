@@ -351,40 +351,11 @@ body {
   padding: 0 var(--space-inset-sm);
 }
 
-/* Bump is the action expo performs a few hundred times a shift, so it
-   gets the whole width and the comfortable target, not the floor. */
-.line-act-bump {
-  height: var(--target-comfortable);
-  min-height: var(--target-comfortable);
-  width: 100%;
-}
-
-.line-act-recall {
+/* One size for every action on the ticket. */
+.line-act {
   height: var(--target-min);
   min-height: var(--target-min);
   width: 100%;
-}
-
-/* Void is unrecoverable, so it is separated from the recoverable pair,
-   coloured away from them, and never sits under a thumb by accident. */
-.line-ticket__danger {
-  margin-top: var(--space-stack-sm);
-  padding-top: var(--space-stack-sm);
-  border-top: 1px dashed var(--border-strong);
-}
-
-.line-act-void {
-  height: var(--target-min);
-  min-height: var(--target-min);
-  width: 100%;
-  background-color: var(--feedback-error-subtle);
-  color: var(--text-primary);
-  border: 2px solid var(--service-critical);
-}
-
-.line-act-void:hover {
-  background-color: var(--feedback-error-subtle);
-  border-color: var(--service-critical);
 }
 
 
