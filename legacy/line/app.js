@@ -206,10 +206,9 @@
     return node;
   }
 
-  function renderRail(host, stacked) {
+  function renderRail(host) {
     if (!host) return;
     host.innerHTML = '';
-    host.classList.toggle('line-rail--stacked', !!stacked);
     railOrder().forEach((ticket) => host.appendChild(ticketNode(ticket)));
   }
 
@@ -404,8 +403,8 @@
   }
 
   function renderAll() {
-    renderRail($('rail'), false);
-    renderRail($('handheld-rail'), true);
+    renderRail($('rail'));
+    renderRail($('handheld-rail'));
     renderEightySix();
     renderAllDay();
     renderTables();

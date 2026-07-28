@@ -378,18 +378,17 @@ body {
 .line-handheld__rail {
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-md);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
-/* On the handheld the rail is a single column at full service density.
-   Nothing is scaled down. */
-.line-rail--stacked {
-  --ticket-w: 100%;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: auto;
-  max-height: 60vh;
-  padding: var(--space-inset-sm);
+/* The handheld shows the pass display. Same six columns, same ticket
+   proportions, same everything, at half size so more of it fits. */
+.line-rail--scaled {
+  --ticket-w: 210px;
+  width: 1366px;
+  height: 620px;
+  zoom: 0.5;
 }
 
 
