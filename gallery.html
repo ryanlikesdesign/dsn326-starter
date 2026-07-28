@@ -176,10 +176,10 @@
 
     .gallery-ticket-frame .rail-ticket-rail {
       --rail-ticket-width: 210px;
-      /* What the rail gets under the header on a 1366x768 pass display.
-         Any shorter and the item list is squeezed by the action column,
-         which is a real constraint but a misleading demo. */
-      height: 620px;
+      /* Tall enough that the demo tickets read end to end. On the real
+         1366x768 pass display the rail gets about 620px, and at that
+         height a five-item ticket scrolls — see the note above. */
+      height: 700px;
     }
 
     .gallery-note {
@@ -721,6 +721,14 @@
             contribution rules still apply to it. Line only, so it ignores the mode
             switcher and always renders <code>density-service env-high-glare
             surface-line</code>. Six fit across a 1366px pass display.
+          </p>
+          <p class="gallery-note">
+            <strong>The vertical budget is the interesting part.</strong> On the real
+            pass display the rail gets about 620px. Header and timing take ~157px and
+            the three stacked actions take ~237px &mdash; 41% of the ticket &mdash;
+            leaving roughly five lines for the items. A longer ticket scrolls inside
+            that space. Ticket height is fixed and the rail must show six, so anything
+            you add here comes out of the item list.
           </p>
 
           <div class="gallery-group">

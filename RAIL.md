@@ -123,6 +123,8 @@ Light-surface variants exist for the rare case where service state has to appear
 
 `--service-ok-light` `#166534` · `--service-approaching-light` `#854D0E` · `--service-late-light` `#9A3412` · `--service-critical-light` `#991B1B`
 
+> **`--interactive-default` is `--primary-600`, not `--primary-500`.** `--primary-500` `#E84E1A` is the brand colour and it is 3.79:1 against white — below the 4.5:1 floor this system documents. Interactive surfaces step one down the ramp so a button label passes. The brand ramp itself is unchanged.
+
 **The scale has to work without colour.** It pairs with a shape, a word or a position signal in every component that uses it. See `--service-*` in `rail/components/Ticket.css`, where each elapsed band ships alongside a Badge with the band written on it.
 
 ### Colour — semantic
@@ -136,9 +138,9 @@ These are what components reference. The right-hand column is what they become u
 | `--text-tertiary` | `--neutral-600` | `--line-neutral-400` |
 | `--text-disabled` | `--neutral-400` | `--line-neutral-500` |
 | `--text-on-brand` | `#FFFFFF` | `--line-neutral-50` |
-| `--text-link` | `--primary-500` | `#85BFFF` |
-| `--text-error` | `--red-700` | `--red-700` |
-| `--text-success` | `--green-700` | `--green-700` |
+| `--text-link` | `--primary-700` | `#85BFFF` |
+| `--text-error` | `--red-700` | `#FCA5A5` |
+| `--text-success` | `--green-700` | `#86EFAC` |
 | `--surface-default` | `--neutral-50` | `--line-neutral-800` |
 | `--surface-subtle` | `--neutral-100` | `--line-neutral-900` |
 | `--surface-raised` | `#FFFFFF` | `--line-neutral-700` |
@@ -146,14 +148,14 @@ These are what components reference. The right-hand column is what they become u
 | `--surface-brand` | `--primary-500` | `--line-primary-700` |
 | `--surface-brand-subtle` | `--primary-50` | `--line-primary-900` |
 | `--surface-overlay` | `--neutral-900` | `--line-neutral-950` |
-| `--border-default` | `--neutral-200` | `--line-neutral-600` |
+| `--border-default` | `--neutral-200` | `--line-neutral-400` |
 | `--border-strong` | `--neutral-400` | `--line-neutral-400` |
 | `--border-subtle` | `--neutral-150` | `--line-neutral-700` |
 | `--border-focus` | `--primary-700` | `--line-primary-400` |
 | `--border-error` | `--red-500` | `--red-500` |
-| `--interactive-default` | `--primary-500` | `--line-primary-500` |
-| `--interactive-hover` | `--primary-400` | `--line-primary-400` |
-| `--interactive-pressed` | `--primary-600` | `--line-primary-700` |
+| `--interactive-default` | `--primary-600` | `--line-primary-500` |
+| `--interactive-hover` | `--primary-500` | `--line-primary-400` |
+| `--interactive-pressed` | `--primary-700` | `--line-primary-700` |
 | `--interactive-subtle` | `--primary-50` | `--line-primary-900` |
 | `--interactive-disabled` | `--neutral-200` | `--line-neutral-700` |
 | `--feedback-success` | `--green-500` | `--green-500` |
@@ -590,7 +592,9 @@ Primary and secondary truncate to one line by design — that is right for a rai
 | `.rail-dialog__btn--destructive` | Unrecoverable action. |
 | `.rail-dialog--confirmation` | No header; the title moves into the body. |
 
-**Two things Rail does not do for you.** `.rail-dialog` sets `display: flex` unconditionally, so a closed `<dialog class="rail-dialog">` still renders — hide it yourself, or open it with `showModal()`. And Rail does not trap focus. `showModal()` gives you the trap and the Escape key for free; if you use the `open` attribute instead, you own both.
+**Rail does not trap focus for you.** `showModal()` gives you the focus trap and the Escape key for free; if you use the `open` attribute instead, you own both.
+
+**Put the dialog inside your axis container.** `showModal()` promotes it to the browser's top layer, but custom properties inherit down the DOM tree, not the top layer — a dialog placed as a sibling of your `surface-line` container renders in Guest's colours.
 
 > It is called Dialog. There is no `.rail-modal`, no `.rail-dialog--sheet` and no `.rail-dialog--fullscreen`.
 
@@ -723,6 +727,17 @@ Requires `density-service env-high-glare surface-line` on an ancestor. Ticket wi
 `--rail-ticket-width` is set on `.rail-ticket-rail` and scoped to the pattern. It is not a system token and it is not in `tokens.css`.
 
 Rules: bump is the action expo performs a few hundred times a shift, so it gets the comfortable target. Void is unrecoverable, so it is separated and never lands under a thumb aimed at bump. A taller ticket takes a ticket off the rail — if you want room, take it from somewhere.
+
+**The vertical budget, because it decides most Line arguments.** The rail gets about 620px under the header on a 1366×768 pass display. Of the ~572px that leaves a ticket:
+
+| | |
+|---|---:|
+| Header — number, source, status badge | ~77px |
+| Timing — elapsed and its band badge | ~80px |
+| **Actions — bump 64, recall 56, void 56, plus separators** | **~237px (41%)** |
+| Items | ~178px, about five lines at 24px |
+
+Three stacked targets at the `high-glare` floor cost more than a third of the ticket, and a five-item order already scrolls. That is not a bug to fix in this file — it is the collision HEARD-156 and HEARD-178 are both standing on. Every proposal that adds to a ticket has to say what comes off it.
 
 ---
 
