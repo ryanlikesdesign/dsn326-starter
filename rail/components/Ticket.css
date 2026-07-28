@@ -1,0 +1,348 @@
+/* ============================================================
+   Rail Design System — Ticket
+   Heard · Line only
+
+   A PATTERN, not a component. Ticket is Card + List Row + Badge
+   composed into the one arrangement every Line screen needs. It sits
+   outside the twelve-component count and the contribution rules apply
+   to it exactly as they apply to everything else in rail/.
+
+   Requires on an ancestor:  density-service env-high-glare surface-line
+   Anything else is unsupported. Line has one density and one
+   environment and this pattern assumes both.
+
+   Six tickets fit across a 1366px pass display. Ticket width is derived
+   from the viewport, not fixed, so the sixth ticket always lands on
+   screen and the seventh always does not.
+
+   Elapsed time uses the service scale — service/ok, /approaching,
+   /late, /critical. Colour never carries that alone: every band also
+   ships a badge with a word in it. The rail is a shared screen in a
+   bright room and half the people reading it are doing so at an angle.
+
+   Usage:
+   <!--
+     A rail of tickets:
+     <div class="rail-ticket-rail" role="list" aria-label="Ticket rail, oldest first">
+       ...tickets...
+     </div>
+
+     A ticket:
+     <article class="rail-card rail-ticket rail-ticket--started" role="listitem">
+
+       <div class="rail-ticket__header">
+         <div class="rail-ticket__ids">
+           <span class="rail-ticket__number">#2208</span>
+           <span class="rail-ticket__source">Table 12</span>
+         </div>
+         <span class="rail-badge rail-badge--label rail-badge--info">Started</span>
+       </div>
+
+       <div class="rail-ticket__timing">
+         <span class="rail-ticket__elapsed rail-ticket__elapsed--late">17:29</span>
+         <span class="rail-badge rail-badge--label rail-badge--warning">Late</span>
+       </div>
+
+       <ul class="rail-ticket__items">
+         <li class="rail-list-row rail-ticket__item">
+           <div class="rail-list-row__content">
+             <span class="rail-list-row__primary rail-ticket__item-name">
+               <span class="rail-ticket__qty">3&times;</span> Al Pastor Taco
+             </span>
+             <span class="rail-ticket__mods">
+               <span class="rail-ticket__mod">No onion</span>
+               <span class="rail-ticket__mod rail-ticket__mod--critical">Dairy allergy</span>
+             </span>
+           </div>
+         </li>
+       </ul>
+
+       <div class="rail-ticket__actions">
+         <button class="rail-button rail-button--primary rail-ticket__action rail-ticket__action--bump">
+           Bump
+         </button>
+         <button class="rail-button rail-ticket__action rail-ticket__action--recall">
+           Recall
+         </button>
+         <div class="rail-ticket__danger">
+           <button class="rail-button rail-ticket__action rail-ticket__action--void">
+             Void
+           </button>
+         </div>
+       </div>
+
+     </article>
+
+     Status variants (background tint; always pair with the badge above):
+     rail-ticket--incoming · --started · --ready · --bumped · --recalled
+
+     Elapsed variants:
+     rail-ticket__elapsed--ok · --approaching · --late · --critical
+
+     A ticket that has come back, with its history:
+     <span class="rail-badge rail-badge--label rail-badge--warning">Recalled &times;2</span>
+   -->
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   The rail
+   Six across a 1366px pass display. A seventh scrolls.
+   ------------------------------------------------------------ */
+
+.rail-ticket-rail {
+  --rail-ticket-width: calc(
+    (100vw - 2 * var(--space-inset-md) - 5 * var(--space-gap-sm)) / 6
+  );
+
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-md);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
+/* ------------------------------------------------------------
+   Ticket container
+   Extends .rail-card. Fixed width, fills the rail's height, and
+   scrolls its own items rather than growing taller — a taller
+   ticket takes a ticket off the rail.
+   ------------------------------------------------------------ */
+
+.rail-ticket {
+  width: var(--rail-ticket-width);
+  min-width: var(--rail-ticket-width);
+  max-width: var(--rail-ticket-width);
+  height: 100%;
+  flex-direction: column;
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-low);
+}
+
+/* Hover does not fire on the pass display. Do not design for it. */
+.rail-ticket:hover {
+  box-shadow: var(--elevation-low);
+}
+
+.rail-ticket:focus-within {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+
+/* ------------------------------------------------------------
+   Status
+   Background tint only. Every ticket also carries a badge with the
+   status written on it — see the usage block. Colour never carries
+   this alone.
+   ------------------------------------------------------------ */
+
+.rail-ticket--incoming { background-color: var(--surface-raised); }
+.rail-ticket--started  { background-color: var(--feedback-info-subtle); }
+.rail-ticket--ready    { background-color: var(--feedback-success-subtle); }
+.rail-ticket--bumped   { background-color: var(--surface-subtle); }
+.rail-ticket--recalled { background-color: var(--feedback-warning-subtle); }
+
+
+/* ------------------------------------------------------------
+   Header — identifiers and status badge
+   ------------------------------------------------------------ */
+
+.rail-ticket__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-sm);
+  border-bottom: 1px solid var(--border-strong);
+  flex-shrink: 0;
+}
+
+.rail-ticket__ids {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rail-ticket__number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-size);
+  line-height: var(--type-mono-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+}
+
+.rail-ticket__source {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-caption-weight);
+  color: var(--text-secondary);
+}
+
+
+/* ------------------------------------------------------------
+   Timing — elapsed time on the service scale
+   The number is the largest thing on the ticket after the items,
+   because it is the only value that changes while anyone is looking.
+   ------------------------------------------------------------ */
+
+.rail-ticket__timing {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  flex-wrap: wrap;
+  padding: var(--space-inset-sm) var(--space-inset-sm) 0;
+  flex-shrink: 0;
+}
+
+.rail-ticket__elapsed {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-line);
+  font-weight: var(--type-heading-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.rail-ticket__elapsed--ok          { color: var(--service-ok); }
+.rail-ticket__elapsed--approaching { color: var(--service-approaching); }
+.rail-ticket__elapsed--late        { color: var(--service-late); }
+.rail-ticket__elapsed--critical    { color: var(--service-critical); }
+
+
+/* ------------------------------------------------------------
+   Items
+   Each item is a .rail-list-row. The row's own truncation and
+   min-height are overridden: a ticket wraps, and its rows are as
+   tall as their content.
+   ------------------------------------------------------------ */
+
+.rail-ticket__items {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-inset-sm);
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+}
+
+.rail-ticket__item {
+  min-height: 0;
+  padding: 0;
+  gap: var(--space-gap-sm);
+  align-items: flex-start;
+  border-bottom: none;
+  cursor: default;
+}
+
+.rail-ticket__item:hover {
+  background-color: transparent;
+}
+
+.rail-ticket__item-name {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+}
+
+.rail-ticket__qty {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+
+/* ------------------------------------------------------------
+   Modifiers
+   The thing that gets missed on a long ticket, so the thing that is
+   loudest. Its own colour, its own weight, its own rule down the
+   side. Not a smaller version of the item name.
+   ------------------------------------------------------------ */
+
+.rail-ticket__mods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+  margin-top: var(--space-stack-sm);
+  padding-left: var(--space-inset-sm);
+  border-left: 3px solid var(--service-approaching);
+}
+
+.rail-ticket__mod {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: 600;
+  color: var(--service-approaching);
+}
+
+/* For a modifier the kitchen cannot get wrong. Pairs with a word —
+   never rely on the colour to say "allergy". */
+.rail-ticket__mod--critical {
+  color: var(--service-critical);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+
+/* ------------------------------------------------------------
+   Actions
+   Bump is the action expo performs a few hundred times a shift and
+   it is recoverable, so it takes the comfortable target. Recall is
+   recoverable and rarer, so it takes the floor. Void cannot be
+   undone, so it is separated, coloured away from the other two, and
+   never lands under a thumb aimed at bump.
+   ------------------------------------------------------------ */
+
+.rail-ticket__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-sm);
+  border-top: 1px solid var(--border-strong);
+  flex-shrink: 0;
+}
+
+.rail-ticket__action {
+  width: 100%;
+  min-width: 0;
+  padding: 0 var(--space-inset-sm);
+}
+
+.rail-ticket__action--bump {
+  height: var(--target-comfortable);
+  min-height: var(--target-comfortable);
+}
+
+.rail-ticket__action--recall {
+  height: var(--target-min);
+  min-height: var(--target-min);
+  background-color: var(--surface-subtle);
+  color: var(--text-primary);
+  border: 2px solid var(--border-strong);
+}
+
+.rail-ticket__danger {
+  margin-top: var(--space-stack-sm);
+  padding-top: var(--space-stack-sm);
+  border-top: 1px dashed var(--border-strong);
+}
+
+.rail-ticket__action--void {
+  height: var(--target-min);
+  min-height: var(--target-min);
+  background-color: var(--feedback-error-subtle);
+  color: var(--text-primary);
+  border: 2px solid var(--service-critical);
+}
