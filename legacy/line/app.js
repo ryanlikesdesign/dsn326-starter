@@ -364,10 +364,10 @@
   }
 
   function renderTables() {
+    /* The handheld reads table status. Firing lives on the terminal. */
     const handheld = $('handheld-tables');
     handheld.innerHTML = '';
-    /* The handheld can fire. Nobody should have to walk for this. */
-    state.tables.forEach((table) => handheld.appendChild(tableNode(table, true)));
+    state.tables.forEach((table) => handheld.appendChild(tableNode(table, false)));
 
     const terminal = $('terminal-tables');
     terminal.innerHTML = '';
