@@ -1,0 +1,221 @@
+/* ============================================================
+   Rail Design System — ListRow
+   Heard · Guest + Line
+
+   Variants: basic, detailed, with-leading-element, with-trailing-action
+   States:   default, hover, focus, active, disabled, selected
+
+   Usage:
+   <!--
+     Basic list row:
+     <div class="rail-list-row" role="listitem">
+       <div class="rail-list-row__content">
+         <span class="rail-list-row__primary">Table 4</span>
+       </div>
+     </div>
+
+     Detailed list row (primary + secondary text):
+     <div class="rail-list-row" role="listitem">
+       <div class="rail-list-row__content">
+         <span class="rail-list-row__primary">Order #1042</span>
+         <span class="rail-list-row__secondary">2 items · 12 min ago</span>
+       </div>
+     </div>
+
+     With leading element (avatar, icon, or thumbnail):
+     <div class="rail-list-row" role="listitem">
+       <div class="rail-list-row__leading">
+         <img src="avatar.jpg" alt="" />
+       </div>
+       <div class="rail-list-row__content">
+         <span class="rail-list-row__primary">Sarah Chen</span>
+         <span class="rail-list-row__secondary">Server · Section B</span>
+       </div>
+     </div>
+
+     With trailing action:
+     <div class="rail-list-row" role="listitem">
+       <div class="rail-list-row__content">
+         <span class="rail-list-row__primary">Grilled Salmon</span>
+         <span class="rail-list-row__secondary">$24.00</span>
+       </div>
+       <div class="rail-list-row__trailing">
+         <button class="rail-list-row__action" aria-label="More options">
+           <svg aria-hidden="true" width="20" height="20">...</svg>
+         </button>
+       </div>
+     </div>
+
+     Selected state:
+     <div class="rail-list-row rail-list-row--selected" role="listitem" aria-selected="true">
+       ...
+     </div>
+
+     Disabled state:
+     <div class="rail-list-row rail-list-row--disabled" role="listitem" aria-disabled="true">
+       ...
+     </div>
+   -->
+   ============================================================ */
+
+
+/* --- Base list row --- */
+
+.rail-list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-inline-md);
+  min-height: var(--list-row-min-height);
+  padding: var(--space-inset-sm) var(--space-inset-md);
+  background-color: transparent;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 150ms ease;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+
+/* --- Interactive states --- */
+
+.rail-list-row:hover:not(.rail-list-row--disabled) {
+  background-color: var(--surface-subtle);
+}
+
+.rail-list-row:focus-visible:not(.rail-list-row--disabled) {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: calc(-1 * var(--focus-ring-offset));
+}
+
+.rail-list-row:active:not(.rail-list-row--disabled):not(.rail-list-row--selected) {
+  background-color: var(--surface-subtle);
+}
+
+
+/* --- Selected state --- */
+
+.rail-list-row--selected {
+  background-color: var(--surface-brand-subtle);
+  border-left: 3px solid var(--interactive-default);
+  /* Adjust left padding to compensate for the border */
+  padding-left: calc(var(--space-inset-md) - 3px);
+}
+
+.rail-list-row--selected:hover {
+  background-color: var(--surface-brand-subtle);
+}
+
+
+/* --- Disabled state --- */
+
+.rail-list-row--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
+
+
+/* --- Leading element (avatar, icon, thumbnail) --- */
+
+.rail-list-row__leading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--list-row-leading-size);
+  height: var(--list-row-leading-size);
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background-color: var(--surface-subtle);
+}
+
+.rail-list-row__leading img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rail-list-row__leading svg {
+  color: var(--text-secondary);
+}
+
+
+/* --- Content area --- */
+
+.rail-list-row__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+
+/* --- Primary text --- */
+
+.rail-list-row__primary {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* --- Secondary text --- */
+
+.rail-list-row__secondary {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-caption-weight);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* --- Trailing area --- */
+
+.rail-list-row__trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+}
+
+
+/* --- Trailing action button --- */
+
+.rail-list-row__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--target-min);
+  height: var(--target-min);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.rail-list-row__action:hover {
+  background-color: var(--surface-subtle);
+  color: var(--text-primary);
+}
+
+.rail-list-row__action:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}

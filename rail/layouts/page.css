@@ -1,0 +1,105 @@
+/* ============================================================
+   Rail — Page Layout Utilities
+   Basic page structure for Guest and Line surfaces.
+   ============================================================ */
+
+/* Page header */
+.page-header {
+  padding: var(--space-inset-lg) var(--space-inset-lg) var(--space-inset-md);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Main content area */
+.page-main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section spacing */
+.page-section {
+  padding: var(--space-inset-lg);
+}
+
+.page-section + .page-section {
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Form layout helper */
+.form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-md);
+}
+
+.form-layout__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+}
+
+.form-layout__actions {
+  display: flex;
+  gap: var(--space-gap-sm);
+  padding-top: var(--space-stack-md);
+}
+
+/* Stack layout — vertical with consistent gaps */
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack--sm { gap: var(--space-stack-sm); }
+.stack--md { gap: var(--space-stack-md); }
+.stack--lg { gap: var(--space-stack-lg); }
+
+/* Inline layout — horizontal with consistent gaps */
+.inline {
+  display: flex;
+  align-items: center;
+}
+
+.inline--sm { gap: var(--space-gap-sm); }
+.inline--md { gap: var(--space-inline-md); }
+
+/* Full-width container */
+.full-width {
+  width: 100%;
+}
+
+/* Card grid */
+.card-grid {
+  display: grid;
+  gap: var(--space-stack-md);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* List-to-detail layout (desktop) */
+@media (min-width: 768px) {
+  .list-detail-layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    min-height: 100vh;
+  }
+
+  .list-detail-layout__list {
+    border-right: 1px solid var(--border-subtle);
+    overflow-y: auto;
+  }
+
+  .list-detail-layout__detail {
+    overflow-y: auto;
+  }
+}

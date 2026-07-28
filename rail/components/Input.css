@@ -1,0 +1,232 @@
+/*
+  Rail Design System — Input Component
+  ============================================================
+
+  Example markup:
+
+  <!-- Single-line input with label and helper text -->
+  <div class="rail-input">
+    <label class="rail-input__label" for="guest-name">Guest Name</label>
+    <input class="rail-input__field" id="guest-name" type="text" placeholder="e.g. Jane Doe" />
+    <span class="rail-input__helper">Required for the reservation.</span>
+  </div>
+
+  <!-- Filled state (add class when value is present) -->
+  <div class="rail-input rail-input--filled">
+    <label class="rail-input__label" for="guest-name-2">Guest Name</label>
+    <input class="rail-input__field" id="guest-name-2" type="text" value="Jane Doe" />
+  </div>
+
+  <!-- Error state -->
+  <div class="rail-input rail-input--error">
+    <label class="rail-input__label" for="email">Email</label>
+    <input class="rail-input__field" id="email" type="email" value="not-an-email" aria-invalid="true" aria-describedby="email-error" />
+    <span class="rail-input__helper rail-input__helper--error" id="email-error">Please enter a valid email.</span>
+  </div>
+
+  <!-- Success state -->
+  <div class="rail-input rail-input--success">
+    <label class="rail-input__label" for="promo">Promo Code</label>
+    <input class="rail-input__field" id="promo" type="text" value="SAVE20" aria-describedby="promo-ok" />
+    <span class="rail-input__helper rail-input__helper--success" id="promo-ok">Code applied!</span>
+  </div>
+
+  <!-- Multi-line (textarea) with character count -->
+  <div class="rail-input rail-input--multi-line">
+    <label class="rail-input__label" for="notes">Special Requests</label>
+    <textarea class="rail-input__field rail-input__field--textarea" id="notes" rows="4" maxlength="200" aria-describedby="notes-count"></textarea>
+    <div class="rail-input__footer">
+      <span class="rail-input__helper">Optional</span>
+      <span class="rail-input__char-count" id="notes-count">0 / 200</span>
+    </div>
+  </div>
+
+  <!-- Disabled -->
+  <div class="rail-input rail-input--disabled">
+    <label class="rail-input__label" for="locked">Locked Field</label>
+    <input class="rail-input__field" id="locked" type="text" value="Cannot edit" disabled />
+  </div>
+*/
+
+
+/* ------------------------------------------------------------
+   Wrapper
+   ------------------------------------------------------------ */
+
+.rail-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+}
+
+
+/* ------------------------------------------------------------
+   Label
+   ------------------------------------------------------------ */
+
+.rail-input__label {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+}
+
+
+/* ------------------------------------------------------------
+   Field (single-line)
+   ------------------------------------------------------------ */
+
+.rail-input__field {
+  height: var(--input-height);
+  padding: 0 var(--space-inset-md);
+
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  color: var(--text-primary);
+
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rail-input__field::placeholder {
+  color: var(--text-tertiary);
+}
+
+
+/* ------------------------------------------------------------
+   Field — Textarea (multi-line)
+   ------------------------------------------------------------ */
+
+.rail-input__field--textarea {
+  height: auto;
+  min-height: calc(var(--input-height) * 2);
+  padding: var(--space-inset-sm) var(--space-inset-md);
+  resize: vertical;
+}
+
+
+/* ------------------------------------------------------------
+   States — Hover
+   ------------------------------------------------------------ */
+
+.rail-input__field:hover {
+  border-color: var(--border-strong);
+}
+
+
+/* ------------------------------------------------------------
+   States — Focus
+   ------------------------------------------------------------ */
+
+.rail-input__field:focus,
+.rail-input__field:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--border-focus);
+}
+
+
+/* ------------------------------------------------------------
+   States — Filled
+   ------------------------------------------------------------ */
+
+.rail-input--filled .rail-input__field {
+  border-color: var(--border-strong);
+}
+
+
+/* ------------------------------------------------------------
+   States — Disabled
+   ------------------------------------------------------------ */
+
+.rail-input--disabled .rail-input__label {
+  color: var(--text-disabled);
+}
+
+.rail-input--disabled .rail-input__field,
+.rail-input__field:disabled {
+  background-color: var(--surface-subtle);
+  border-color: var(--border-subtle);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+
+/* ------------------------------------------------------------
+   States — Error
+   ------------------------------------------------------------ */
+
+.rail-input--error .rail-input__field {
+  border-color: var(--border-error);
+}
+
+.rail-input--error .rail-input__field:focus,
+.rail-input--error .rail-input__field:focus-visible {
+  outline-color: var(--border-error);
+  border-color: var(--border-error);
+}
+
+
+/* ------------------------------------------------------------
+   States — Success
+   ------------------------------------------------------------ */
+
+.rail-input--success .rail-input__field {
+  border-color: var(--feedback-success);
+}
+
+.rail-input--success .rail-input__field:focus,
+.rail-input--success .rail-input__field:focus-visible {
+  outline-color: var(--feedback-success);
+  border-color: var(--feedback-success);
+}
+
+
+/* ------------------------------------------------------------
+   Helper text
+   ------------------------------------------------------------ */
+
+.rail-input__helper {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-caption-weight);
+  color: var(--text-secondary);
+}
+
+.rail-input__helper--error {
+  color: var(--text-error);
+}
+
+.rail-input__helper--success {
+  color: var(--text-success);
+}
+
+
+/* ------------------------------------------------------------
+   Footer (helper + character count row)
+   ------------------------------------------------------------ */
+
+.rail-input__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+
+/* ------------------------------------------------------------
+   Character count
+   ------------------------------------------------------------ */
+
+.rail-input__char-count {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-caption-weight);
+  color: var(--text-tertiary);
+}

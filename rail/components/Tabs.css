@@ -1,0 +1,162 @@
+/* ============================================================
+   Rail Design System — Tabs
+   Heard · Guest + Line
+
+   Variants: underline, segmented
+   Underline: active tab has bottom border in interactive-default
+   Segmented: pill container with raised active segment
+
+   Usage:
+   <!--
+     Underline tabs:
+     <div class="rail-tabs rail-tabs--underline" role="tablist" aria-label="Menu sections">
+       <button class="rail-tab rail-tab--active" role="tab" aria-selected="true" id="tab-1" aria-controls="panel-1">
+         Appetizers
+       </button>
+       <button class="rail-tab" role="tab" aria-selected="false" id="tab-2" aria-controls="panel-2" tabindex="-1">
+         Mains
+       </button>
+       <button class="rail-tab" role="tab" aria-selected="false" id="tab-3" aria-controls="panel-3" tabindex="-1">
+         Desserts
+       </button>
+     </div>
+     <div class="rail-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+       ...
+     </div>
+
+     Segmented tabs:
+     <div class="rail-tabs rail-tabs--segmented" role="tablist" aria-label="View mode">
+       <button class="rail-tab rail-tab--active" role="tab" aria-selected="true">Dine-in</button>
+       <button class="rail-tab" role="tab" aria-selected="false" tabindex="-1">Takeout</button>
+       <button class="rail-tab" role="tab" aria-selected="false" tabindex="-1">Delivery</button>
+     </div>
+
+     Disabled tab:
+     <button class="rail-tab rail-tab--disabled" role="tab" aria-disabled="true" tabindex="-1">
+       Catering
+     </button>
+   -->
+   ============================================================ */
+
+
+/* --- Tab list container (shared) --- */
+
+.rail-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+
+/* --- Base tab button --- */
+
+.rail-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--tab-height);
+  padding: 0 var(--space-inset-md);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 150ms ease, background-color 150ms ease;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.rail-tab:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+
+/* --- Disabled tab --- */
+
+.rail-tab--disabled {
+  color: var(--text-disabled);
+  cursor: default;
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   Variant: Underline
+   ============================================================ */
+
+.rail-tabs--underline {
+  border-bottom: 1px solid var(--border-subtle);
+  gap: var(--space-gap-sm);
+}
+
+/* Underline tab: inactive bottom border (transparent placeholder) */
+.rail-tabs--underline .rail-tab {
+  border-bottom: 2px solid transparent;
+  /* Offset the container border */
+  margin-bottom: -1px;
+}
+
+/* Underline tab: hover */
+.rail-tabs--underline .rail-tab:hover:not(.rail-tab--active):not(.rail-tab--disabled) {
+  color: var(--text-primary);
+  border-bottom-color: var(--border-default);
+}
+
+/* Underline tab: active */
+.rail-tabs--underline .rail-tab--active {
+  color: var(--text-primary);
+  font-weight: 600;
+  border-bottom-color: var(--interactive-default);
+}
+
+
+/* ============================================================
+   Variant: Segmented
+   ============================================================ */
+
+.rail-tabs--segmented {
+  background-color: var(--surface-subtle);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+
+/* Segmented tab */
+.rail-tabs--segmented .rail-tab {
+  height: var(--tab-height-segmented);
+  border-radius: calc(var(--radius-md) - 4px);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Segmented tab: hover */
+.rail-tabs--segmented .rail-tab:hover:not(.rail-tab--active):not(.rail-tab--disabled) {
+  color: var(--text-primary);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Segmented tab: active */
+.rail-tabs--segmented .rail-tab--active {
+  color: var(--text-primary);
+  font-weight: 600;
+  background-color: var(--surface-raised);
+  box-shadow: var(--elevation-1);
+}
+
+
+/* ============================================================
+   Tab panel
+   ============================================================ */
+
+.rail-tab-panel {
+  padding: var(--space-stack-md) 0;
+}
+
+.rail-tab-panel[hidden] {
+  display: none;
+}

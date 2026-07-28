@@ -1,0 +1,273 @@
+/* ============================================================
+   Rail Design System — Dialog
+   Heard · Guest + Line
+
+   Variants: standard, confirmation-neutral, confirmation-destructive
+   Backdrop: neutral-950 at 40% opacity
+   Container: surface-raised, radius-md, elevation-3
+
+   Usage:
+   <!--
+     Standard dialog:
+     <div class="rail-dialog-backdrop" aria-hidden="true"></div>
+     <dialog class="rail-dialog" role="dialog" aria-labelledby="dialog-title" aria-modal="true" open>
+       <div class="rail-dialog__header">
+         <h2 class="rail-dialog__title" id="dialog-title">Edit menu item</h2>
+         <button class="rail-dialog__close" aria-label="Close dialog">
+           <svg aria-hidden="true" width="20" height="20">...</svg>
+         </button>
+       </div>
+       <div class="rail-dialog__body">
+         <p>Dialog content goes here.</p>
+       </div>
+       <div class="rail-dialog__footer">
+         <button class="rail-dialog__btn rail-dialog__btn--secondary">Cancel</button>
+         <button class="rail-dialog__btn rail-dialog__btn--primary">Save</button>
+       </div>
+     </dialog>
+
+     Confirmation dialog (neutral):
+     <dialog class="rail-dialog rail-dialog--confirmation" ...>
+       <div class="rail-dialog__body">
+         <h2 class="rail-dialog__title" id="dialog-title">Confirm changes?</h2>
+         <p>This will update the menu for all locations.</p>
+       </div>
+       <div class="rail-dialog__footer">
+         <button class="rail-dialog__btn rail-dialog__btn--secondary">Cancel</button>
+         <button class="rail-dialog__btn rail-dialog__btn--primary">Confirm</button>
+       </div>
+     </dialog>
+
+     Confirmation dialog (destructive):
+     <dialog class="rail-dialog rail-dialog--confirmation" ...>
+       <div class="rail-dialog__body">
+         <h2 class="rail-dialog__title" id="dialog-title">Delete this item?</h2>
+         <p>This action cannot be undone.</p>
+       </div>
+       <div class="rail-dialog__footer">
+         <button class="rail-dialog__btn rail-dialog__btn--secondary">Cancel</button>
+         <button class="rail-dialog__btn rail-dialog__btn--destructive">Delete</button>
+       </div>
+     </dialog>
+   -->
+   ============================================================ */
+
+
+/* --- Backdrop --- */
+
+.rail-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(20, 18, 16, 0.4); /* neutral-950 at 40% */
+  z-index: 999;
+  animation: rail-dialog-fade-in 200ms ease;
+}
+
+
+/* --- Dialog container --- */
+
+.rail-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 2 * var(--space-inset-lg));
+  max-width: 480px;
+  max-height: calc(100vh - 2 * var(--space-inset-lg));
+  margin: 0;
+  padding: 0;
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-3);
+  box-sizing: border-box;
+  overflow: hidden;
+  animation: rail-dialog-slide-in 250ms ease;
+}
+
+
+/* --- Header --- */
+
+.rail-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-inset-md) var(--dialog-body-padding);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.rail-dialog__title {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-line);
+  font-weight: var(--type-heading-weight);
+  color: var(--text-primary);
+}
+
+
+/* --- Close button --- */
+
+.rail-dialog__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--target-min);
+  height: var(--target-min);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+  flex-shrink: 0;
+}
+
+.rail-dialog__close:hover {
+  background-color: var(--surface-subtle);
+  color: var(--text-primary);
+}
+
+.rail-dialog__close:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+
+/* --- Body --- */
+
+.rail-dialog__body {
+  padding: var(--dialog-body-padding);
+  overflow-y: auto;
+  flex: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  color: var(--text-secondary);
+}
+
+.rail-dialog__body p {
+  margin: 0 0 var(--space-stack-sm);
+}
+
+.rail-dialog__body p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* --- Confirmation variant: title inside body --- */
+
+.rail-dialog--confirmation .rail-dialog__body .rail-dialog__title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-line);
+  font-weight: var(--type-heading-weight);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-stack-sm);
+}
+
+
+/* --- Footer --- */
+
+.rail-dialog__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-md) var(--dialog-body-padding);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+
+/* --- Footer buttons --- */
+
+.rail-dialog__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--target-min);
+  padding: 0 var(--space-inset-md);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+  box-sizing: border-box;
+}
+
+.rail-dialog__btn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Primary action */
+.rail-dialog__btn--primary {
+  background-color: var(--interactive-default);
+  color: var(--text-on-brand);
+}
+
+.rail-dialog__btn--primary:hover {
+  background-color: var(--interactive-hover);
+}
+
+.rail-dialog__btn--primary:active {
+  background-color: var(--interactive-pressed);
+}
+
+/* Secondary action */
+.rail-dialog__btn--secondary {
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+
+.rail-dialog__btn--secondary:hover {
+  background-color: var(--surface-subtle);
+}
+
+/* Destructive action */
+.rail-dialog__btn--destructive {
+  background-color: var(--feedback-error);
+  color: var(--text-on-brand);
+}
+
+.rail-dialog__btn--destructive:hover {
+  opacity: 0.9;
+}
+
+
+/* --- Animations --- */
+
+@keyframes rail-dialog-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes rail-dialog-slide-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+/* --- Responsive: full-width on small screens --- */
+
+@media (max-width: 480px) {
+  .rail-dialog {
+    width: calc(100% - 2 * var(--space-inset-md));
+    max-width: none;
+  }
+}

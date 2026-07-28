@@ -1,0 +1,210 @@
+/*
+  Rail Design System — Switch Component
+  ============================================================
+
+  Toggle on/off. Track and thumb sizing from tokens:
+    --switch-track-w, --switch-track-h, --switch-thumb
+
+  Example markup:
+
+  <!-- Off -->
+  <label class="rail-switch">
+    <input class="rail-switch__input" type="checkbox" role="switch" />
+    <span class="rail-switch__track" aria-hidden="true">
+      <span class="rail-switch__thumb"></span>
+    </span>
+    <span class="rail-switch__label">Push Notifications</span>
+  </label>
+
+  <!-- On -->
+  <label class="rail-switch">
+    <input class="rail-switch__input" type="checkbox" role="switch" checked />
+    <span class="rail-switch__track" aria-hidden="true">
+      <span class="rail-switch__thumb"></span>
+    </span>
+    <span class="rail-switch__label">Push Notifications</span>
+  </label>
+
+  <!-- Disabled off -->
+  <label class="rail-switch rail-switch--disabled">
+    <input class="rail-switch__input" type="checkbox" role="switch" disabled />
+    <span class="rail-switch__track" aria-hidden="true">
+      <span class="rail-switch__thumb"></span>
+    </span>
+    <span class="rail-switch__label">Feature Locked</span>
+  </label>
+
+  <!-- Disabled on -->
+  <label class="rail-switch rail-switch--disabled">
+    <input class="rail-switch__input" type="checkbox" role="switch" checked disabled />
+    <span class="rail-switch__track" aria-hidden="true">
+      <span class="rail-switch__thumb"></span>
+    </span>
+    <span class="rail-switch__label">Always Active</span>
+  </label>
+*/
+
+
+/* ------------------------------------------------------------
+   Wrapper
+   ------------------------------------------------------------ */
+
+.rail-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  cursor: pointer;
+  position: relative;
+}
+
+
+/* ------------------------------------------------------------
+   Native input (visually hidden, stays accessible)
+   ------------------------------------------------------------ */
+
+.rail-switch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ------------------------------------------------------------
+   Track
+   ------------------------------------------------------------ */
+
+.rail-switch__track {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+
+  width: var(--switch-track-w);
+  height: var(--switch-track-h);
+
+  background-color: var(--border-default);
+  border-radius: var(--radius-full);
+  transition: background-color 0.2s ease;
+}
+
+
+/* ------------------------------------------------------------
+   Thumb
+   ------------------------------------------------------------ */
+
+.rail-switch__thumb {
+  display: block;
+  position: absolute;
+  left: calc((var(--switch-track-h) - var(--switch-thumb)) / 2);
+
+  width: var(--switch-thumb);
+  height: var(--switch-thumb);
+
+  background-color: var(--surface-raised);
+  border-radius: var(--radius-full);
+  box-shadow: var(--elevation-1);
+  transition: transform 0.2s ease;
+}
+
+
+/* ------------------------------------------------------------
+   Label text
+   ------------------------------------------------------------ */
+
+.rail-switch__label {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  color: var(--text-primary);
+}
+
+
+/* ------------------------------------------------------------
+   State — Hover (off)
+   ------------------------------------------------------------ */
+
+.rail-switch:hover .rail-switch__track {
+  background-color: var(--border-strong);
+}
+
+
+/* ------------------------------------------------------------
+   State — Focus
+   ------------------------------------------------------------ */
+
+.rail-switch__input:focus-visible ~ .rail-switch__track {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+
+/* ------------------------------------------------------------
+   State — On (checked)
+   ------------------------------------------------------------ */
+
+.rail-switch__input:checked ~ .rail-switch__track {
+  background-color: var(--interactive-default);
+}
+
+.rail-switch__input:checked ~ .rail-switch__track .rail-switch__thumb {
+  transform: translateX(
+    calc(var(--switch-track-w) - var(--switch-thumb) - (var(--switch-track-h) - var(--switch-thumb)))
+  );
+}
+
+
+/* ------------------------------------------------------------
+   State — Hover (on)
+   ------------------------------------------------------------ */
+
+.rail-switch:hover .rail-switch__input:checked ~ .rail-switch__track {
+  background-color: var(--interactive-hover);
+}
+
+
+/* ------------------------------------------------------------
+   State — Disabled (off)
+   ------------------------------------------------------------ */
+
+.rail-switch--disabled,
+.rail-switch:has(.rail-switch__input:disabled) {
+  cursor: not-allowed;
+}
+
+.rail-switch__input:disabled ~ .rail-switch__track {
+  background-color: var(--interactive-disabled);
+}
+
+.rail-switch__input:disabled ~ .rail-switch__track .rail-switch__thumb {
+  background-color: var(--surface-subtle);
+  box-shadow: none;
+}
+
+.rail-switch__input:disabled ~ .rail-switch__label {
+  color: var(--text-disabled);
+}
+
+/* Prevent hover effect on disabled */
+.rail-switch:has(.rail-switch__input:disabled):hover .rail-switch__track {
+  background-color: var(--interactive-disabled);
+}
+
+
+/* ------------------------------------------------------------
+   State — Disabled (on)
+   ------------------------------------------------------------ */
+
+.rail-switch__input:checked:disabled ~ .rail-switch__track {
+  background-color: var(--interactive-disabled);
+}
+
+.rail-switch:has(.rail-switch__input:checked:disabled):hover .rail-switch__track {
+  background-color: var(--interactive-disabled);
+}

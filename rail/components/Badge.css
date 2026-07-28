@@ -1,0 +1,174 @@
+/* ============================================================
+   Rail Design System — Badge
+   Heard · Guest + Line
+
+   Variants: count, status, label, removable
+   Intents:  default, brand, success, warning, error, info
+
+   Usage:
+   <!--
+     Count badge (notification dot):
+     <span class="rail-badge rail-badge--count">3</span>
+
+     Status dot:
+     <span class="rail-badge rail-badge--status rail-badge--success"></span>
+
+     Label badge:
+     <span class="rail-badge rail-badge--label rail-badge--brand">New</span>
+
+     Removable badge:
+     <span class="rail-badge rail-badge--label rail-badge--info rail-badge--removable">
+       Filter
+       <button class="rail-badge__remove" aria-label="Remove">
+         <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12">
+           <path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.5"/>
+         </svg>
+       </button>
+     </span>
+   -->
+   ============================================================ */
+
+
+/* --- Base badge --- */
+
+.rail-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--badge-height);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-label-weight);
+  white-space: nowrap;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+
+/* --- Variant: count --- */
+
+.rail-badge--count {
+  min-width: var(--badge-count-size);
+  height: var(--badge-count-size);
+  padding: 0 var(--space-inset-sm);
+  border-radius: var(--radius-full);
+  background-color: var(--feedback-error);
+  color: var(--text-on-brand);
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+
+/* --- Variant: status (dot indicator) --- */
+
+.rail-badge--status {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  padding: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--border-strong);
+}
+
+.rail-badge--status.rail-badge--success {
+  background-color: var(--feedback-success);
+}
+
+.rail-badge--status.rail-badge--warning {
+  background-color: var(--feedback-warning);
+}
+
+.rail-badge--status.rail-badge--error {
+  background-color: var(--feedback-error);
+}
+
+.rail-badge--status.rail-badge--info {
+  background-color: var(--feedback-info);
+}
+
+.rail-badge--status.rail-badge--brand {
+  background-color: var(--interactive-default);
+}
+
+
+/* --- Variant: label --- */
+
+.rail-badge--label {
+  padding: 0 var(--space-inset-sm);
+  border-radius: var(--radius-sm);
+  gap: var(--space-gap-sm);
+}
+
+
+/* --- Variant: removable (extends label) --- */
+
+.rail-badge--removable {
+  padding-right: var(--space-inset-sm);
+}
+
+.rail-badge__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 150ms ease;
+}
+
+.rail-badge__remove:hover {
+  opacity: 1;
+}
+
+.rail-badge__remove:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+
+/* --- Color intents (for label and removable variants) --- */
+
+/* Default */
+.rail-badge--label:not([class*="rail-badge--brand"]):not([class*="rail-badge--success"]):not([class*="rail-badge--warning"]):not([class*="rail-badge--error"]):not([class*="rail-badge--info"]) {
+  background-color: var(--surface-subtle);
+  color: var(--text-secondary);
+}
+
+/* Brand */
+.rail-badge--label.rail-badge--brand {
+  background-color: var(--surface-brand-subtle);
+  color: var(--interactive-default);
+}
+
+/* Success */
+.rail-badge--label.rail-badge--success {
+  background-color: var(--feedback-success-subtle);
+  color: var(--text-success);
+}
+
+/* Warning */
+.rail-badge--label.rail-badge--warning {
+  background-color: var(--feedback-warning-subtle);
+  color: var(--text-primary);
+}
+
+/* Error */
+.rail-badge--label.rail-badge--error {
+  background-color: var(--feedback-error-subtle);
+  color: var(--text-error);
+}
+
+/* Info */
+.rail-badge--label.rail-badge--info {
+  background-color: var(--feedback-info-subtle);
+  color: var(--text-link);
+}

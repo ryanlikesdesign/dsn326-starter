@@ -1,0 +1,238 @@
+/*
+  Rail Design System — Button Component
+  ============================================================
+
+  Example markup:
+
+  <!-- Primary (default) -->
+  <button class="rail-button rail-button--primary">Place Order</button>
+
+  <!-- Secondary -->
+  <button class="rail-button rail-button--secondary">Cancel</button>
+
+  <!-- Tertiary -->
+  <button class="rail-button rail-button--tertiary">Learn More</button>
+
+  <!-- Destructive -->
+  <button class="rail-button rail-button--destructive">Remove Item</button>
+
+  <!-- Icon leading -->
+  <button class="rail-button rail-button--primary rail-button--icon-leading">
+    <span class="rail-button__icon" aria-hidden="true">+</span>
+    Add to Cart
+  </button>
+
+  <!-- Icon only -->
+  <button class="rail-button rail-button--primary rail-button--icon-only" aria-label="Close">
+    <span class="rail-button__icon" aria-hidden="true">&times;</span>
+  </button>
+
+  <!-- Full width -->
+  <button class="rail-button rail-button--primary rail-button--full-width">Checkout</button>
+
+  <!-- Disabled -->
+  <button class="rail-button rail-button--primary rail-button--disabled" disabled>Unavailable</button>
+
+  <!-- Loading -->
+  <button class="rail-button rail-button--primary rail-button--loading" disabled>
+    <span class="rail-button__spinner" aria-hidden="true"></span>
+    Placing Order...
+  </button>
+*/
+
+
+/* ------------------------------------------------------------
+   Base
+   ------------------------------------------------------------ */
+
+.rail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-gap-sm);
+
+  height: var(--button-height);
+  min-width: var(--button-min-width);
+  padding: 0 var(--space-inset-md);
+
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+
+/* ------------------------------------------------------------
+   Variant — Primary
+   ------------------------------------------------------------ */
+
+.rail-button--primary {
+  background-color: var(--interactive-default);
+  color: var(--text-on-brand);
+}
+
+.rail-button--primary:hover {
+  background-color: var(--interactive-hover);
+}
+
+.rail-button--primary:active {
+  background-color: var(--interactive-pressed);
+}
+
+
+/* ------------------------------------------------------------
+   Variant — Secondary
+   ------------------------------------------------------------ */
+
+.rail-button--secondary {
+  background-color: transparent;
+  color: var(--interactive-default);
+  border-color: var(--border-default);
+}
+
+.rail-button--secondary:hover {
+  background-color: var(--interactive-subtle);
+  border-color: var(--interactive-default);
+}
+
+.rail-button--secondary:active {
+  background-color: var(--interactive-subtle);
+  border-color: var(--interactive-pressed);
+  color: var(--interactive-pressed);
+}
+
+
+/* ------------------------------------------------------------
+   Variant — Tertiary
+   ------------------------------------------------------------ */
+
+.rail-button--tertiary {
+  background-color: transparent;
+  color: var(--interactive-default);
+  border-color: transparent;
+  min-width: auto;
+}
+
+.rail-button--tertiary:hover {
+  background-color: var(--interactive-subtle);
+}
+
+.rail-button--tertiary:active {
+  background-color: var(--interactive-subtle);
+  color: var(--interactive-pressed);
+}
+
+
+/* ------------------------------------------------------------
+   Variant — Destructive
+   ------------------------------------------------------------ */
+
+.rail-button--destructive {
+  background-color: var(--feedback-error);
+  color: var(--text-on-brand);
+}
+
+.rail-button--destructive:hover {
+  background-color: var(--text-error);
+}
+
+.rail-button--destructive:active {
+  background-color: var(--text-error);
+  filter: brightness(0.9);
+}
+
+
+/* ------------------------------------------------------------
+   Focus (all variants)
+   ------------------------------------------------------------ */
+
+.rail-button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+
+/* ------------------------------------------------------------
+   Disabled (all variants)
+   ------------------------------------------------------------ */
+
+.rail-button--disabled,
+.rail-button:disabled {
+  background-color: var(--interactive-disabled);
+  color: var(--text-disabled);
+  border-color: transparent;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/* ------------------------------------------------------------
+   Sub-variant — Icon leading
+   ------------------------------------------------------------ */
+
+.rail-button--icon-leading {
+  /* gap already set on base; just ensure icon sizing */
+}
+
+.rail-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-md);
+  height: var(--icon-md);
+  flex-shrink: 0;
+  font-size: var(--icon-md);
+  line-height: 1;
+}
+
+
+/* ------------------------------------------------------------
+   Sub-variant — Icon only
+   ------------------------------------------------------------ */
+
+.rail-button--icon-only {
+  min-width: auto;
+  width: var(--button-height);
+  padding: 0;
+}
+
+
+/* ------------------------------------------------------------
+   Sub-variant — Full width
+   ------------------------------------------------------------ */
+
+.rail-button--full-width {
+  width: 100%;
+}
+
+
+/* ------------------------------------------------------------
+   Loading state
+   ------------------------------------------------------------ */
+
+.rail-button--loading {
+  cursor: wait;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.rail-button__spinner {
+  display: inline-block;
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: rail-button-spin 0.6s linear infinite;
+}
+
+@keyframes rail-button-spin {
+  to { transform: rotate(360deg); }
+}

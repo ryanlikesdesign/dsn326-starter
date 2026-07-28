@@ -1,0 +1,165 @@
+/*
+  Rail Design System — Stepper Component
+  ============================================================
+
+  Quantity control: decrement button, value display, increment button.
+
+  Example markup:
+
+  <!-- Default -->
+  <div class="rail-stepper">
+    <button class="rail-stepper__button rail-stepper__button--decrement" aria-label="Decrease quantity">&minus;</button>
+    <span class="rail-stepper__value" aria-live="polite">2</span>
+    <button class="rail-stepper__button rail-stepper__button--increment" aria-label="Increase quantity">+</button>
+  </div>
+
+  <!-- Min reached (decrement disabled) -->
+  <div class="rail-stepper rail-stepper--min-reached">
+    <button class="rail-stepper__button rail-stepper__button--decrement" aria-label="Decrease quantity" disabled>&minus;</button>
+    <span class="rail-stepper__value" aria-live="polite">0</span>
+    <button class="rail-stepper__button rail-stepper__button--increment" aria-label="Increase quantity">+</button>
+  </div>
+
+  <!-- Max reached (increment disabled) -->
+  <div class="rail-stepper rail-stepper--max-reached">
+    <button class="rail-stepper__button rail-stepper__button--decrement" aria-label="Decrease quantity">&minus;</button>
+    <span class="rail-stepper__value" aria-live="polite">10</span>
+    <button class="rail-stepper__button rail-stepper__button--increment" aria-label="Increase quantity" disabled>+</button>
+  </div>
+
+  <!-- Fully disabled -->
+  <div class="rail-stepper rail-stepper--disabled">
+    <button class="rail-stepper__button rail-stepper__button--decrement" disabled>&minus;</button>
+    <span class="rail-stepper__value">1</span>
+    <button class="rail-stepper__button rail-stepper__button--increment" disabled>+</button>
+  </div>
+*/
+
+
+/* ------------------------------------------------------------
+   Container
+   ------------------------------------------------------------ */
+
+.rail-stepper {
+  display: inline-flex;
+  align-items: center;
+  width: var(--stepper-total-width);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background-color: var(--surface-raised);
+}
+
+
+/* ------------------------------------------------------------
+   Buttons (decrement / increment)
+   ------------------------------------------------------------ */
+
+.rail-stepper__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--stepper-button-size);
+  height: var(--stepper-button-size);
+  min-width: var(--target-min);
+  min-height: var(--target-min);
+
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: 1;
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+
+.rail-stepper__button:hover {
+  background-color: var(--surface-subtle);
+}
+
+.rail-stepper__button:active {
+  background-color: var(--interactive-subtle);
+}
+
+.rail-stepper__button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: calc(-1 * var(--focus-ring-width));
+}
+
+
+/* ------------------------------------------------------------
+   Value display
+   ------------------------------------------------------------ */
+
+.rail-stepper__value {
+  flex: 1;
+  text-align: center;
+  width: var(--stepper-value-width);
+
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+
+  user-select: none;
+}
+
+
+/* ------------------------------------------------------------
+   State — Min reached (decrement disabled)
+   ------------------------------------------------------------ */
+
+.rail-stepper--min-reached .rail-stepper__button--decrement,
+.rail-stepper__button--decrement:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.rail-stepper--min-reached .rail-stepper__button--decrement:hover,
+.rail-stepper__button--decrement:disabled:hover {
+  background-color: transparent;
+}
+
+
+/* ------------------------------------------------------------
+   State — Max reached (increment disabled)
+   ------------------------------------------------------------ */
+
+.rail-stepper--max-reached .rail-stepper__button--increment,
+.rail-stepper__button--increment:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.rail-stepper--max-reached .rail-stepper__button--increment:hover,
+.rail-stepper__button--increment:disabled:hover {
+  background-color: transparent;
+}
+
+
+/* ------------------------------------------------------------
+   State — Fully disabled
+   ------------------------------------------------------------ */
+
+.rail-stepper--disabled {
+  border-color: var(--border-subtle);
+  background-color: var(--surface-subtle);
+}
+
+.rail-stepper--disabled .rail-stepper__value {
+  color: var(--text-disabled);
+}
+
+.rail-stepper--disabled .rail-stepper__button {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}

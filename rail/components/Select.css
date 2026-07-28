@@ -1,0 +1,275 @@
+/*
+  Rail Design System — Select Component
+  ============================================================
+
+  Custom dropdown: trigger styled like an input with a chevron,
+  plus a dropdown panel with option rows.
+
+  Example markup:
+
+  <!-- Default (closed) -->
+  <div class="rail-select">
+    <label class="rail-select__label" for="party-size">Party Size</label>
+    <button class="rail-select__trigger" id="party-size" aria-haspopup="listbox" aria-expanded="false">
+      <span class="rail-select__value rail-select__value--placeholder">Select...</span>
+      <span class="rail-select__chevron" aria-hidden="true">&#9662;</span>
+    </button>
+  </div>
+
+  <!-- Open (with dropdown visible) -->
+  <div class="rail-select rail-select--open">
+    <label class="rail-select__label" for="party-size-2">Party Size</label>
+    <button class="rail-select__trigger" id="party-size-2" aria-haspopup="listbox" aria-expanded="true">
+      <span class="rail-select__value rail-select__value--placeholder">Select...</span>
+      <span class="rail-select__chevron" aria-hidden="true">&#9662;</span>
+    </button>
+    <ul class="rail-select__dropdown" role="listbox" aria-labelledby="party-size-2">
+      <li class="rail-select__option" role="option">1 Guest</li>
+      <li class="rail-select__option rail-select__option--selected" role="option" aria-selected="true">2 Guests</li>
+      <li class="rail-select__option" role="option">3 Guests</li>
+      <li class="rail-select__option rail-select__option--disabled" role="option" aria-disabled="true">10+ (call ahead)</li>
+    </ul>
+  </div>
+
+  <!-- Error state -->
+  <div class="rail-select rail-select--error">
+    <label class="rail-select__label" for="party-size-3">Party Size</label>
+    <button class="rail-select__trigger" id="party-size-3" aria-haspopup="listbox" aria-expanded="false" aria-invalid="true">
+      <span class="rail-select__value rail-select__value--placeholder">Select...</span>
+      <span class="rail-select__chevron" aria-hidden="true">&#9662;</span>
+    </button>
+    <span class="rail-select__helper rail-select__helper--error">Please select a party size.</span>
+  </div>
+
+  <!-- Disabled -->
+  <div class="rail-select rail-select--disabled">
+    <label class="rail-select__label" for="party-size-4">Party Size</label>
+    <button class="rail-select__trigger" id="party-size-4" disabled>
+      <span class="rail-select__value">2 Guests</span>
+      <span class="rail-select__chevron" aria-hidden="true">&#9662;</span>
+    </button>
+  </div>
+*/
+
+
+/* ------------------------------------------------------------
+   Wrapper (positioned for dropdown)
+   ------------------------------------------------------------ */
+
+.rail-select {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+  position: relative;
+}
+
+
+/* ------------------------------------------------------------
+   Label
+   ------------------------------------------------------------ */
+
+.rail-select__label {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+}
+
+
+/* ------------------------------------------------------------
+   Trigger (looks like an input)
+   ------------------------------------------------------------ */
+
+.rail-select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-gap-sm);
+
+  height: var(--input-height);
+  padding: 0 var(--space-inset-md);
+
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  color: var(--text-primary);
+
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+
+/* Placeholder text */
+.rail-select__value--placeholder {
+  color: var(--text-tertiary);
+}
+
+
+/* Chevron icon */
+.rail-select__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-md);
+  height: var(--icon-md);
+  font-size: var(--icon-sm);
+  color: var(--text-secondary);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+
+/* ------------------------------------------------------------
+   Trigger states — Hover
+   ------------------------------------------------------------ */
+
+.rail-select__trigger:hover {
+  border-color: var(--border-strong);
+}
+
+
+/* ------------------------------------------------------------
+   Trigger states — Focus
+   ------------------------------------------------------------ */
+
+.rail-select__trigger:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--border-focus);
+}
+
+
+/* ------------------------------------------------------------
+   State — Open
+   ------------------------------------------------------------ */
+
+.rail-select--open .rail-select__trigger {
+  border-color: var(--border-focus);
+}
+
+.rail-select--open .rail-select__chevron {
+  transform: rotate(180deg);
+}
+
+
+/* ------------------------------------------------------------
+   Dropdown panel
+   ------------------------------------------------------------ */
+
+.rail-select__dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  margin-top: var(--space-stack-sm);
+  padding: var(--space-inset-sm) 0;
+
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--elevation-2);
+
+  list-style: none;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.rail-select--open .rail-select__dropdown {
+  display: block;
+}
+
+
+/* ------------------------------------------------------------
+   Option rows
+   ------------------------------------------------------------ */
+
+.rail-select__option {
+  display: flex;
+  align-items: center;
+  padding: var(--space-inset-sm) var(--space-inset-md);
+
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+  color: var(--text-primary);
+
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.rail-select__option:hover {
+  background-color: var(--surface-subtle);
+}
+
+.rail-select__option--selected {
+  font-weight: var(--type-label-weight);
+  color: var(--interactive-default);
+  background-color: var(--interactive-subtle);
+}
+
+.rail-select__option--disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/* ------------------------------------------------------------
+   State — Error
+   ------------------------------------------------------------ */
+
+.rail-select--error .rail-select__trigger {
+  border-color: var(--border-error);
+}
+
+.rail-select--error .rail-select__trigger:focus-visible {
+  outline-color: var(--border-error);
+  border-color: var(--border-error);
+}
+
+
+/* ------------------------------------------------------------
+   State — Disabled
+   ------------------------------------------------------------ */
+
+.rail-select--disabled .rail-select__label {
+  color: var(--text-disabled);
+}
+
+.rail-select--disabled .rail-select__trigger {
+  background-color: var(--surface-subtle);
+  border-color: var(--border-subtle);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.rail-select--disabled .rail-select__chevron {
+  color: var(--text-disabled);
+}
+
+
+/* ------------------------------------------------------------
+   Helper text
+   ------------------------------------------------------------ */
+
+.rail-select__helper {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-caption-weight);
+  color: var(--text-secondary);
+}
+
+.rail-select__helper--error {
+  color: var(--text-error);
+}

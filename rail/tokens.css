@@ -1,0 +1,509 @@
+/* ============================================================
+   Rail Design System — Token Definitions
+   Heard · Guest + Line
+
+   Structure:
+   1. Primitive palette (raw values)
+   2. Semantic color tokens (role-based aliases)
+   3. Density tokens (comfortable / compact / service)
+   4. Environment tokens (standard / high-glare)
+   5. Radius, elevation, icon sizes
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. PRIMITIVE PALETTE
+   Raw values. Never reference these directly in components.
+   Use semantic tokens instead.
+   ------------------------------------------------------------ */
+
+:root {
+
+  /* --- Neutral (warm gray — Guest) --- */
+  --neutral-50:  #FAF9F7;
+  --neutral-100: #F3F1EE;
+  --neutral-150: #EBE8E4;
+  --neutral-200: #DDD9D3;
+  --neutral-300: #C4BEB6;
+  --neutral-400: #A9A29A;
+  --neutral-500: #8D857C;
+  --neutral-600: #6E675F;
+  --neutral-700: #524C46;
+  --neutral-800: #383430;
+  --neutral-900: #231F1C;
+  --neutral-950: #141210;
+
+  /* --- Primary (paprika — Guest) --- */
+  --primary-50:  #FEF3EE;
+  --primary-100: #FDDFD3;
+  --primary-200: #FBBFA8;
+  --primary-300: #F79672;
+  --primary-400: #F2703F;
+  --primary-500: #E84E1A;
+  --primary-600: #C93D12;
+  --primary-700: #A5300E;
+  --primary-800: #852A12;
+  --primary-900: #6D2513;
+
+  /* --- Accent (gold-amber — Guest) --- */
+  --accent-50:  #FFFBEB;
+  --accent-100: #FEF3C7;
+  --accent-200: #FDE68A;
+  --accent-300: #FCD34D;
+  --accent-400: #FBBF24;
+  --accent-500: #D97706;
+  --accent-600: #B45309;
+  --accent-700: #92400E;
+
+  /* --- Feedback --- */
+  --green-50:  #F0FDF4;
+  --green-500: #22C55E;
+  --green-700: #15803D;
+
+  --yellow-50:  #FEFCE8;
+  --yellow-500: #EAB308;
+  --yellow-700: #A16207;
+
+  --red-50:  #FEF2F2;
+  --red-500: #EF4444;
+  --red-700: #B91C1C;
+
+  --blue-50:  #EFF6FF;
+  --blue-500: #3B82F6;
+  --blue-700: #1D4ED8;
+
+  /* --- Line neutral (cool gray — dark UI) --- */
+  --line-neutral-50:  #F7F7F8;
+  --line-neutral-100: #EDEDF0;
+  --line-neutral-200: #D4D4D9;
+  --line-neutral-300: #B0B0B8;
+  --line-neutral-400: #8C8C96;
+  --line-neutral-500: #6B6B75;
+  --line-neutral-600: #4A4A54;
+  --line-neutral-700: #333340;
+  --line-neutral-800: #24242E;
+  --line-neutral-900: #1A1A24;
+  --line-neutral-950: #111118;
+
+  /* --- Line primary (muted indigo) --- */
+  --line-primary-50:  #EEF0FF;
+  --line-primary-100: #D9DDFF;
+  --line-primary-200: #B3BBFF;
+  --line-primary-300: #8D99E6;
+  --line-primary-400: #6E7ACC;
+  --line-primary-500: #5560B3;
+  --line-primary-600: #434D99;
+  --line-primary-700: #343D80;
+  --line-primary-800: #283066;
+  --line-primary-900: #1C224D;
+
+  /* --- Service color scale (Line only) --- */
+  --service-ok:           #4ADE80;
+  --service-approaching:  #F5C518;
+  --service-late:         #FB923C;
+  --service-critical:     #F87171;
+
+  /* Service colors — light variants (for use on light surfaces) */
+  --service-ok-light:           #166534;
+  --service-approaching-light:  #854D0E;
+  --service-late-light:         #9A3412;
+  --service-critical-light:     #991B1B;
+}
+
+
+/* ------------------------------------------------------------
+   2. SEMANTIC COLOR TOKENS
+   What components actually reference. Maps primitives to roles.
+   ------------------------------------------------------------ */
+
+:root {
+
+  /* --- Text --- */
+  --text-primary:   var(--neutral-900);
+  --text-secondary: var(--neutral-600);
+  --text-tertiary:  var(--neutral-600);
+  --text-disabled:  var(--neutral-400);
+  --text-on-brand:  #FFFFFF;
+  --text-link:      var(--primary-500);
+  --text-error:     var(--red-700);
+  --text-success:   var(--green-700);
+
+  /* --- Surface --- */
+  --surface-default:      var(--neutral-50);
+  --surface-subtle:       var(--neutral-100);
+  --surface-raised:       #FFFFFF;
+  --surface-inverse:      var(--neutral-950);
+  --surface-brand:        var(--primary-500);
+  --surface-brand-subtle: var(--primary-50);
+
+  /* --- Border --- */
+  --border-default: var(--neutral-200);
+  --border-strong:  var(--neutral-400);
+  --border-subtle:  var(--neutral-150);
+  --border-focus:   var(--primary-700);
+  --border-error:   var(--red-500);
+
+  /* --- Interactive --- */
+  --interactive-default:  var(--primary-500);
+  --interactive-hover:    var(--primary-400);
+  --interactive-pressed:  var(--primary-600);
+  --interactive-subtle:   var(--primary-50);
+  --interactive-disabled: var(--neutral-200);
+
+  /* --- Overlay --- */
+  --surface-overlay: var(--neutral-900);
+
+  /* --- Feedback (semantic) --- */
+  --feedback-success:        var(--green-500);
+  --feedback-success-subtle: var(--green-50);
+  --feedback-warning:        var(--yellow-500);
+  --feedback-warning-subtle: var(--yellow-50);
+  --feedback-error:          var(--red-500);
+  --feedback-error-subtle:   var(--red-50);
+  --feedback-info:           var(--blue-500);
+  --feedback-info-subtle:    var(--blue-50);
+}
+
+
+/* ------------------------------------------------------------
+   3. DENSITY TOKENS
+   Three modes: comfortable (Guest phone), compact (Guest desktop),
+   service (Line — always).
+
+   Density controls spacing and type size. NOT target sizes.
+
+   Default is comfortable. Apply .density-compact or .density-service
+   on a container to switch.
+   ------------------------------------------------------------ */
+
+/* --- Comfortable (default — Guest phone) --- */
+:root,
+.density-comfortable {
+  /* Spacing — inset */
+  --space-inset-sm: 8px;
+  --space-inset-md: 16px;
+  --space-inset-lg: 24px;
+
+  /* Spacing — stack */
+  --space-stack-sm: 8px;
+  --space-stack-md: 16px;
+  --space-stack-lg: 20px;
+
+  /* Spacing — inline */
+  --space-gap-sm: 8px;
+  --space-inline-md: 16px;
+
+  /* Type scale */
+  --type-display-size: 32px;
+  --type-display-line: 40px;
+  --type-display-weight: 700;
+
+  --type-heading-size: 20px;
+  --type-heading-line: 28px;
+  --type-heading-weight: 600;
+
+  --type-body-size: 16px;
+  --type-body-line: 24px;
+  --type-body-weight: 400;
+
+  --type-label-size: 14px;
+  --type-label-line: 20px;
+  --type-label-weight: 500;
+
+  --type-caption-size: 13px;
+  --type-caption-line: 18px;
+  --type-caption-weight: 400;
+
+  --type-mono-size: 14px;
+  --type-mono-line: 20px;
+  --type-mono-weight: 400;
+
+  /* Component density values */
+  --button-height: 48px;
+  --button-min-width: 120px;
+  --input-height: 48px;
+  --stepper-button-size: 44px;
+  --stepper-value-width: 40px;
+  --stepper-total-width: 128px;
+  --checkbox-size: 20px;
+  --switch-track-w: 44px;
+  --switch-track-h: 24px;
+  --switch-thumb: 20px;
+  --badge-height: 24px;
+  --badge-count-size: 20px;
+  --card-padding: var(--space-inset-md);
+  --card-image-height: 180px;
+  --card-image-width: 100px;
+  --card-gap: var(--space-stack-sm);
+  --list-row-min-height: 56px;
+  --list-row-leading-size: 48px;
+  --dialog-body-padding: var(--space-inset-lg);
+  --toast-min-height: 48px;
+  --tab-height: 48px;
+  --tab-height-segmented: 40px;
+}
+
+/* --- Compact (Guest desktop) --- */
+.density-compact {
+  --space-inset-sm: 6px;
+  --space-inset-md: 12px;
+  --space-inset-lg: 16px;
+
+  --space-stack-sm: 4px;
+  --space-stack-md: 8px;
+  --space-stack-lg: 16px;
+
+  --space-gap-sm: 6px;
+  --space-inline-md: 12px;
+
+  --type-display-size: 28px;
+  --type-display-line: 36px;
+
+  --type-heading-size: 18px;
+  --type-heading-line: 24px;
+
+  --type-body-size: 14px;
+  --type-body-line: 22px;
+
+  --type-label-size: 13px;
+  --type-label-line: 18px;
+
+  --type-caption-size: 12px;
+  --type-caption-line: 16px;
+
+  --type-mono-size: 13px;
+  --type-mono-line: 18px;
+
+  --button-height: 44px;
+  --button-min-width: 100px;
+  --input-height: 44px;
+  --stepper-button-size: 44px;
+  --stepper-value-width: 32px;
+  --stepper-total-width: 120px;
+  --checkbox-size: 18px;
+  --switch-track-w: 40px;
+  --switch-track-h: 22px;
+  --switch-thumb: 18px;
+  --badge-height: 20px;
+  --badge-count-size: 18px;
+  --card-image-height: 140px;
+  --card-image-width: 80px;
+  --card-gap: 4px;
+  --list-row-min-height: 44px;
+  --list-row-leading-size: 40px;
+  --toast-min-height: 40px;
+  --tab-height: 40px;
+  --tab-height-segmented: 36px;
+}
+
+/* --- Service (Line — always) --- */
+.density-service {
+  --space-inset-sm: 12px;
+  --space-inset-md: 24px;
+  --space-inset-lg: 32px;
+
+  --space-stack-sm: 12px;
+  --space-stack-md: 24px;
+  --space-stack-lg: 32px;
+
+  --space-gap-sm: 12px;
+  --space-inline-md: 24px;
+
+  --type-display-size: 40px;
+  --type-display-line: 48px;
+  --type-display-weight: 600;
+
+  --type-heading-size: 28px;
+  --type-heading-line: 36px;
+  --type-heading-weight: 600;
+
+  --type-body-size: 24px;
+  --type-body-line: 32px;
+
+  --type-label-size: 20px;
+  --type-label-line: 28px;
+
+  --type-caption-size: 18px;
+  --type-caption-line: 24px;
+
+  --type-mono-size: 20px;
+  --type-mono-line: 28px;
+
+  --button-height: 56px;
+  --button-height-lg: 64px;
+  --button-min-width: 140px;
+  --input-height: 56px;
+  --stepper-button-size: 56px;
+  --stepper-value-width: 48px;
+  --stepper-total-width: 160px;
+  --checkbox-size: 32px;
+  --switch-track-w: 72px;
+  --switch-track-h: 40px;
+  --switch-thumb: 32px;
+  --badge-height: 32px;
+  --badge-count-size: 28px;
+  --card-padding: 24px;
+  --card-gap: 12px;
+  --list-row-min-height: 56px;
+  --list-row-leading-size: 56px;
+  --dialog-body-padding: 32px;
+  --toast-min-height: 64px;
+  --tab-height: 56px;
+}
+
+
+/* ------------------------------------------------------------
+   4. ENVIRONMENT TOKENS
+   Two modes: standard (Guest), high-glare (Line).
+
+   Environment controls target sizes, focus rings, and contrast floor.
+   NOT spacing or type. Independent of density.
+
+   Default is standard. Apply .env-high-glare on a container to switch.
+   ------------------------------------------------------------ */
+
+:root,
+.env-standard {
+  --target-min: 44px;
+  --target-comfortable: 48px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  /* Contrast floor: 4.5:1 (documented, not enforced by CSS) */
+}
+
+.env-high-glare {
+  --target-min: 56px;
+  --target-comfortable: 64px;
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+  /* Contrast floor: 7:1 (documented, not enforced by CSS) */
+}
+
+
+/* ------------------------------------------------------------
+   5. RADIUS, ELEVATION, ICONS
+   These don't change with density or environment.
+   ------------------------------------------------------------ */
+
+:root {
+  /* Radius */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-full: 9999px;
+
+  /* Elevation (Guest — light surfaces, subtle shadows) */
+  --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --elevation-2: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --elevation-3: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --elevation-4: 0 16px 48px rgba(0, 0, 0, 0.16);
+
+  /* Elevation (Line — dark surfaces, heavier shadows) */
+  --elevation-none: none;
+  --elevation-low:  0 2px 4px rgba(0, 0, 0, 0.3);
+  --elevation-mid:  0 4px 12px rgba(0, 0, 0, 0.4);
+  --elevation-high: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  /* Icon sizes */
+  --icon-xs: 12px;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-xl: 32px;
+}
+
+
+/* ------------------------------------------------------------
+   6. TYPOGRAPHY BASE STYLES
+   Font imports and type token application helpers.
+   ------------------------------------------------------------ */
+
+/* Fonts loaded via HTML <link> tags — see index.html */
+
+.type-display {
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--type-display-size);
+  line-height: var(--type-display-line);
+  font-weight: var(--type-display-weight);
+}
+
+.type-heading {
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-line);
+  font-weight: var(--type-heading-weight);
+}
+
+.type-body {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-body-weight);
+}
+
+.type-label {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+}
+
+.type-caption {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-caption-weight);
+}
+
+.type-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-size);
+  line-height: var(--type-mono-line);
+  font-weight: var(--type-mono-weight);
+}
+
+
+/* ------------------------------------------------------------
+   LINE SURFACE OVERRIDES
+   When building for Line, apply .surface-line to the root container.
+   This swaps the semantic color tokens to Line's dark palette.
+   ------------------------------------------------------------ */
+
+.surface-line {
+  --text-primary:   var(--line-neutral-50);
+  --text-secondary: var(--line-neutral-200);
+  --text-tertiary:  var(--line-neutral-400);
+  --text-disabled:  var(--line-neutral-500);
+  --text-on-brand:  var(--line-neutral-50);
+  --text-link:      #85BFFF;
+
+  --surface-default:      var(--line-neutral-800);
+  --surface-subtle:       var(--line-neutral-900);
+  --surface-raised:       var(--line-neutral-700);
+  --surface-inverse:      var(--line-neutral-50);
+  --surface-brand:        var(--line-primary-700);
+  --surface-brand-subtle: var(--line-primary-900);
+
+  --border-default: var(--line-neutral-600);
+  --border-strong:  var(--line-neutral-400);
+  --border-subtle:  var(--line-neutral-700);
+  --border-focus:   var(--line-primary-400);
+  --border-error:   var(--red-500);
+
+  --interactive-default:  var(--line-primary-500);
+  --interactive-hover:    var(--line-primary-400);
+  --interactive-pressed:  var(--line-primary-700);
+  --interactive-subtle:   var(--line-primary-900);
+  --interactive-disabled: var(--line-neutral-700);
+
+  --surface-overlay: var(--line-neutral-950);
+
+  --feedback-success-subtle: #0D2818;
+  --feedback-warning-subtle: #2D2004;
+  --feedback-error-subtle:   #2D0A0A;
+  --feedback-info-subtle:    #0A1929;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  color: var(--text-primary);
+  background-color: var(--surface-default);
+}

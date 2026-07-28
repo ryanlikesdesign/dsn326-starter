@@ -1,0 +1,13 @@
+{
+  "name": "rail-starter",
+  "version": "1.0.0",
+  "description": "Rail design system starter — Heard Guest + Line",
+  "scripts": {
+    "dev": "npx vite",
+    "build": "npx vite build",
+    "preview": "npx vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

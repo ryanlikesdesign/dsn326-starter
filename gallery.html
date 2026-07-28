@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Gallery — Rail Design System</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Rail tokens and components -->
+  <link rel="stylesheet" href="/rail/tokens.css">
+  <link rel="stylesheet" href="/rail/components/Button.css">
+  <link rel="stylesheet" href="/rail/components/Input.css">
+  <link rel="stylesheet" href="/rail/components/Stepper.css">
+  <link rel="stylesheet" href="/rail/components/Select.css">
+  <link rel="stylesheet" href="/rail/components/Checkbox.css">
+  <link rel="stylesheet" href="/rail/components/Switch.css">
+  <link rel="stylesheet" href="/rail/components/Badge.css">
+  <link rel="stylesheet" href="/rail/components/Card.css">
+  <link rel="stylesheet" href="/rail/components/ListRow.css">
+  <link rel="stylesheet" href="/rail/components/Dialog.css">
+  <link rel="stylesheet" href="/rail/components/Toast.css">
+  <link rel="stylesheet" href="/rail/components/Tabs.css">
+  <link rel="stylesheet" href="/rail/utilities/reset.css">
+  <link rel="stylesheet" href="/rail/layouts/page.css">
+
+  <style>
+    /* Gallery page styles — using Rail tokens */
+    .gallery-header {
+      padding: var(--space-inset-lg);
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    .gallery-header__title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 var(--space-stack-sm) 0;
+    }
+
+    .gallery-header__note {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--type-body-size, 14px);
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .gallery-mode-switcher {
+      display: flex;
+      gap: var(--space-gap-sm);
+      padding: var(--space-inset-md) var(--space-inset-lg);
+      border-bottom: 1px solid var(--border-default);
+      background: var(--surface-raised, #f8f8f8);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .gallery-mode-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border: 1px solid var(--border-default, #d4d4d4);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-secondary, #666);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .gallery-mode-btn:hover {
+      border-color: var(--text-primary, #333);
+      color: var(--text-primary, #333);
+    }
+
+    .gallery-mode-btn--active {
+      background: var(--text-primary, #1a1a1a);
+      color: #fff;
+      border-color: var(--text-primary, #1a1a1a);
+    }
+
+    .gallery-sections {
+      padding: var(--space-inset-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-stack-lg);
+    }
+
+    .gallery-section {
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md, 8px);
+      overflow: hidden;
+    }
+
+    .gallery-section__heading {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+      padding: var(--space-inset-md);
+      border-bottom: 1px solid var(--border-default);
+      background: var(--surface-raised, #fafafa);
+    }
+
+    .gallery-section__body {
+      padding: var(--space-inset-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-stack-md);
+    }
+
+    .gallery-row {
+      display: flex;
+      gap: var(--space-gap-sm);
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .gallery-row--col {
+      flex-direction: column;
+    }
+
+    .gallery-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-tertiary, #999);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .gallery-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* Toast display — show inline instead of fixed positioning */
+    .gallery-section .rail-toast-region {
+      position: static;
+      transform: none;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Dialog display — show inline instead of overlay */
+    .gallery-section .rail-dialog {
+      position: static;
+      transform: none;
+      margin: 0;
+      max-width: 420px;
+    }
+
+    .gallery-section .rail-dialog-backdrop {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mode switcher (outside the density container so it stays styled consistently) -->
+  <div class="gallery-header" style="background: #fff;">
+    <h1 class="gallery-header__title">Component Gallery — Rail Design System</h1>
+    <p class="gallery-header__note">Switch modes to see how density and environment affect every component.</p>
+  </div>
+
+  <div class="gallery-mode-switcher">
+    <button class="gallery-mode-btn gallery-mode-btn--active" data-mode="comfortable" onclick="switchMode('density-comfortable env-standard', this)">
+      Guest Phone
+    </button>
+    <button class="gallery-mode-btn" data-mode="compact" onclick="switchMode('density-compact env-standard', this)">
+      Guest Desktop
+    </button>
+    <button class="gallery-mode-btn" data-mode="service" onclick="switchMode('density-service env-high-glare surface-line', this)">
+      Line
+    </button>
+  </div>
+
+  <!-- Gallery container — density classes applied here -->
+  <div id="gallery" class="density-comfortable env-standard">
+    <div class="gallery-sections">
+
+      <!-- ============================================================
+           1. BUTTON
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Button</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-group">
+            <span class="gallery-label">Variants</span>
+            <div class="gallery-row">
+              <button class="rail-button rail-button--primary">
+                <span class="rail-button__label">Place Order</span>
+              </button>
+              <button class="rail-button rail-button--secondary">
+                <span class="rail-button__label">View Menu</span>
+              </button>
+              <button class="rail-button rail-button--tertiary">
+                <span class="rail-button__label">Cancel</span>
+              </button>
+              <button class="rail-button rail-button--destructive">
+                <span class="rail-button__label">Remove Item</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Disabled</span>
+            <div class="gallery-row">
+              <button class="rail-button rail-button--primary rail-button--disabled" disabled>
+                <span class="rail-button__label">Unavailable</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Full Width</span>
+            <div class="gallery-row" style="width: 100%; max-width: 360px;">
+              <button class="rail-button rail-button--primary rail-button--full-width">
+                <span class="rail-button__label">Checkout — $47.50</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">With Icon</span>
+            <div class="gallery-row">
+              <button class="rail-button rail-button--primary rail-button--icon-leading">
+                <span class="rail-button__icon" aria-hidden="true">+</span>
+                <span class="rail-button__label">Add to Cart</span>
+              </button>
+              <button class="rail-button rail-button--secondary rail-button--icon-only" aria-label="Close">
+                <span class="rail-button__icon" aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           2. INPUT
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Input</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-row" style="gap: var(--space-gap-sm); flex-wrap: wrap;">
+            <div class="gallery-group" style="min-width: 240px; flex: 1;">
+              <span class="gallery-label">Default</span>
+              <div class="rail-input">
+                <label class="rail-input__label" for="g-name">Guest Name</label>
+                <input class="rail-input__field" id="g-name" type="text" placeholder="e.g. Jane Doe">
+              </div>
+            </div>
+
+            <div class="gallery-group" style="min-width: 240px; flex: 1;">
+              <span class="gallery-label">With Helper Text</span>
+              <div class="rail-input">
+                <label class="rail-input__label" for="g-phone">Phone Number</label>
+                <input class="rail-input__field" id="g-phone" type="tel" placeholder="(555) 123-4567">
+                <span class="rail-input__helper">For reservation confirmations only.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-row" style="gap: var(--space-gap-sm); flex-wrap: wrap;">
+            <div class="gallery-group" style="min-width: 240px; flex: 1;">
+              <span class="gallery-label">Error State</span>
+              <div class="rail-input rail-input--error">
+                <label class="rail-input__label" for="g-email">Email</label>
+                <input class="rail-input__field" id="g-email" type="email" value="not-an-email" aria-invalid="true" aria-describedby="email-err">
+                <span class="rail-input__helper rail-input__helper--error" id="email-err">Please enter a valid email.</span>
+              </div>
+            </div>
+
+            <div class="gallery-group" style="min-width: 240px; flex: 1;">
+              <span class="gallery-label">Disabled</span>
+              <div class="rail-input rail-input--disabled">
+                <label class="rail-input__label" for="g-locked">Location</label>
+                <input class="rail-input__field" id="g-locked" type="text" value="Downtown — Main St" disabled>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           3. STEPPER
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Stepper</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-row">
+            <div class="gallery-group">
+              <span class="gallery-label">Default (qty 2)</span>
+              <div class="rail-stepper">
+                <button class="rail-stepper__button rail-stepper__button--decrement" aria-label="Decrease quantity">&minus;</button>
+                <span class="rail-stepper__value" aria-live="polite">2</span>
+                <button class="rail-stepper__button rail-stepper__button--increment" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <div class="gallery-group">
+              <span class="gallery-label">Min Reached (qty 1)</span>
+              <div class="rail-stepper rail-stepper--min-reached">
+                <button class="rail-stepper__button rail-stepper__button--decrement" aria-label="Decrease quantity" disabled>&minus;</button>
+                <span class="rail-stepper__value" aria-live="polite">1</span>
+                <button class="rail-stepper__button rail-stepper__button--increment" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           4. SELECT
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Select</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-row" style="gap: var(--space-gap-sm); flex-wrap: wrap;">
+            <div class="gallery-group" style="min-width: 200px;">
+              <span class="gallery-label">Default (closed)</span>
+              <div class="rail-select">
+                <label class="rail-select__label" for="g-party">Party Size</label>
+                <button class="rail-select__trigger" id="g-party" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="rail-select__value rail-select__value--placeholder">Select...</span>
+                  <span class="rail-select__chevron" aria-hidden="true">&#9662;</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="gallery-group" style="min-width: 200px;">
+              <span class="gallery-label">With Value</span>
+              <div class="rail-select">
+                <label class="rail-select__label" for="g-seating">Seating Preference</label>
+                <button class="rail-select__trigger" id="g-seating" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="rail-select__value">Outdoor Patio</span>
+                  <span class="rail-select__chevron" aria-hidden="true">&#9662;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           5. CHECKBOX
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Checkbox</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-row">
+            <div class="gallery-group">
+              <span class="gallery-label">Unchecked</span>
+              <label class="rail-checkbox">
+                <input class="rail-checkbox__input" type="checkbox">
+                <span class="rail-checkbox__box" aria-hidden="true"></span>
+                <span class="rail-checkbox__label">Accept terms and conditions</span>
+              </label>
+            </div>
+
+            <div class="gallery-group">
+              <span class="gallery-label">Checked</span>
+              <label class="rail-checkbox">
+                <input class="rail-checkbox__input" type="checkbox" checked>
+                <span class="rail-checkbox__box" aria-hidden="true"></span>
+                <span class="rail-checkbox__label">Subscribe to newsletter</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Group</span>
+            <fieldset class="rail-checkbox-group">
+              <legend class="rail-checkbox-group__legend">Dietary Preferences</legend>
+              <label class="rail-checkbox">
+                <input class="rail-checkbox__input" type="checkbox" checked>
+                <span class="rail-checkbox__box" aria-hidden="true"></span>
+                <span class="rail-checkbox__label">Vegetarian</span>
+              </label>
+              <label class="rail-checkbox">
+                <input class="rail-checkbox__input" type="checkbox">
+                <span class="rail-checkbox__box" aria-hidden="true"></span>
+                <span class="rail-checkbox__label">Gluten-Free</span>
+              </label>
+              <label class="rail-checkbox">
+                <input class="rail-checkbox__input" type="checkbox">
+                <span class="rail-checkbox__box" aria-hidden="true"></span>
+                <span class="rail-checkbox__label">Dairy-Free</span>
+              </label>
+            </fieldset>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           6. SWITCH
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Switch</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-row">
+            <div class="gallery-group">
+              <span class="gallery-label">Off</span>
+              <label class="rail-switch">
+                <input class="rail-switch__input" type="checkbox" role="switch">
+                <span class="rail-switch__track" aria-hidden="true">
+                  <span class="rail-switch__thumb"></span>
+                </span>
+                <span class="rail-switch__label">Push Notifications</span>
+              </label>
+            </div>
+
+            <div class="gallery-group">
+              <span class="gallery-label">On</span>
+              <label class="rail-switch">
+                <input class="rail-switch__input" type="checkbox" role="switch" checked>
+                <span class="rail-switch__track" aria-hidden="true">
+                  <span class="rail-switch__thumb"></span>
+                </span>
+                <span class="rail-switch__label">Order Updates</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           7. BADGE
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Badge</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-group">
+            <span class="gallery-label">Label Badges (Intents)</span>
+            <div class="gallery-row">
+              <span class="rail-badge rail-badge--label">Default</span>
+              <span class="rail-badge rail-badge--label rail-badge--brand">New</span>
+              <span class="rail-badge rail-badge--label rail-badge--success">Open</span>
+              <span class="rail-badge rail-badge--label rail-badge--warning">Low Stock</span>
+              <span class="rail-badge rail-badge--label rail-badge--error">86'd</span>
+              <span class="rail-badge rail-badge--label rail-badge--info">Updated</span>
+            </div>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Count Badge</span>
+            <div class="gallery-row" style="align-items: center;">
+              <span class="rail-badge rail-badge--count">3</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary);">notifications</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           8. CARD
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Card</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-row" style="gap: var(--space-gap-sm); flex-wrap: wrap;">
+            <div class="gallery-group" style="flex: 1; min-width: 240px;">
+              <span class="gallery-label">Basic with Metadata</span>
+              <div class="rail-card">
+                <div class="rail-card__body">
+                  <h3 class="rail-card__title">Margherita Pizza</h3>
+                  <p class="rail-card__description">San Marzano tomatoes, fresh mozzarella, basil, olive oil</p>
+                  <div class="rail-card__meta">
+                    <span>$14.00</span>
+                    <span>12 min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-group" style="flex: 1; min-width: 240px;">
+              <span class="gallery-label">With Actions</span>
+              <div class="rail-card">
+                <div class="rail-card__body">
+                  <h3 class="rail-card__title">Grilled Salmon</h3>
+                  <p class="rail-card__description">Atlantic salmon, lemon butter, asparagus, wild rice</p>
+                  <div class="rail-card__meta">
+                    <span>$24.00</span>
+                  </div>
+                </div>
+                <div class="rail-card__actions">
+                  <button class="rail-card__action">Edit</button>
+                  <button class="rail-card__action">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           9. LIST ROW
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">List Row</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-group" style="max-width: 420px;">
+            <span class="gallery-label">Basic</span>
+            <div role="list">
+              <div class="rail-list-row" role="listitem">
+                <div class="rail-list-row__content">
+                  <span class="rail-list-row__primary">Table 4</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-group" style="max-width: 420px;">
+            <span class="gallery-label">Detailed with Secondary Text</span>
+            <div role="list">
+              <div class="rail-list-row" role="listitem">
+                <div class="rail-list-row__content">
+                  <span class="rail-list-row__primary">Order #1042</span>
+                  <span class="rail-list-row__secondary">2 items -- 12 min ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-group" style="max-width: 420px;">
+            <span class="gallery-label">With Trailing Price</span>
+            <div role="list">
+              <div class="rail-list-row" role="listitem">
+                <div class="rail-list-row__content">
+                  <span class="rail-list-row__primary">Grilled Salmon</span>
+                  <span class="rail-list-row__secondary">Atlantic, lemon butter</span>
+                </div>
+                <div class="rail-list-row__trailing">
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: var(--type-body-size, 14px); color: var(--text-primary);">$24.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           10. DIALOG
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Dialog</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-group">
+            <span class="gallery-label">Standard Dialog (inline preview)</span>
+            <dialog class="rail-dialog" role="dialog" aria-labelledby="g-dialog-title" open style="position: static; transform: none; margin: 0; max-width: 420px;">
+              <div class="rail-dialog__header">
+                <h2 class="rail-dialog__title" id="g-dialog-title">Edit Menu Item</h2>
+                <button class="rail-dialog__close" aria-label="Close dialog">&times;</button>
+              </div>
+              <div class="rail-dialog__body">
+                <p style="margin: 0; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-size: var(--type-body-size, 14px);">
+                  Update the name, description, or price for this menu item. Changes apply to all active menus.
+                </p>
+              </div>
+              <div class="rail-dialog__footer">
+                <button class="rail-dialog__btn rail-dialog__btn--secondary">Cancel</button>
+                <button class="rail-dialog__btn rail-dialog__btn--primary">Save Changes</button>
+              </div>
+            </dialog>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Destructive Confirmation</span>
+            <dialog class="rail-dialog rail-dialog--confirmation" role="dialog" aria-labelledby="g-dialog-title-2" open style="position: static; transform: none; margin: 0; max-width: 420px;">
+              <div class="rail-dialog__body">
+                <h2 class="rail-dialog__title" id="g-dialog-title-2">Delete this item?</h2>
+                <p style="margin: 0; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-size: var(--type-body-size, 14px);">
+                  This action cannot be undone. The item will be removed from all menus.
+                </p>
+              </div>
+              <div class="rail-dialog__footer">
+                <button class="rail-dialog__btn rail-dialog__btn--secondary">Cancel</button>
+                <button class="rail-dialog__btn rail-dialog__btn--destructive">Delete</button>
+              </div>
+            </dialog>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           11. TOAST
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Toast</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-group">
+            <span class="gallery-label">All Variants</span>
+            <div class="rail-toast-region" role="status" aria-live="polite" aria-label="Notifications" style="position: static; transform: none; width: 100%; max-width: 400px;">
+
+              <div class="rail-toast rail-toast--success" role="alert">
+                <div class="rail-toast__content">
+                  <span class="rail-toast__message">Order placed successfully.</span>
+                </div>
+                <button class="rail-toast__dismiss" aria-label="Dismiss">&times;</button>
+              </div>
+
+              <div class="rail-toast rail-toast--error" role="alert">
+                <div class="rail-toast__content">
+                  <span class="rail-toast__message">Payment failed. Please try again.</span>
+                </div>
+                <button class="rail-toast__dismiss" aria-label="Dismiss">&times;</button>
+              </div>
+
+              <div class="rail-toast rail-toast--info" role="alert">
+                <div class="rail-toast__content">
+                  <span class="rail-toast__message">Your table is ready in 5 minutes.</span>
+                </div>
+                <button class="rail-toast__dismiss" aria-label="Dismiss">&times;</button>
+              </div>
+
+              <div class="rail-toast rail-toast--warning" role="alert">
+                <div class="rail-toast__content">
+                  <span class="rail-toast__message">Grilled salmon is running low tonight.</span>
+                </div>
+                <button class="rail-toast__dismiss" aria-label="Dismiss">&times;</button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           12. TABS
+           ============================================================ -->
+      <section class="gallery-section">
+        <h2 class="gallery-section__heading">Tabs</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-group">
+            <span class="gallery-label">Underline (3 tabs)</span>
+            <div class="rail-tabs rail-tabs--underline" role="tablist" aria-label="Menu sections">
+              <button class="rail-tab rail-tab--active" role="tab" aria-selected="true">Appetizers</button>
+              <button class="rail-tab" role="tab" aria-selected="false" tabindex="-1">Mains</button>
+              <button class="rail-tab" role="tab" aria-selected="false" tabindex="-1">Desserts</button>
+            </div>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Segmented (2 tabs)</span>
+            <div class="rail-tabs rail-tabs--segmented" role="tablist" aria-label="Order type">
+              <button class="rail-tab rail-tab--active" role="tab" aria-selected="true">Dine-in</button>
+              <button class="rail-tab" role="tab" aria-selected="false" tabindex="-1">Takeout</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    // Mode switcher
+    function switchMode(classes, btn) {
+      document.getElementById('gallery').className = classes;
+
+      // Update active button
+      document.querySelectorAll('.gallery-mode-btn').forEach(function(b) {
+        b.classList.remove('gallery-mode-btn--active');
+      });
+      btn.classList.add('gallery-mode-btn--active');
+    }
+
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

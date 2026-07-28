@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rail — Heard Design System</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Rail tokens and components -->
+  <link rel="stylesheet" href="/rail/tokens.css">
+  <link rel="stylesheet" href="/rail/components/Button.css">
+  <link rel="stylesheet" href="/rail/components/Input.css">
+  <link rel="stylesheet" href="/rail/components/Stepper.css">
+  <link rel="stylesheet" href="/rail/components/Select.css">
+  <link rel="stylesheet" href="/rail/components/Checkbox.css">
+  <link rel="stylesheet" href="/rail/components/Switch.css">
+  <link rel="stylesheet" href="/rail/components/Badge.css">
+  <link rel="stylesheet" href="/rail/components/Card.css">
+  <link rel="stylesheet" href="/rail/components/ListRow.css">
+  <link rel="stylesheet" href="/rail/components/Dialog.css">
+  <link rel="stylesheet" href="/rail/components/Toast.css">
+  <link rel="stylesheet" href="/rail/components/Tabs.css">
+  <link rel="stylesheet" href="/rail/utilities/reset.css">
+  <link rel="stylesheet" href="/rail/layouts/page.css">
+</head>
+<body>
+  <!--
+    Rail Starter — Heard Design System
+
+    HOW TO USE THIS FILE:
+
+    1. This is a starting point. Replace the content below with your feature.
+
+    2. Set density + environment on the outermost container:
+       - Guest phone:    class="density-comfortable env-standard"
+       - Guest desktop:  class="density-compact env-standard"
+       - Line (always):  class="density-service env-high-glare surface-line"
+
+    3. Use only Rail components and tokens. Never hardcode colors,
+       spacing, or type sizes. Use var(--token-name) for everything.
+
+    4. See /gallery.html for all components rendered at each density.
+  -->
+
+  <div id="app" class="density-comfortable env-standard">
+    <header class="page-header">
+      <h1 class="type-heading" style="color: var(--text-primary);">Rail Starter</h1>
+      <p class="type-body" style="color: var(--text-secondary);">
+        Heard Design System — ready for your feature build.
+      </p>
+    </header>
+
+    <main class="page-main">
+      <!-- Your feature goes here -->
+
+      <section style="padding: var(--space-inset-lg); display: flex; flex-direction: column; gap: var(--space-stack-md);">
+
+        <div style="display: flex; gap: var(--space-gap-sm); flex-wrap: wrap;">
+          <button class="rail-button rail-button--primary">
+            <span class="rail-button__label">Add to Cart</span>
+          </button>
+          <button class="rail-button rail-button--secondary">
+            <span class="rail-button__label">View Menu</span>
+          </button>
+          <button class="rail-button rail-button--tertiary">
+            <span class="rail-button__label">Cancel</span>
+          </button>
+        </div>
+
+        <div class="rail-input-group">
+          <label class="rail-input__label" for="demo-input">Search restaurants</label>
+          <input class="rail-input" type="search" id="demo-input" placeholder="Pizza, sushi, tacos...">
+        </div>
+
+        <div class="rail-card">
+          <div class="rail-card__content">
+            <h3 class="rail-card__title type-heading" style="color: var(--text-primary);">Margherita Pizza</h3>
+            <p class="rail-card__description type-body" style="color: var(--text-secondary);">
+              Fresh mozzarella, San Marzano tomatoes, basil, olive oil
+            </p>
+            <span class="type-mono" style="color: var(--text-primary);">$14.50</span>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

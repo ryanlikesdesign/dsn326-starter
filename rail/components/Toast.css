@@ -1,0 +1,226 @@
+/* ============================================================
+   Rail Design System — Toast
+   Heard · Guest + Line
+
+   Variants: success, error, info, warning
+   Each has a colored 3px left border and subtle background.
+   Position: top-center on phone, top-right on desktop.
+
+   Usage:
+   <!--
+     Toast container (add to page root):
+     <div class="rail-toast-region" role="status" aria-live="polite" aria-label="Notifications">
+
+       Success toast:
+       <div class="rail-toast rail-toast--success" role="alert">
+         <div class="rail-toast__icon" aria-hidden="true">
+           <svg width="20" height="20">...</svg>
+         </div>
+         <div class="rail-toast__content">
+           <span class="rail-toast__message">Item saved successfully.</span>
+         </div>
+         <button class="rail-toast__dismiss" aria-label="Dismiss">
+           <svg aria-hidden="true" width="16" height="16">...</svg>
+         </button>
+       </div>
+
+       Error toast:
+       <div class="rail-toast rail-toast--error" role="alert">
+         <div class="rail-toast__icon" aria-hidden="true">...</div>
+         <div class="rail-toast__content">
+           <span class="rail-toast__message">Failed to save changes.</span>
+         </div>
+         <button class="rail-toast__dismiss" aria-label="Dismiss">...</button>
+       </div>
+
+       Info toast:
+       <div class="rail-toast rail-toast--info" role="alert">...</div>
+
+       Warning toast:
+       <div class="rail-toast rail-toast--warning" role="alert">...</div>
+
+     </div>
+   -->
+   ============================================================ */
+
+
+/* --- Toast region (positioning container) --- */
+
+.rail-toast-region {
+  position: fixed;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+  pointer-events: none;
+
+  /* Desktop: top-right */
+  top: var(--space-inset-lg);
+  right: var(--space-inset-lg);
+  max-width: 400px;
+}
+
+/* Phone: top-center */
+@media (max-width: 480px) {
+  .rail-toast-region {
+    top: var(--space-inset-md);
+    right: var(--space-inset-md);
+    left: var(--space-inset-md);
+    max-width: none;
+  }
+}
+
+
+/* --- Base toast --- */
+
+.rail-toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  min-height: var(--toast-min-height);
+  padding: var(--space-inset-sm) var(--space-inset-md);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid transparent;
+  box-shadow: var(--elevation-2);
+  box-sizing: border-box;
+  pointer-events: auto;
+  animation: rail-toast-slide-in 300ms ease;
+}
+
+
+/* --- Variant: success --- */
+
+.rail-toast--success {
+  background-color: var(--feedback-success-subtle);
+  border-left-color: var(--feedback-success);
+}
+
+.rail-toast--success .rail-toast__icon {
+  color: var(--text-success);
+}
+
+
+/* --- Variant: error --- */
+
+.rail-toast--error {
+  background-color: var(--feedback-error-subtle);
+  border-left-color: var(--feedback-error);
+}
+
+.rail-toast--error .rail-toast__icon {
+  color: var(--text-error);
+}
+
+
+/* --- Variant: info --- */
+
+.rail-toast--info {
+  background-color: var(--feedback-info-subtle);
+  border-left-color: var(--feedback-info);
+}
+
+.rail-toast--info .rail-toast__icon {
+  color: var(--text-link);
+}
+
+
+/* --- Variant: warning --- */
+
+.rail-toast--warning {
+  background-color: var(--feedback-warning-subtle);
+  border-left-color: var(--feedback-warning);
+}
+
+.rail-toast--warning .rail-toast__icon {
+  color: var(--text-primary);
+}
+
+
+/* --- Icon --- */
+
+.rail-toast__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+
+/* --- Content --- */
+
+.rail-toast__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.rail-toast__message {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+}
+
+
+/* --- Dismiss button --- */
+
+.rail-toast__dismiss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.rail-toast__dismiss:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  color: var(--text-primary);
+}
+
+.rail-toast__dismiss:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+
+/* --- Exit animation class (apply via JS to remove) --- */
+
+.rail-toast--exiting {
+  animation: rail-toast-slide-out 200ms ease forwards;
+}
+
+
+/* --- Animations --- */
+
+@keyframes rail-toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rail-toast-slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
