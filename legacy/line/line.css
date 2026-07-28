@@ -1,0 +1,549 @@
+/* ============================================================
+   Heard Line — flow-local layout
+
+   Layout only. Every value comes from a Rail token.
+   Local classes use the `line-` prefix; `.rail-` is the system
+   namespace and nothing here may add to it.
+   ============================================================ */
+
+
+/* --- Local corrections to browser defaults ---------------------- */
+
+[hidden] {
+  display: none !important;
+}
+
+dialog.rail-dialog:not([open]) {
+  display: none;
+}
+
+
+/* --- Shell ------------------------------------------------------ */
+
+body {
+  background-color: var(--line-neutral-950);
+}
+
+.line-app {
+  min-height: 100vh;
+  color: var(--text-primary);
+  background-color: var(--surface-default);
+}
+
+.line-view[hidden] {
+  display: none;
+}
+
+/* The pass display is one screen. The rail takes whatever is left of the
+   viewport under the header, and app.js measures it. */
+#view-pass {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#view-pass > .line-header,
+#view-pass > .line-allday {
+  flex: 0 0 auto;
+}
+
+.line-muted {
+  color: var(--text-secondary);
+}
+
+.line-clock {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-size);
+  line-height: var(--type-mono-line);
+  color: var(--text-secondary);
+}
+
+
+/* --- Header ------------------------------------------------------ */
+
+.line-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-inline-md);
+  padding: var(--space-inset-sm) var(--space-inset-md);
+  background-color: var(--surface-subtle);
+  border-bottom: 2px solid var(--border-strong);
+}
+
+.line-header__identity {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.line-header__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.line-header--handheld {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+
+/* --- 86 board ------------------------------------------------------ */
+
+.line-eightysix {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.line-eightysix__item {
+  flex-shrink: 0;
+}
+
+.line-eightysix__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-sm);
+  background-color: var(--surface-default);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.line-eightysix__name {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.line-eightysix__reach {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+
+/* --- All day -------------------------------------------------------- */
+
+.line-allday {
+  padding: var(--space-inset-sm) var(--space-inset-md);
+  background-color: var(--surface-subtle);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.line-allday__heading {
+  color: var(--text-secondary);
+  padding-bottom: var(--space-stack-sm);
+  display: block;
+}
+
+.line-allday__grid {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.line-allday__cell {
+  flex-shrink: 0;
+}
+
+.line-allday__cell {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-sm);
+  background-color: var(--surface-default);
+  border-radius: var(--radius-sm);
+}
+
+.line-allday__count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: 500;
+  color: var(--service-approaching);
+}
+
+.line-allday__name {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+
+/* --- The rail --------------------------------------------------------
+   Six tickets across the 15-inch pass display. Ticket width is derived
+   from the viewport so six always fit and a seventh always does not.
+   ------------------------------------------------------------------- */
+
+.line-rail {
+  --ticket-w: calc(
+    (100vw - 2 * var(--space-inset-md) - 5 * var(--space-gap-sm)) / 6
+  );
+
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-md);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
+/* --- Ticket ----------------------------------------------------------- */
+
+.line-ticket {
+  display: flex;
+  flex-direction: column;
+  width: var(--ticket-w);
+  min-width: var(--ticket-w);
+  max-width: var(--ticket-w);
+  background-color: var(--surface-raised);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--elevation-low);
+}
+
+/* Status is a background tint. Every state also carries a badge with
+   words in it — see .line-ticket__status. */
+.line-ticket--incoming  { background-color: var(--surface-raised); }
+.line-ticket--started   { background-color: var(--feedback-info-subtle); }
+.line-ticket--ready     { background-color: var(--feedback-success-subtle); }
+.line-ticket--bumped    { background-color: var(--surface-subtle); }
+.line-ticket--recalled  { background-color: var(--feedback-warning-subtle); }
+
+.line-ticket__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-sm);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.line-ticket__ids {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.line-ticket__number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.line-ticket__source {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  color: var(--text-secondary);
+}
+
+.line-ticket__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  flex-wrap: wrap;
+  padding: var(--space-inset-sm) var(--space-inset-sm) 0;
+}
+
+/* Elapsed time: a chip, so the band is carried by position and a word
+   as well as by colour. */
+.line-elapsed {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2px var(--space-inset-sm);
+  background-color: var(--surface-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.line-elapsed__value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-size);
+  line-height: var(--type-mono-line);
+  font-weight: 500;
+}
+
+.line-elapsed__band {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  font-weight: var(--type-label-weight);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.line-elapsed--ok          .line-elapsed__value,
+.line-elapsed--ok          .line-elapsed__band { color: var(--service-ok); }
+.line-elapsed--approaching .line-elapsed__value,
+.line-elapsed--approaching .line-elapsed__band { color: var(--service-approaching); }
+.line-elapsed--late        .line-elapsed__value,
+.line-elapsed--late        .line-elapsed__band { color: var(--service-late); }
+.line-elapsed--critical    .line-elapsed__value,
+.line-elapsed--critical    .line-elapsed__band { color: var(--service-critical); }
+
+
+/* --- Ticket body ------------------------------------------------------- */
+
+.line-ticket__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-inset-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+}
+
+.line-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.line-item__name {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+}
+
+.line-item__qty {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-primary);
+}
+
+/* Modifiers are the thing that gets missed, so they are the thing that
+   is loudest: their own weight, their own colour, their own marker. */
+.line-item__mods {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: var(--space-inset-sm);
+  border-left: 3px solid var(--service-approaching);
+}
+
+.line-item__mod {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  font-weight: 600;
+  color: var(--service-approaching);
+}
+
+
+/* --- Ticket actions ------------------------------------------------------ */
+
+.line-ticket__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-sm);
+  border-top: 1px solid var(--border-strong);
+}
+
+.line-ticket__actions .rail-button {
+  min-width: 0;
+  padding: 0 var(--space-inset-sm);
+}
+
+/* Bump is the action expo performs a few hundred times a shift, so it
+   gets the whole width and the comfortable target, not the floor. */
+.line-act-bump {
+  height: var(--target-comfortable);
+  min-height: var(--target-comfortable);
+  width: 100%;
+}
+
+.line-act-recall {
+  height: var(--target-min);
+  min-height: var(--target-min);
+  width: 100%;
+}
+
+/* Void is unrecoverable, so it is separated from the recoverable pair,
+   coloured away from them, and never sits under a thumb by accident. */
+.line-ticket__danger {
+  margin-top: var(--space-stack-sm);
+  padding-top: var(--space-stack-sm);
+  border-top: 1px dashed var(--border-strong);
+}
+
+.line-act-void {
+  height: var(--target-min);
+  min-height: var(--target-min);
+  width: 100%;
+  background-color: var(--feedback-error-subtle);
+  color: var(--text-primary);
+  border: 2px solid var(--service-critical);
+}
+
+.line-act-void:hover {
+  background-color: var(--feedback-error-subtle);
+  border-color: var(--service-critical);
+}
+
+
+/* --- Handheld ------------------------------------------------------------- */
+
+.line-handheld {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-md);
+  padding: var(--space-inset-md);
+  max-width: 390px;
+  margin: 0 auto;
+}
+
+.line-handheld__title {
+  color: var(--text-primary);
+}
+
+.line-handheld__rail {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* On the handheld the rail is a single column at full service density.
+   Nothing is scaled down. */
+.line-rail--stacked {
+  --ticket-w: 100%;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 60vh;
+  padding: var(--space-inset-sm);
+}
+
+
+/* --- Tables ---------------------------------------------------------------- */
+
+.line-tables {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-gap-sm);
+}
+
+.line-tables--terminal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: var(--space-gap-sm);
+}
+
+.line-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+  padding: var(--space-inset-sm);
+  background-color: var(--surface-raised);
+  border-radius: var(--radius-md);
+}
+
+.line-table__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-gap-sm);
+}
+
+.line-table__label {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  font-weight: var(--type-label-weight);
+  color: var(--text-primary);
+}
+
+.line-table__meta {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line);
+  color: var(--text-secondary);
+}
+
+.line-course {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-gap-sm);
+  padding: var(--space-inset-sm) 0;
+  border-top: 1px solid var(--border-strong);
+}
+
+.line-course__name {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line);
+  color: var(--text-primary);
+}
+
+.line-course .rail-button {
+  min-height: var(--target-min);
+  height: var(--target-min);
+  min-width: 0;
+}
+
+
+/* --- The walk ------------------------------------------------------------------ */
+
+.line-view--walk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-inset-lg);
+}
+
+.line-walkscreen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-stack-md);
+  max-width: 640px;
+}
+
+.line-walkscreen h1 {
+  color: var(--text-primary);
+}
+
+.line-walkscreen h1:focus-visible {
+  outline: var(--focus-ring-width) solid var(--border-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+
+/* --- Terminal --------------------------------------------------------------------- */
+
+.line-terminal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-md);
+  padding: var(--space-inset-md);
+}
+
+.line-terminal__banner {
+  align-self: flex-start;
+}

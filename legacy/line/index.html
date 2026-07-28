@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heard Line — Expo Pass</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Rail tokens and components -->
+  <link rel="stylesheet" href="../../rail/tokens.css">
+  <link rel="stylesheet" href="../../rail/utilities/reset.css">
+  <link rel="stylesheet" href="../../rail/layouts/page.css">
+  <link rel="stylesheet" href="../../rail/components/Button.css">
+  <link rel="stylesheet" href="../../rail/components/Input.css">
+  <link rel="stylesheet" href="../../rail/components/Stepper.css">
+  <link rel="stylesheet" href="../../rail/components/Select.css">
+  <link rel="stylesheet" href="../../rail/components/Checkbox.css">
+  <link rel="stylesheet" href="../../rail/components/Switch.css">
+  <link rel="stylesheet" href="../../rail/components/Badge.css">
+  <link rel="stylesheet" href="../../rail/components/Card.css">
+  <link rel="stylesheet" href="../../rail/components/ListRow.css">
+  <link rel="stylesheet" href="../../rail/components/Dialog.css">
+  <link rel="stylesheet" href="../../rail/components/Toast.css">
+  <link rel="stylesheet" href="../../rail/components/Tabs.css">
+
+  <!-- Flow-local layout only. No new .rail- classes. -->
+  <link rel="stylesheet" href="line.css">
+</head>
+<body>
+
+  <!--
+    Heard Line — expo rail, as it ships today.
+
+    Surface:      Line
+    Density:      service
+    Environment:  high-glare
+
+    Three views, switched with ?view= or the buttons in the header:
+      ?view=pass       the 15" pass display, 1366 x 768 landscape (default)
+      ?view=handheld   the server handheld, 390px
+      ?view=terminal   the fixed terminal by the server station
+
+    The terminal is only reachable through the walk. That is deliberate:
+    HEARD-163 is about the walk, so the flow has to contain it.
+  -->
+
+  <div id="app" class="line-app density-service env-high-glare surface-line">
+
+    <!-- =============================================================
+         PASS DISPLAY
+         ============================================================= -->
+    <section class="line-view" id="view-pass" aria-labelledby="pass-heading">
+
+      <header class="line-header">
+        <div class="line-header__identity">
+          <h1 class="type-heading" id="pass-heading">Expo · Pass</h1>
+          <span class="type-caption line-muted" id="pass-restaurant">Taquería La Brasa</span>
+        </div>
+
+        <!-- 86 board -->
+        <div class="line-eightysix" id="eightysix-board" aria-label="86 board"></div>
+
+        <div class="line-header__tools">
+          <span class="type-mono line-clock" id="pass-clock">—</span>
+          <button class="rail-button rail-button--primary" id="clear-all" type="button">Clear all</button>
+          <button class="rail-button rail-button--primary" id="to-handheld" type="button">Handheld</button>
+        </div>
+      </header>
+
+      <!-- All-day counts: every outstanding item across every ticket -->
+      <section class="line-allday" id="allday" aria-labelledby="allday-heading">
+        <h2 class="type-label line-allday__heading" id="allday-heading">All day</h2>
+        <div class="line-allday__grid" id="allday-grid"></div>
+      </section>
+
+      <div class="line-rail" id="rail" role="list" aria-label="Ticket rail, oldest first"></div>
+
+    </section>
+
+    <!-- =============================================================
+         HANDHELD
+         ============================================================= -->
+    <section class="line-view" id="view-handheld" aria-labelledby="handheld-heading" hidden>
+
+      <header class="line-header line-header--handheld">
+        <div class="line-header__identity">
+          <h1 class="type-heading" id="handheld-heading">Floor</h1>
+          <span class="type-caption line-muted">Jess · Section A</span>
+        </div>
+        <button class="rail-button rail-button--primary" id="to-pass" type="button">Pass</button>
+      </header>
+
+      <div class="line-handheld">
+
+        <h2 class="type-heading line-handheld__title">Tables</h2>
+        <div class="line-tables" id="handheld-tables" role="list"></div>
+
+        <div class="line-walk">
+          <p class="type-body">Fire a course at the terminal.</p>
+          <button class="rail-button rail-button--primary rail-button--full-width" id="start-walk" type="button">
+            Go to the terminal
+          </button>
+        </div>
+
+        <h2 class="type-heading line-handheld__title">Kitchen</h2>
+        <div class="line-handheld__rail" id="handheld-rail-wrap">
+          <div class="line-rail line-rail--scaled" id="handheld-rail" role="list" aria-label="Ticket rail"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================================
+         THE WALK — the deliberate step between handheld and terminal
+         ============================================================= -->
+    <section class="line-view line-view--walk" id="view-walk" aria-labelledby="walk-heading" hidden>
+      <div class="line-walkscreen">
+        <span class="rail-badge rail-badge--label rail-badge--warning">Away from your section</span>
+        <h1 class="type-display" id="walk-heading" tabindex="-1">You are walking to the terminal</h1>
+        <p class="type-body line-muted">
+          The terminal is at the server station, past the pass. Nothing on the handheld
+          can fire a course, so this is the trip.
+        </p>
+        <p class="type-body line-muted" id="walk-count">Trips this shift: 1</p>
+        <button class="rail-button rail-button--primary rail-button--full-width" id="arrive-terminal" type="button">
+          I am at the terminal
+        </button>
+        <button class="rail-button rail-button--primary rail-button--full-width" id="abandon-walk" type="button">
+          Go back to the floor
+        </button>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         TERMINAL — the only place a course can be fired
+         ============================================================= -->
+    <section class="line-view" id="view-terminal" aria-labelledby="terminal-heading" hidden>
+
+      <header class="line-header">
+        <div class="line-header__identity">
+          <h1 class="type-heading" id="terminal-heading">Terminal · Server station</h1>
+          <span class="type-caption line-muted" id="terminal-who">Signed in as Jess</span>
+        </div>
+        <div class="line-header__tools">
+          <span class="type-mono line-clock" id="terminal-clock">—</span>
+          <button class="rail-button rail-button--primary" id="leave-terminal" type="button">Back to the floor</button>
+        </div>
+      </header>
+
+      <div class="line-terminal">
+        <p class="rail-badge rail-badge--label rail-badge--info line-terminal__banner">
+          You are now at the terminal. Course firing lives here.
+        </p>
+        <div class="line-tables line-tables--terminal" id="terminal-tables" role="list"></div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- Confirm dialog -->
+  <div class="rail-dialog-backdrop" id="line-backdrop" hidden></div>
+  <dialog class="rail-dialog rail-dialog--confirmation" id="line-dialog" role="dialog"
+          aria-labelledby="line-dialog-title" aria-modal="true">
+    <div class="rail-dialog__body">
+      <h2 class="rail-dialog__title" id="line-dialog-title">Confirm</h2>
+      <p id="line-dialog-body">Are you sure?</p>
+    </div>
+    <div class="rail-dialog__footer">
+      <button class="rail-dialog__btn rail-dialog__btn--secondary" id="line-dialog-cancel">Cancel</button>
+      <button class="rail-dialog__btn rail-dialog__btn--primary" id="line-dialog-ok">Confirm</button>
+    </div>
+  </dialog>
+
+  <!-- Toasts -->
+  <div class="rail-toast-region" role="status" aria-live="polite" aria-label="Notifications" id="line-toasts"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
