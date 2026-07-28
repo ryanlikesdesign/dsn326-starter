@@ -240,6 +240,10 @@
   align-items: flex-start;
   border-bottom: none;
   cursor: default;
+  /* The items list is a height-constrained flex column, so a row would
+     otherwise shrink below its own content and paint over the row under
+     it. Rows keep their natural height; the list scrolls instead. */
+  flex-shrink: 0;
 }
 
 .rail-ticket__item:hover {

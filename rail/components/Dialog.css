@@ -58,13 +58,19 @@
 .rail-dialog-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(20, 18, 16, 0.4); /* neutral-950 at 40% */
+  background-color: color-mix(in srgb, var(--surface-overlay) 45%, transparent); /* neutral-950 at 40% */
   z-index: 999;
   animation: rail-dialog-fade-in 200ms ease;
 }
 
 
 /* --- Dialog container --- */
+
+/* A closed <dialog> must not render. display:flex below would beat the UA
+   rule, so state it explicitly. */
+.rail-dialog:not([open]) {
+  display: none;
+}
 
 .rail-dialog {
   position: fixed;

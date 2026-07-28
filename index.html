@@ -46,46 +46,56 @@
     3. Use only Rail components and tokens. Never hardcode colors,
        spacing, or type sizes. Use var(--token-name) for everything.
 
-    4. See /gallery.html for all components rendered at each density.
+    4. See /gallery.html for every component rendered at each density,
+       and /RAIL.md for the class names and tokens in writing.
+
+    5. /legacy/ is Heard as it ships today. Test it, don't fix it.
   -->
 
   <div id="app" class="density-comfortable env-standard">
-    <header class="page-header">
-      <h1 class="type-heading" style="color: var(--text-primary);">Rail Starter</h1>
+    <header class="page-header stack stack--sm">
+      <h1 class="type-heading">Rail Starter</h1>
       <p class="type-body" style="color: var(--text-secondary);">
         Heard Design System — ready for your feature build.
+      </p>
+      <p class="type-caption" style="color: var(--text-secondary);">
+        <a href="/gallery.html">Component gallery</a> &middot;
+        <a href="/RAIL.md">RAIL.md</a> &middot;
+        <a href="/legacy/">The current state</a>
       </p>
     </header>
 
     <main class="page-main">
       <!-- Your feature goes here -->
 
-      <section style="padding: var(--space-inset-lg); display: flex; flex-direction: column; gap: var(--space-stack-md);">
+      <section class="page-section stack stack--md">
 
-        <div style="display: flex; gap: var(--space-gap-sm); flex-wrap: wrap;">
+        <div class="inline inline--sm" style="flex-wrap: wrap;">
           <button class="rail-button rail-button--primary">
-            <span class="rail-button__label">Add to Cart</span>
+            Add to Cart
           </button>
           <button class="rail-button rail-button--secondary">
-            <span class="rail-button__label">View Menu</span>
+            View Menu
           </button>
           <button class="rail-button rail-button--tertiary">
-            <span class="rail-button__label">Cancel</span>
+            Cancel
           </button>
         </div>
 
-        <div class="rail-input-group">
+        <div class="rail-input">
           <label class="rail-input__label" for="demo-input">Search restaurants</label>
-          <input class="rail-input" type="search" id="demo-input" placeholder="Pizza, sushi, tacos...">
+          <input class="rail-input__field" type="search" id="demo-input" placeholder="Pizza, sushi, tacos...">
+          <span class="rail-input__helper">Try a dish, a cuisine, or a neighbourhood.</span>
         </div>
 
         <div class="rail-card">
-          <div class="rail-card__content">
-            <h3 class="rail-card__title type-heading" style="color: var(--text-primary);">Margherita Pizza</h3>
-            <p class="rail-card__description type-body" style="color: var(--text-secondary);">
-              Fresh mozzarella, San Marzano tomatoes, basil, olive oil
-            </p>
-            <span class="type-mono" style="color: var(--text-primary);">$14.50</span>
+          <div class="rail-card__body">
+            <h3 class="rail-card__title">Margherita Pizza</h3>
+            <p class="rail-card__description">Fresh mozzarella, San Marzano tomatoes, basil, olive oil</p>
+            <div class="rail-card__meta">
+              <span>$14.50</span>
+              <span>12 min</span>
+            </div>
           </div>
         </div>
 

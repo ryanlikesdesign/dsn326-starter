@@ -123,7 +123,7 @@
   --text-tertiary:  var(--neutral-600);
   --text-disabled:  var(--neutral-400);
   --text-on-brand:  #FFFFFF;
-  --text-link:      var(--primary-500);
+  --text-link:      var(--primary-700);   /* 6.93:1 on surface/raised */
   --text-error:     var(--red-700);
   --text-success:   var(--green-700);
 
@@ -143,9 +143,13 @@
   --border-error:   var(--red-500);
 
   /* --- Interactive --- */
-  --interactive-default:  var(--primary-500);
-  --interactive-hover:    var(--primary-400);
-  --interactive-pressed:  var(--primary-600);
+  /* primary-500 (#E84E1A) is 3.79:1 on white — below the 4.5:1 floor this file
+     documents. Interactive surfaces step one down the ramp so Rail passes its
+     own standard. The brand ramp itself is unchanged; primary-500 is still the
+     brand colour and is still used where it sits on a dark or subtle ground. */
+  --interactive-default:  var(--primary-600);   /* 5.05:1 on white */
+  --interactive-hover:    var(--primary-500);
+  --interactive-pressed:  var(--primary-700);
   --interactive-subtle:   var(--primary-50);
   --interactive-disabled: var(--neutral-200);
 
@@ -482,7 +486,7 @@
   --surface-brand:        var(--line-primary-700);
   --surface-brand-subtle: var(--line-primary-900);
 
-  --border-default: var(--line-neutral-600);
+  --border-default: var(--line-neutral-400);   /* 3.31:1 on surface/default — SC 1.4.11 */
   --border-strong:  var(--line-neutral-400);
   --border-subtle:  var(--line-neutral-700);
   --border-focus:   var(--line-primary-400);
@@ -493,6 +497,11 @@
   --interactive-pressed:  var(--line-primary-700);
   --interactive-subtle:   var(--line-primary-900);
   --interactive-disabled: var(--line-neutral-700);
+
+  /* Light-surface error/success values are unreadable on Line's dark grounds
+     (2.80:1 and 3.14:1). Override them the way every other colour is overridden. */
+  --text-error:     #FCA5A5;
+  --text-success:   #86EFAC;
 
   --surface-overlay: var(--line-neutral-950);
 

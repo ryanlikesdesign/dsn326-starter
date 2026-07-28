@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="/rail/components/Dialog.css">
   <link rel="stylesheet" href="/rail/components/Toast.css">
   <link rel="stylesheet" href="/rail/components/Tabs.css">
+  <link rel="stylesheet" href="/rail/components/Ticket.css">
   <link rel="stylesheet" href="/rail/utilities/reset.css">
   <link rel="stylesheet" href="/rail/layouts/page.css">
 
@@ -163,6 +164,30 @@
     .gallery-section .rail-dialog-backdrop {
       display: none;
     }
+
+    /* Ticket is Line-only. It always renders in its own Line container,
+       whatever mode the switcher is in, and the rail is given a height
+       so the tickets fill it the way they do on the pass display. */
+    .gallery-ticket-frame {
+      background-color: var(--line-neutral-800);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .gallery-ticket-frame .rail-ticket-rail {
+      --rail-ticket-width: 210px;
+      /* What the rail gets under the header on a 1366x768 pass display.
+         Any shorter and the item list is squeezed by the action column,
+         which is a real constraint but a misleading demo. */
+      height: 620px;
+    }
+
+    .gallery-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin: 0 0 var(--space-stack-sm);
+    }
   </style>
 </head>
 <body>
@@ -200,16 +225,16 @@
             <span class="gallery-label">Variants</span>
             <div class="gallery-row">
               <button class="rail-button rail-button--primary">
-                <span class="rail-button__label">Place Order</span>
+                Place Order
               </button>
               <button class="rail-button rail-button--secondary">
-                <span class="rail-button__label">View Menu</span>
+                View Menu
               </button>
               <button class="rail-button rail-button--tertiary">
-                <span class="rail-button__label">Cancel</span>
+                Cancel
               </button>
               <button class="rail-button rail-button--destructive">
-                <span class="rail-button__label">Remove Item</span>
+                Remove Item
               </button>
             </div>
           </div>
@@ -218,7 +243,7 @@
             <span class="gallery-label">Disabled</span>
             <div class="gallery-row">
               <button class="rail-button rail-button--primary rail-button--disabled" disabled>
-                <span class="rail-button__label">Unavailable</span>
+                Unavailable
               </button>
             </div>
           </div>
@@ -227,7 +252,7 @@
             <span class="gallery-label">Full Width</span>
             <div class="gallery-row" style="width: 100%; max-width: 360px;">
               <button class="rail-button rail-button--primary rail-button--full-width">
-                <span class="rail-button__label">Checkout — $47.50</span>
+                Checkout — $47.50
               </button>
             </div>
           </div>
@@ -237,7 +262,7 @@
             <div class="gallery-row">
               <button class="rail-button rail-button--primary rail-button--icon-leading">
                 <span class="rail-button__icon" aria-hidden="true">+</span>
-                <span class="rail-button__label">Add to Cart</span>
+                Add to Cart
               </button>
               <button class="rail-button rail-button--secondary rail-button--icon-only" aria-label="Close">
                 <span class="rail-button__icon" aria-hidden="true">&times;</span>
@@ -678,6 +703,199 @@
             <div class="rail-tabs rail-tabs--segmented" role="tablist" aria-label="Order type">
               <button class="rail-tab rail-tab--active" role="tab" aria-selected="true">Dine-in</button>
               <button class="rail-tab" role="tab" aria-selected="false" tabindex="-1">Takeout</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TICKET — a pattern, not a thirteenth component
+           ============================================================ -->
+      <section class="gallery-section" id="ticket">
+        <h2 class="gallery-section__heading">Ticket &mdash; pattern</h2>
+        <div class="gallery-section__body">
+
+          <p class="gallery-note">
+            Card + List Row + Badge, composed. It sits outside the twelve and the
+            contribution rules still apply to it. Line only, so it ignores the mode
+            switcher and always renders <code>density-service env-high-glare
+            surface-line</code>. Six fit across a 1366px pass display.
+          </p>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Status, elapsed bands, modifiers, actions</span>
+
+            <div class="gallery-ticket-frame density-service env-high-glare surface-line">
+              <div class="rail-ticket-rail" role="list" aria-label="Ticket rail, oldest first">
+
+                <article class="rail-card rail-ticket rail-ticket--recalled" role="listitem">
+                  <div class="rail-ticket__header">
+                    <div class="rail-ticket__ids">
+                      <span class="rail-ticket__number">#2199</span>
+                      <span class="rail-ticket__source">Table 3</span>
+                    </div>
+                    <span class="rail-badge rail-badge--label rail-badge--warning">Recalled</span>
+                  </div>
+                  <div class="rail-ticket__timing">
+                    <span class="rail-ticket__elapsed rail-ticket__elapsed--critical">28:47</span>
+                    <span class="rail-badge rail-badge--label rail-badge--warning">Recalled &times;2</span>
+                  </div>
+                  <ul class="rail-ticket__items">
+                    <li class="rail-list-row rail-ticket__item">
+                      <div class="rail-list-row__content">
+                        <span class="rail-list-row__primary rail-ticket__item-name"><span class="rail-ticket__qty">2&times;</span> Carne Asada Taco</span>
+                        <span class="rail-ticket__mods">
+                          <span class="rail-ticket__mod">Medium rare</span>
+                          <span class="rail-ticket__mod">No onion</span>
+                        </span>
+                      </div>
+                    </li>
+                    <li class="rail-list-row rail-ticket__item">
+                      <div class="rail-list-row__content">
+                        <span class="rail-list-row__primary rail-ticket__item-name"><span class="rail-ticket__qty">1&times;</span> Elote</span>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="rail-ticket__actions">
+                    <button class="rail-button rail-button--primary rail-ticket__action rail-ticket__action--bump">Bump</button>
+                    <button class="rail-button rail-ticket__action rail-ticket__action--recall">Recall</button>
+                    <div class="rail-ticket__danger">
+                      <button class="rail-button rail-ticket__action rail-ticket__action--void">Void</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="rail-card rail-ticket rail-ticket--started" role="listitem">
+                  <div class="rail-ticket__header">
+                    <div class="rail-ticket__ids">
+                      <span class="rail-ticket__number">#2208</span>
+                      <span class="rail-ticket__source">Table 12</span>
+                    </div>
+                    <span class="rail-badge rail-badge--label rail-badge--info">Started</span>
+                  </div>
+                  <div class="rail-ticket__timing">
+                    <span class="rail-ticket__elapsed rail-ticket__elapsed--late">17:29</span>
+                    <span class="rail-badge rail-badge--label rail-badge--warning">Late</span>
+                  </div>
+                  <ul class="rail-ticket__items">
+                    <li class="rail-list-row rail-ticket__item">
+                      <div class="rail-list-row__content">
+                        <span class="rail-list-row__primary rail-ticket__item-name"><span class="rail-ticket__qty">3&times;</span> Al Pastor Taco</span>
+                        <span class="rail-ticket__mods">
+                          <span class="rail-ticket__mod">No onion</span>
+                          <span class="rail-ticket__mod">Flour tortilla</span>
+                        </span>
+                      </div>
+                    </li>
+                    <li class="rail-list-row rail-ticket__item">
+                      <div class="rail-list-row__content">
+                        <span class="rail-list-row__primary rail-ticket__item-name"><span class="rail-ticket__qty">1&times;</span> Chicken Tinga Burrito</span>
+                        <span class="rail-ticket__mods">
+                          <span class="rail-ticket__mod rail-ticket__mod--critical">Dairy allergy</span>
+                          <span class="rail-ticket__mod">No crema, no cheese</span>
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="rail-ticket__actions">
+                    <button class="rail-button rail-button--primary rail-ticket__action rail-ticket__action--bump">Bump</button>
+                    <button class="rail-button rail-ticket__action rail-ticket__action--recall">Recall</button>
+                    <div class="rail-ticket__danger">
+                      <button class="rail-button rail-ticket__action rail-ticket__action--void">Void</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="rail-card rail-ticket rail-ticket--ready" role="listitem">
+                  <div class="rail-ticket__header">
+                    <div class="rail-ticket__ids">
+                      <span class="rail-ticket__number">#2211</span>
+                      <span class="rail-ticket__source">Table 4</span>
+                    </div>
+                    <span class="rail-badge rail-badge--label rail-badge--success">Ready</span>
+                  </div>
+                  <div class="rail-ticket__timing">
+                    <span class="rail-ticket__elapsed rail-ticket__elapsed--approaching">9:41</span>
+                    <span class="rail-badge rail-badge--label rail-badge--warning">Approaching</span>
+                  </div>
+                  <ul class="rail-ticket__items">
+                    <li class="rail-list-row rail-ticket__item">
+                      <div class="rail-list-row__content">
+                        <span class="rail-list-row__primary rail-ticket__item-name"><span class="rail-ticket__qty">1&times;</span> Barbacoa Burrito</span>
+                        <span class="rail-ticket__mods">
+                          <span class="rail-ticket__mod">Wet, salsa roja on top</span>
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="rail-ticket__actions">
+                    <button class="rail-button rail-button--primary rail-ticket__action rail-ticket__action--bump">Bump</button>
+                    <button class="rail-button rail-ticket__action rail-ticket__action--recall">Recall</button>
+                    <div class="rail-ticket__danger">
+                      <button class="rail-button rail-ticket__action rail-ticket__action--void">Void</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="rail-card rail-ticket rail-ticket--incoming" role="listitem">
+                  <div class="rail-ticket__header">
+                    <div class="rail-ticket__ids">
+                      <span class="rail-ticket__number">#A4471</span>
+                      <span class="rail-ticket__source">Heard Guest</span>
+                    </div>
+                    <span class="rail-badge rail-badge--label">Incoming</span>
+                  </div>
+                  <div class="rail-ticket__timing">
+                    <span class="rail-ticket__elapsed rail-ticket__elapsed--ok">3:57</span>
+                    <span class="rail-badge rail-badge--label rail-badge--success">On time</span>
+                  </div>
+                  <ul class="rail-ticket__items">
+                    <li class="rail-list-row rail-ticket__item">
+                      <div class="rail-list-row__content">
+                        <span class="rail-list-row__primary rail-ticket__item-name"><span class="rail-ticket__qty">2&times;</span> Al Pastor Taco</span>
+                        <span class="rail-ticket__mods">
+                          <span class="rail-ticket__mod">Salsa verde</span>
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="rail-ticket__actions">
+                    <button class="rail-button rail-button--primary rail-ticket__action rail-ticket__action--bump">Bump</button>
+                    <button class="rail-button rail-ticket__action rail-ticket__action--recall">Recall</button>
+                    <div class="rail-ticket__danger">
+                      <button class="rail-button rail-ticket__action rail-ticket__action--void">Void</button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="rail-card rail-ticket rail-ticket--bumped" role="listitem">
+                  <div class="rail-ticket__header">
+                    <div class="rail-ticket__ids">
+                      <span class="rail-ticket__number">#2203</span>
+                      <span class="rail-ticket__source">Table 9</span>
+                    </div>
+                    <span class="rail-badge rail-badge--label">Bumped</span>
+                  </div>
+                  <div class="rail-ticket__timing">
+                    <span class="rail-ticket__elapsed">24:12</span>
+                  </div>
+                  <ul class="rail-ticket__items">
+                    <li class="rail-list-row rail-ticket__item">
+                      <div class="rail-list-row__content">
+                        <span class="rail-list-row__primary rail-ticket__item-name"><span class="rail-ticket__qty">3&times;</span> Al Pastor Taco</span>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="rail-ticket__actions">
+                    <button class="rail-button rail-ticket__action rail-ticket__action--recall">Recall</button>
+                    <div class="rail-ticket__danger">
+                      <button class="rail-button rail-ticket__action rail-ticket__action--void">Void</button>
+                    </div>
+                  </div>
+                </article>
+
+              </div>
             </div>
           </div>
 
