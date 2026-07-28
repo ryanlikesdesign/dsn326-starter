@@ -84,6 +84,11 @@ body {
   flex-shrink: 0;
 }
 
+.line-header .rail-button {
+  height: 44px;
+  min-height: 44px;
+}
+
 .line-header--handheld {
   position: sticky;
   top: 0;
@@ -351,10 +356,11 @@ body {
   padding: 0 var(--space-inset-sm);
 }
 
-/* One size for every action on the ticket. */
+/* One size for every action on the ticket.
+   44px is the WCAG 2.5.8 AA target and it fits more ticket on the rail. */
 .line-act {
-  height: var(--target-min);
-  min-height: var(--target-min);
+  height: 44px;
+  min-height: 44px;
   width: 100%;
 }
 
@@ -454,8 +460,8 @@ body {
 }
 
 .line-course .rail-button {
-  min-height: var(--target-min);
-  height: var(--target-min);
+  height: 44px;
+  min-height: 44px;
   min-width: 0;
 }
 
