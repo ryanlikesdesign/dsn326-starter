@@ -9,7 +9,7 @@ One system, two surfaces. You never build separate components for Guest and Line
 
 Rail is small on purpose. A system with forty components has an answer for everything, and you learn nothing from working inside it.
 
-**This file is generated from the code.** Every class name below appears in a file under `rail/components/`. Every token name below appears in `rail/tokens.css`. If you copy markup from here it will be styled.
+**This file is generated from the code.** Every class name below appears in a file under `rail/components/` and every token name below appears in `rail/tokens.css`, both checked mechanically. If you copy markup from here it will be styled. Where a class exists in Rail's markup but has no rule behind it, this file says so.
 
 ---
 
@@ -397,7 +397,7 @@ A trigger styled like an input, plus a dropdown panel.
 | `.rail-select__trigger` | The closed control. |
 | `.rail-select__value--placeholder` | Placeholder styling for the value span. |
 | `.rail-select__chevron` | Rotates when open. |
-| `.rail-select__dropdown` | The panel. Hidden until `--open`. |
+| `.rail-select__dropdown` | The panel. Hidden until `.rail-select--open` is on the wrapper. |
 | `.rail-select__option` | One row. |
 | `.rail-select__option--selected` | Current value. |
 | `.rail-select__option--disabled` | Not choosable. |
@@ -407,9 +407,9 @@ A trigger styled like an input, plus a dropdown panel.
 | `.rail-select--error` | Error border. |
 | `.rail-select--disabled` | Control off. |
 
-The dropdown does not open by itself. `--open` is a class you add.
+The dropdown does not open by itself. `.rail-select--open` is a class you add.
 
-> `.rail-select__value` is styled only through `--placeholder`. There is no `.rail-select--native`.
+> Rail styles the value span only through `.rail-select__value--placeholder`. The bare `rail-select__value` in the markup above is a hook with no rule behind it — it inherits from the trigger. There is no `.rail-select--native`.
 
 ---
 
@@ -487,7 +487,7 @@ Binary on/off, applied immediately. Use it for 86'ing an item — that has to be
 | `.rail-badge--error` | Intent. |
 | `.rail-badge--info` | Intent. |
 
-Intents apply to `--label`, `--removable` and `--status`. Badge is not interactive; the remove button inside `--removable` is.
+Intents apply to `.rail-badge--label`, `.rail-badge--removable` and `.rail-badge--status`. Badge is not interactive; the remove button inside `.rail-badge--removable` is.
 
 **A Badge is how you stop colour carrying meaning alone.** A status tint plus a Badge with the status written in it satisfies WCAG 1.4.1. A tint on its own does not.
 
@@ -555,7 +555,7 @@ Intents apply to `--label`, `--removable` and `--status`. Badge is not interacti
 
 Primary and secondary truncate to one line by design — that is right for a rail and wrong for a receipt. If your content must wrap, override `white-space` in your own layout CSS, not in `rail/`.
 
-> It is called List Row. There is no `.rail-list-item` and no `--two-line`.
+> It is called List Row. There is no `.rail-list-item` and no `.rail-list-row--two-line`.
 
 ---
 
@@ -592,7 +592,7 @@ Primary and secondary truncate to one line by design — that is right for a rai
 
 **Two things Rail does not do for you.** `.rail-dialog` sets `display: flex` unconditionally, so a closed `<dialog class="rail-dialog">` still renders — hide it yourself, or open it with `showModal()`. And Rail does not trap focus. `showModal()` gives you the trap and the Escape key for free; if you use the `open` attribute instead, you own both.
 
-> It is called Dialog. There is no `.rail-modal`, no `--sheet` and no `--fullscreen`.
+> It is called Dialog. There is no `.rail-modal`, no `.rail-dialog--sheet` and no `.rail-dialog--fullscreen`.
 
 ---
 
@@ -614,7 +614,7 @@ Primary and secondary truncate to one line by design — that is right for a rai
 |---|---|
 | `.rail-toast-region` | Live region. Top-right; top-centre under 480px. |
 | `.rail-toast` | One toast. |
-| `.rail-toast--success` `--error` `--info` `--warning` | Variants. Coloured left border plus a subtle background. |
+| `.rail-toast--success` · `.rail-toast--error` · `.rail-toast--info` · `.rail-toast--warning` | Variants. Coloured left border plus a subtle background. |
 | `.rail-toast__icon` | Icon slot. |
 | `.rail-toast__content` | Text column. |
 | `.rail-toast__message` | The message. |
@@ -678,7 +678,7 @@ Rules: every field has a visible `.rail-input__label`. Errors go in `.rail-input
 
 ### Confirm destructive
 
-An unrecoverable action opens a **Dialog** with `--confirmation`. The title names the object and the consequence. The confirming button uses `.rail-dialog__btn--destructive` and its label is the verb, not "OK".
+An unrecoverable action opens a **Dialog** with `.rail-dialog--confirmation`. The title names the object and the consequence. The confirming button uses `.rail-dialog__btn--destructive` and its label is the verb, not "OK".
 
 Rules: recoverable actions do not get a dialog — they get an undo. The destructive button is never the default focus. A destructive control never sits adjacent to, or looks like, a recoverable one.
 
@@ -698,14 +698,14 @@ Requires `density-service env-high-glare surface-line` on an ancestor. Ticket wi
 |---|---|
 | `.rail-ticket-rail` | The rail. Six across, horizontal scroll past that. |
 | `.rail-ticket` | The ticket. Add it to a `.rail-card`. |
-| `.rail-ticket--incoming` `--started` `--ready` `--bumped` `--recalled` | Status tint. **Always pair with a Badge carrying the word.** |
+| `.rail-ticket--incoming` · `.rail-ticket--started` · `.rail-ticket--ready` · `.rail-ticket--bumped` · `.rail-ticket--recalled` | Status tint. **Always pair with a Badge carrying the word.** |
 | `.rail-ticket__header` | Identifiers plus the status Badge. |
 | `.rail-ticket__ids` | Number and source column. |
 | `.rail-ticket__number` | Ticket number, mono. |
 | `.rail-ticket__source` | Table 12, Heard Guest, Bar 2. |
 | `.rail-ticket__timing` | Elapsed time plus its band Badge. |
 | `.rail-ticket__elapsed` | The number, heading size. |
-| `.rail-ticket__elapsed--ok` `--approaching` `--late` `--critical` | The service scale. |
+| `.rail-ticket__elapsed--ok` · `.rail-ticket__elapsed--approaching` · `.rail-ticket__elapsed--late` · `.rail-ticket__elapsed--critical` | The service scale. |
 | `.rail-ticket__items` | Scrolling item list. |
 | `.rail-ticket__item` | One item. Add it to a `.rail-list-row`. |
 | `.rail-ticket__item-name` | Item name. Wraps — overrides List Row's truncation. |
@@ -779,7 +779,7 @@ There is no issue tracker for this. Write the proposal — problem, why the exis
 
 If you genuinely need something Rail does not have, build it **in your own screens**, in your own CSS, with your own class prefix. Not in `rail/`.
 
-**`.rail-` is the system namespace.** Never add to it. `"I edited the system"` is a different conversation from `"I built it locally and here is the case for adding it"`, and only one of those goes well.
+**Every class beginning `rail-` belongs to the system.** Never add one. `"I edited the system"` is a different conversation from `"I built it locally and here is the case for adding it"`, and only one of those goes well.
 
 ---
 
