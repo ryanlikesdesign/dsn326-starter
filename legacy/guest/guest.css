@@ -515,6 +515,10 @@ body {
 }
 
 .legacy-confirm__number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-display-size);
+  line-height: var(--type-display-line);
+  font-weight: var(--type-display-weight);
   color: var(--text-primary);
   letter-spacing: 0.02em;
 }

@@ -367,8 +367,8 @@
     row('Total', money(total), 'legacy-totals__row--grand');
 
     if (!opts.full) {
-      const note = el('span', 'type-caption legacy-muted', 'Includes fees and tax.');
-      host.appendChild(note);
+      host.appendChild(el('span', 'type-caption legacy-muted',
+        opts.includeTip ? 'Includes fees, tax and tip.' : 'Includes fees and tax.'));
     }
   }
 
