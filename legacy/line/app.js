@@ -142,13 +142,8 @@
       '</div>';
     node.appendChild(head);
 
-    /* Meta: how many times this ticket has come back */
-    const meta = el('div', 'line-ticket__meta');
-    meta.innerHTML = ticket.recallCount > 0
-      ? '<span class="rail-badge rail-badge--label rail-badge--warning">Recalled &times;' +
-        ticket.recallCount + '</span>'
-      : '';
-    node.appendChild(meta);
+    /* Ticket state is current only. There is no history on a ticket. */
+    node.appendChild(el('div', 'line-ticket__meta'));
 
     /* Body: items and their modifiers */
     const body = el('div', 'line-ticket__body');
