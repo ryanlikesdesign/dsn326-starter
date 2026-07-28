@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heard — the current state</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../rail/tokens.css">
+  <link rel="stylesheet" href="../rail/utilities/reset.css">
+  <link rel="stylesheet" href="../rail/layouts/page.css">
+  <link rel="stylesheet" href="../rail/components/Card.css">
+  <link rel="stylesheet" href="../rail/components/Badge.css">
+  <link rel="stylesheet" href="../rail/components/ListRow.css">
+
+  <style>
+    body { background-color: var(--surface-subtle); }
+    .legacy-index { max-width: 720px; margin: 0 auto; padding: var(--space-inset-lg); }
+    .legacy-index h1 { color: var(--text-primary); }
+    .legacy-index p { color: var(--text-secondary); }
+    .legacy-index h2 { color: var(--text-primary); margin-top: var(--space-stack-lg); }
+    .legacy-index a { color: var(--text-primary); text-decoration: none; display: block; }
+    .legacy-index a:hover .rail-card { border-color: var(--border-strong); }
+    .legacy-index .rail-card { margin-bottom: var(--space-stack-sm); }
+    .legacy-index code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: var(--type-caption-size);
+      background-color: var(--surface-subtle);
+      padding: 1px 4px;
+      border-radius: var(--radius-sm);
+    }
+    .legacy-index .note {
+      padding: var(--space-inset-md);
+      background-color: var(--feedback-warning-subtle);
+      border-radius: var(--radius-sm);
+      margin-top: var(--space-stack-md);
+    }
+    .legacy-index .note p { color: var(--text-primary); }
+  </style>
+</head>
+<body>
+  <main class="legacy-index density-comfortable env-standard">
+
+    <h1 class="type-display">Heard — the current state</h1>
+    <p class="type-body">
+      Both flows as they ship today, before anyone touches them. This is what you
+      write your Week&nbsp;1 task script against, what you test in Week&nbsp;2, and what
+      everything in Week&nbsp;6 is measured against.
+    </p>
+
+    <div class="note">
+      <p class="type-body">
+        <strong>Don't fix these.</strong> They are the baseline. Changing them makes your
+        Week&nbsp;6 comparison meaningless.
+      </p>
+    </div>
+
+    <h2 class="type-heading">Heard Guest — checkout</h2>
+    <p class="type-caption">Phone width. <code>density-comfortable env-standard</code></p>
+
+    <a href="guest/">
+      <div class="rail-card"><div class="rail-card__body">
+        <h3 class="rail-card__title">Guest checkout</h3>
+        <p class="rail-card__description">menu → cart → time → tip → pay → confirmation</p>
+        <div class="rail-card__meta"><code>legacy/guest/</code></div>
+      </div></div>
+    </a>
+
+    <a href="guest/?demo=group">
+      <div class="rail-card"><div class="rail-card__body">
+        <h3 class="rail-card__title">Guest checkout — office order</h3>
+        <p class="rail-card__description">
+          Opens on a cart already holding 22 items, with people's names typed into the
+          special-instructions boxes. Use this one for a group-order task.
+        </p>
+        <div class="rail-card__meta"><code>legacy/guest/?demo=group</code></div>
+      </div></div>
+    </a>
+
+    <h2 class="type-heading">Heard Line — tickets</h2>
+    <p class="type-caption">
+      Pass display is best at 1366&times;768, landscape. Handheld is phone width.
+      <code>density-service env-high-glare surface-line</code>
+    </p>
+
+    <a href="line/">
+      <div class="rail-card"><div class="rail-card__body">
+        <h3 class="rail-card__title">Pass display</h3>
+        <p class="rail-card__description">The expo rail. Six tickets, oldest on the left.</p>
+        <div class="rail-card__meta"><code>legacy/line/</code></div>
+      </div></div>
+    </a>
+
+    <a href="line/?view=handheld">
+      <div class="rail-card"><div class="rail-card__body">
+        <h3 class="rail-card__title">Server handheld</h3>
+        <p class="rail-card__description">
+          Table status and the kitchen rail, in an apron pocket. The way to the terminal
+          starts here.
+        </p>
+        <div class="rail-card__meta"><code>legacy/line/?view=handheld</code></div>
+      </div></div>
+    </a>
+
+    <a href="line/?view=terminal">
+      <div class="rail-card"><div class="rail-card__body">
+        <h3 class="rail-card__title">Terminal</h3>
+        <p class="rail-card__description">
+          The fixed terminal at the server station. Where a course actually gets fired.
+          Normally you reach it by walking there from the handheld.
+        </p>
+        <div class="rail-card__meta"><code>legacy/line/?view=terminal</code></div>
+      </div></div>
+    </a>
+
+    <h2 class="type-heading">Moderating a session</h2>
+    <p class="type-body">
+      Nothing is stored between page loads. Reload the page — or tap
+      <strong>Start a new order</strong> on the Guest confirmation screen — and the flow
+      returns to exactly the state the URL describes. That is how you give the second
+      participant the same starting point as the first.
+    </p>
+    <p class="type-body">
+      Guest also takes <code>?screen=cart</code> — and <code>menu</code>,
+      <code>time</code>, <code>tip</code>, <code>pay</code>, <code>confirm</code> — to open
+      on one screen with a small cart already in it.
+    </p>
+
+  </main>
+</body>
+</html>

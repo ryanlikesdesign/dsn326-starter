@@ -95,7 +95,7 @@ Every component file has HTML examples in a comment at the top. Open the file, c
 <div class="rail-input">
   <label class="rail-input__label" for="phone">Phone number</label>
   <input class="rail-input__field" id="phone" type="tel" inputmode="tel">
-  <span class="rail-input__helper">We text your order confirmation</span>
+  <span class="rail-input__helper">Give this number at the window</span>
 </div>
 
 <!-- Card -->

@@ -52,7 +52,10 @@
 
   /* --- Money --------------------------------------------------- */
 
-  const money = (n) => '$' + (Math.round(n * 100) / 100).toFixed(2);
+  /* Money is rounded to cents at every step, not just when printed, so
+     the rows a guest can read always add up to the total under them. */
+  const cents = (n) => Math.round(n * 100) / 100;
+  const money = (n) => '$' + cents(n).toFixed(2);
 
   function lineUnitPrice(line) {
     const item = findItem(line.itemId);
@@ -67,16 +70,18 @@
     return price;
   }
 
-  const lineTotal = (line) => lineUnitPrice(line) * line.qty;
+  const lineTotal = (line) => cents(lineUnitPrice(line) * line.qty);
   const itemCount = () => state.lines.reduce((n, line) => n + line.qty, 0);
-  const subtotal = () => state.lines.reduce((sum, line) => sum + lineTotal(line), 0);
-  const discount = () => (state.promoApplied ? Math.min(state.promoApplied.amount, subtotal()) : 0);
-  const serviceFee = () => (subtotal() - discount()) * RESTAURANT.serviceFeeRate;
-  const tax = () => (subtotal() - discount() + serviceFee()) * RESTAURANT.taxRate;
+  const subtotal = () => cents(state.lines.reduce((sum, line) => sum + lineTotal(line), 0));
+  const discount = () => (state.promoApplied ? cents(Math.min(state.promoApplied.amount, subtotal())) : 0);
+  const netSubtotal = () => cents(subtotal() - discount());
+  const serviceFee = () => cents(netSubtotal() * RESTAURANT.serviceFeeRate);
+  const tax = () => cents((netSubtotal() + serviceFee()) * RESTAURANT.taxRate);
 
   /* Everything the guest must pay before a tip is chosen. Legal requires
-     this number on the first price screen. */
-  const preTipTotal = () => subtotal() - discount() + serviceFee() + tax();
+     this number on the first price screen. It is the sum of the rounded
+     parts, so the breakdown on the pay screen adds up to it exactly. */
+  const preTipTotal = () => cents(netSubtotal() + serviceFee() + tax());
 
   /* The base the tip percentage is applied to. */
   function tipBase() {
@@ -84,12 +89,12 @@
   }
 
   function tipAmount() {
-    if (state.tipCustom !== null) return state.tipCustom;
+    if (state.tipCustom !== null) return cents(state.tipCustom);
     if (state.tipPercent === null) return 0;
-    return tipBase() * (state.tipPercent / 100);
+    return cents(tipBase() * (state.tipPercent / 100));
   }
 
-  const grandTotal = () => preTipTotal() + tipAmount();
+  const grandTotal = () => cents(preTipTotal() + tipAmount());
 
 
   /* --- Quoted pickup time --------------------------------------- */
@@ -262,7 +267,13 @@
 
     $('menu-quote-badge').textContent = 'Ready in about ' + quotedMinutes() + ' min';
     $('menu-quote-detail').textContent = 'Estimated pickup ' + quotedClockTime();
-    $('reorder-summary').textContent = 'Your ' + PREVIOUS_ORDER.placedOn + ' order';
+    $('reorder-summary').textContent = PREVIOUS_ORDER.lines
+      .map((line) => {
+        const item = findItem(line.itemId);
+        return item ? (line.qty > 1 ? line.qty + '× ' : '') + item.name : '';
+      })
+      .filter(Boolean)
+      .join(' · ');
   }
 
 
@@ -953,14 +964,12 @@
     });
     $('pay-utensils').addEventListener('change', (event) => { state.utensils = event.target.checked; });
 
+    /* Reload rather than reset field by field. It restores every default
+       including the pre-selected tip, clears the phone number and the
+       payment method, and keeps ?demo=group so a moderator running two
+       participants back to back gets the same starting state twice. */
     $('start-over').addEventListener('click', () => {
-      state.lines = [];
-      state.promoApplied = null;
-      state.tipPercent = null;
-      state.tipCustom = null;
-      state.paymentMethod = null;
-      state.orderNumber = null;
-      go('menu');
+      window.location.reload();
     });
 
     go(state.screen);

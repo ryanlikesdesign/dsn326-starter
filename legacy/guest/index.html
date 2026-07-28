@@ -41,8 +41,21 @@
 
     Flow: menu → cart → time → tip → pay → confirmation
 
-    ?demo=group loads a 22-item office order with names typed into the
-    special-instructions boxes. That is how a group order actually arrives.
+    URL parameters, for moderating a session:
+
+      ?demo=group    loads a 22-item office order with names typed into
+                     the special-instructions boxes. That is how a group
+                     order actually arrives.
+
+      ?screen=cart   opens straight onto a named screen with a small
+                     cart already in it. Also: menu, time, tip, pay,
+                     confirm. Use it to restore a session after a
+                     reload, or to reach one screen for a screenshot.
+
+    Nothing is stored between page loads. Reloading, or tapping "Start a
+    new order" on the confirmation screen, returns the flow to exactly
+    the state the URL describes — which is how you give participant two
+    the same starting point as participant one.
   -->
 
   <a class="legacy-skip" href="#legacy-main">Skip to content</a>
@@ -85,7 +98,7 @@
         <!-- Order again -->
         <div class="legacy-reorder" id="reorder-block">
           <div class="legacy-reorder__text">
-            <span class="type-label">Order again</span>
+            <span class="type-label">Order again &middot; Thursday</span>
             <span class="type-caption legacy-muted" id="reorder-summary">Your Thursday order</span>
           </div>
           <button class="rail-button rail-button--secondary" id="order-again">Order again</button>
@@ -151,7 +164,7 @@
           <label class="rail-input__label" for="pickup-phone">Phone number</label>
           <input class="rail-input__field" id="pickup-phone" type="tel" inputmode="tel"
                  autocomplete="tel" placeholder="(408) 555-0148" aria-describedby="phone-helper">
-          <span class="rail-input__helper" id="phone-helper">We text you when it is ready. No account needed.</span>
+          <span class="rail-input__helper" id="phone-helper">Give this number at the window. No account needed.</span>
         </div>
       </section>
 
