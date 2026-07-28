@@ -849,20 +849,11 @@
 
     const at = state.lines.findIndex((line) => line.lineId === lineId);
     if (at === -1) return;
-    const removed = state.lines[at];
     state.lines.splice(at, 1);
 
-    /* Take the row out where it stands. The rest of the list does not move. */
-    const node = document.querySelector('.legacy-line[data-line-id="' + lineId + '"]');
-    if (node) node.remove();
-
-    const count = itemCount();
-    $('cart-count').textContent = count === 1 ? '1 item' : count + ' items';
-    $('cart-empty').hidden = state.lines.length > 0;
-    renderTotals($('cart-totals'), { full: true, includeTip: false });
-    renderActionBar();
-
-    toast('Removed ' + findItem(removed.itemId).name + '.', 'info');
+    /* Rebuild the cart from state and go back to the top of it. */
+    renderCart();
+    window.scrollTo(0, 0);
   }
 
 
