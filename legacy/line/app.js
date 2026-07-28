@@ -178,7 +178,9 @@
     bump.addEventListener('click', () => bumpTicket(ticket.id));
     actions.appendChild(bump);
 
-    const recall = el('button', 'rail-button rail-button--primary line-act', 'Recall');
+    const armed = state.armedRecall === ticket.id;
+    const recall = el('button', 'rail-button rail-button--primary line-act',
+      armed ? 'Recall?' : 'Recall');
     recall.type = 'button';
     recall.addEventListener('click', () => recallTicket(ticket.id));
     actions.appendChild(recall);
@@ -231,32 +233,37 @@
     toast('Ticket #' + ticket.number + ' bumped. Recall is on the ticket.', 'success');
   }
 
-  /* Recall pulls a ticket back onto the rail, whether it was bumped or
-     is still working. */
+  /* Recall arms on the first tap, opens a confirm on the second. */
   function recallTicket(id) {
     const ticket = findTicket(id);
     if (!ticket) return;
-    ticket.status = 'recalled';
-    ticket.recallCount += 1;
+
+    if (state.armedRecall !== id) {
+      state.armedRecall = id;
+      renderAll();
+      return;
+    }
+
+    state.armedRecall = null;
     renderAll();
-    toast('Ticket #' + ticket.number + ' is back on the rail.', 'info');
+    confirmAction(
+      'Recall ticket #' + ticket.number + '?',
+      ticket.source + ' · ' + ticket.items.length + ' items. This puts it back on the rail.',
+      'Recall the ticket',
+      () => {
+        ticket.status = 'recalled';
+        ticket.recallCount += 1;
+        renderAll();
+      }
+    );
   }
 
-  /* Void cannot be undone, so it costs a confirm. */
+  /* Void goes through on the tap. */
   function voidTicket(id) {
     const ticket = findTicket(id);
     if (!ticket) return;
-    confirmAction(
-      'Void ticket #' + ticket.number + '?',
-      ticket.source + ' · ' + ticket.items.length +
-        ' items. Voiding cancels the order outright and cannot be undone.',
-      'Void the ticket',
-      () => {
-        state.tickets = state.tickets.filter((t) => t.id !== id);
-        renderAll();
-        toast('Ticket #' + ticket.number + ' voided.', 'error');
-      }
-    );
+    state.tickets = state.tickets.filter((t) => t.id !== id);
+    renderAll();
   }
 
   function clearAll() {
