@@ -314,7 +314,7 @@ const PREVIOUS_ORDER = {
 const GROUP_DEMO_LINES = [
   { itemId: 'taco-pastor',      qty: 2, mods: { tortilla: ['corn'],  salsa: ['verde'],    tacoExtras: [] },                instructions: 'for Priya' },
   { itemId: 'taco-asada',       qty: 1, mods: { tortilla: ['corn'],  salsa: ['roja'],     tacoExtras: ['noonion'] },       instructions: 'Marcus - no onion' },
-  { itemId: 'taco-carnitas',    qty: 2, mods: { tortilla: ['flour'], salsa: ['verde'],    tacoExtras: [] },                instructions: 'Jordan - no cilantro, extra lime, and pl' },
+  { itemId: 'taco-carnitas',    qty: 2, mods: { tortilla: ['flour'], salsa: ['verde'],    tacoExtras: [] },                instructions: 'Jordan - no cilantro, extra lime, and please put the salsa on the side' },
   { itemId: 'burrito-tinga',    qty: 1, mods: { rice: ['mexican'],   beans: ['black'],    burritoExtras: [] },             instructions: 'for Sam (front desk)' },
   { itemId: 'burrito-barbacoa', qty: 1, mods: { rice: ['mexican'],   beans: ['nobeans'],  burritoExtras: ['guac'] },       instructions: 'Ali - no beans' },
   { itemId: 'bowl-camote',      qty: 1, mods: { rice: ['cilantro'],  beans: ['black'],    burritoExtras: [] },             instructions: 'Wen - vegetarian' },
@@ -329,7 +329,7 @@ const GROUP_DEMO_LINES = [
   { itemId: 'drink-topo',       qty: 1, mods: {},                                                                          instructions: 'Wen' },
   { itemId: 'taco-pastor',      qty: 1, mods: { tortilla: ['corn'],  salsa: ['none'],     tacoExtras: [] },                instructions: 'Theo - no pineapple if possible' },
   { itemId: 'taco-asada',       qty: 1, mods: { tortilla: ['flour'], salsa: ['habanero'], tacoExtras: ['guac'] },          instructions: 'Jordan' },
-  { itemId: 'burrito-tinga',    qty: 1, mods: { rice: ['norice'],    beans: ['black'],    burritoExtras: [] },             instructions: 'Nia - no crema, she is dairy free' },
+  { itemId: 'burrito-tinga',    qty: 1, mods: { rice: ['norice'],    beans: ['black'],    burritoExtras: [] },             instructions: 'Nia - dairy allergy, no crema and no cheese, this one is important' },
   { itemId: 'side-guac',        qty: 1, mods: {},                                                                          instructions: 'Nia' },
   { itemId: 'drink-horchata',   qty: 1, mods: { drinkSize: ['large'] },                                                    instructions: 'Nia' },
   { itemId: 'taco-carnitas',    qty: 1, mods: { tortilla: ['corn'],  salsa: ['roja'],     tacoExtras: ['queso'] },         instructions: 'Ravi' },
