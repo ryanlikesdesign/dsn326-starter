@@ -144,9 +144,9 @@ body {
 /* --- All day -------------------------------------------------------- */
 
 .line-allday {
-  padding: var(--space-inset-sm) var(--space-inset-md);
+  padding: var(--space-inset-md);
   background-color: var(--surface-subtle);
-  border-bottom: 1px solid var(--border-strong);
+  border-top: 1px solid var(--border-strong);
 }
 
 .line-allday__heading {
@@ -159,12 +159,7 @@ body {
   display: flex;
   align-items: center;
   gap: var(--space-gap-sm);
-  flex-wrap: nowrap;
-  overflow-x: auto;
-}
-
-.line-allday__cell {
-  flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .line-allday__cell {
