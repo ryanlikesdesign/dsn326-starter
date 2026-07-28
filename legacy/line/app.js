@@ -286,14 +286,7 @@
       const node = el('div', 'line-eightysix__item');
       node.innerHTML =
         '<span class="rail-badge rail-badge--label rail-badge--error">86</span>' +
-        '<span class="line-eightysix__name">' + escapeHtml(item.name) + '</span>' +
-        /* Where the 86 has actually landed. */
-        '<span class="line-eightysix__reach">' +
-          '<span>Handheld &check; ' + item.markedMinutesAgo + ' min ago</span>' +
-          '<span>Guest menu ' +
-            (item.markedMinutesAgo >= 4 ? '&check; synced' : 'syncing, up to 4 min') +
-          '</span>' +
-        '</span>';
+        '<span class="line-eightysix__name">' + escapeHtml(item.name) + '</span>';
       host.appendChild(node);
     });
   }
