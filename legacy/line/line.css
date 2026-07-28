@@ -221,8 +221,7 @@ body {
   box-shadow: var(--elevation-low);
 }
 
-/* Status is a background tint. Every state also carries a badge with
-   words in it — see .line-ticket__status. */
+/* Status is the background tint. */
 .line-ticket--incoming  { background-color: var(--surface-raised); }
 .line-ticket--started   { background-color: var(--feedback-info-subtle); }
 .line-ticket--ready     { background-color: var(--feedback-success-subtle); }

@@ -137,8 +137,6 @@
         '<span class="line-ticket__source">' + escapeHtml(ticket.source) + '</span>' +
       '</div>' +
       '<div class="line-ticket__headright">' +
-        '<span class="rail-badge rail-badge--label' + STATUS_INTENT[ticket.status] + '">' +
-          escapeHtml(STATUS_LABEL[ticket.status]) + '</span>' +
         '<span class="line-elapsed" data-elapsed="' + ticket.id + '">' +
           clockString(minutes) + '</span>' +
       '</div>';
