@@ -10,23 +10,6 @@
 
   const VIEWS = ['pass', 'handheld', 'walk', 'terminal'];
 
-  const STATUS_LABEL = {
-    incoming: 'Incoming',
-    started: 'Started',
-    ready: 'Ready',
-    bumped: 'Bumped',
-    recalled: 'Recalled',
-  };
-
-  /* Which Rail badge intent each status borrows. */
-  const STATUS_INTENT = {
-    incoming: '',
-    started: ' rail-badge--info',
-    ready: ' rail-badge--success',
-    bumped: '',
-    recalled: ' rail-badge--warning',
-  };
-
   const ADVANCE = { incoming: 'started', started: 'ready' };
 
 
@@ -284,7 +267,7 @@
     state.eightySix.filter((item) => item.off).forEach((item) => {
       const node = el('div', 'line-eightysix__item');
       node.innerHTML =
-        '<span class="rail-badge rail-badge--label rail-badge--error">86</span>' +
+        '<span class="rail-badge rail-badge--label rail-badge--warning">86</span>' +
         '<span class="line-eightysix__name">' + escapeHtml(item.name) + '</span>';
       host.appendChild(node);
     });
@@ -319,7 +302,9 @@
 
   /* --- Tables ---------------------------------------------------------------------- */
 
-  const COURSE_INTENT = { fired: ' rail-badge--success', held: '' };
+  /* --success and --error are unreadable on Line — see FLAWS.md. --info and
+     the default label are the two intents surface-line re-themes correctly. */
+  const COURSE_INTENT = { fired: ' rail-badge--info', held: '' };
 
   function tableNode(table, canFire) {
     const node = el('div', 'line-table');
