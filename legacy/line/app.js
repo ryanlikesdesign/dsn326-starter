@@ -172,17 +172,16 @@
     /* Actions */
     const actions = el('div', 'line-ticket__actions');
 
-    if (ticket.status === 'bumped') {
-      const recall = el('button', 'rail-button rail-button--primary line-act', 'Recall');
-      recall.type = 'button';
-      recall.addEventListener('click', () => recallTicket(ticket.id));
-      actions.appendChild(recall);
-    } else {
-      const bump = el('button', 'rail-button rail-button--primary line-act', 'Bump');
-      bump.type = 'button';
-      bump.addEventListener('click', () => bumpTicket(ticket.id));
-      actions.appendChild(bump);
-    }
+    /* Bump, recall and void, in that order, on every ticket. */
+    const bump = el('button', 'rail-button rail-button--primary line-act', 'Bump');
+    bump.type = 'button';
+    bump.addEventListener('click', () => bumpTicket(ticket.id));
+    actions.appendChild(bump);
+
+    const recall = el('button', 'rail-button rail-button--primary line-act', 'Recall');
+    recall.type = 'button';
+    recall.addEventListener('click', () => recallTicket(ticket.id));
+    actions.appendChild(recall);
 
     const voidBtn = el('button', 'rail-button rail-button--primary line-act', 'Void');
     voidBtn.type = 'button';
@@ -232,7 +231,8 @@
     toast('Ticket #' + ticket.number + ' bumped. Recall is on the ticket.', 'success');
   }
 
-  /* Recall is recoverable, so it costs one tap. */
+  /* Recall pulls a ticket back onto the rail, whether it was bumped or
+     is still working. */
   function recallTicket(id) {
     const ticket = findTicket(id);
     if (!ticket) return;
