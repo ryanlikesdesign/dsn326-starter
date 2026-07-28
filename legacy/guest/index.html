@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heard Guest — Taquería La Brasa</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Rail tokens and components -->
+  <link rel="stylesheet" href="../../rail/tokens.css">
+  <link rel="stylesheet" href="../../rail/utilities/reset.css">
+  <link rel="stylesheet" href="../../rail/layouts/page.css">
+  <link rel="stylesheet" href="../../rail/components/Button.css">
+  <link rel="stylesheet" href="../../rail/components/Input.css">
+  <link rel="stylesheet" href="../../rail/components/Stepper.css">
+  <link rel="stylesheet" href="../../rail/components/Select.css">
+  <link rel="stylesheet" href="../../rail/components/Checkbox.css">
+  <link rel="stylesheet" href="../../rail/components/Switch.css">
+  <link rel="stylesheet" href="../../rail/components/Badge.css">
+  <link rel="stylesheet" href="../../rail/components/Card.css">
+  <link rel="stylesheet" href="../../rail/components/ListRow.css">
+  <link rel="stylesheet" href="../../rail/components/Dialog.css">
+  <link rel="stylesheet" href="../../rail/components/Toast.css">
+  <link rel="stylesheet" href="../../rail/components/Tabs.css">
+
+  <!-- Flow-local layout only. No new .rail- classes. -->
+  <link rel="stylesheet" href="guest.css">
+</head>
+<body>
+
+  <!--
+    Heard Guest — checkout, as it ships today.
+
+    Surface:      Guest phone
+    Density:      comfortable
+    Environment:  standard
+
+    Flow: menu → cart → time → tip → pay → confirmation
+
+    ?demo=group loads a 22-item office order with names typed into the
+    special-instructions boxes. That is how a group order actually arrives.
+  -->
+
+  <a class="legacy-skip" href="#legacy-main">Skip to content</a>
+
+  <div id="app" class="legacy-app density-comfortable env-standard">
+
+    <!-- ---------------------------------------------------------------
+         Top bar — shared across screens
+         --------------------------------------------------------------- -->
+    <header class="legacy-topbar">
+      <button class="rail-button rail-button--tertiary legacy-topbar__back" id="nav-back" hidden>
+        <span class="rail-button__icon" aria-hidden="true">&#8592;</span>
+        Back
+      </button>
+      <div class="legacy-topbar__titles">
+        <span class="type-label legacy-topbar__eyebrow" id="topbar-eyebrow">Pickup</span>
+        <span class="type-heading legacy-topbar__title" id="topbar-title">Taquería La Brasa</span>
+      </div>
+      <span class="rail-badge rail-badge--label" id="topbar-step">1 of 5</span>
+    </header>
+
+    <main class="legacy-main" id="legacy-main">
+
+      <!-- =============================================================
+           1 · MENU
+           ============================================================= -->
+      <section class="legacy-screen" id="screen-menu" aria-labelledby="menu-heading">
+        <h1 class="type-display legacy-screen__heading" id="menu-heading" tabindex="-1">Menu</h1>
+
+        <p class="type-body legacy-lede">
+          1841 Alum Rock Ave &middot; Pickup only
+        </p>
+
+        <!-- Quoted pickup time -->
+        <div class="legacy-quote" id="menu-quote">
+          <span class="rail-badge rail-badge--label rail-badge--info" id="menu-quote-badge">Ready in about 20 min</span>
+          <span class="type-caption legacy-muted" id="menu-quote-detail">Estimated pickup 12:41 PM</span>
+        </div>
+
+        <!-- Order again -->
+        <div class="legacy-reorder" id="reorder-block">
+          <div class="legacy-reorder__text">
+            <span class="type-label">Order again</span>
+            <span class="type-caption legacy-muted" id="reorder-summary">Your Thursday order</span>
+          </div>
+          <button class="rail-button rail-button--secondary" id="order-again">Order again</button>
+        </div>
+
+        <div class="rail-tabs rail-tabs--underline legacy-menu__tabs" role="tablist" aria-label="Menu sections" id="menu-tabs"></div>
+
+        <div id="menu-sections"></div>
+      </section>
+
+      <!-- =============================================================
+           2 · CART
+           ============================================================= -->
+      <section class="legacy-screen" id="screen-cart" aria-labelledby="cart-heading" hidden>
+        <h1 class="type-display legacy-screen__heading" id="cart-heading" tabindex="-1">Your order</h1>
+
+        <p class="type-body legacy-lede" id="cart-count">0 items</p>
+
+        <div class="legacy-cart" id="cart-lines"></div>
+
+        <p class="type-body legacy-empty" id="cart-empty" hidden>
+          Nothing in your order yet.
+        </p>
+
+        <!-- Promo code -->
+        <div class="legacy-promo" id="promo-block">
+          <div class="rail-input legacy-promo__input">
+            <label class="rail-input__label" for="promo-code">Promo code</label>
+            <input class="rail-input__field" id="promo-code" type="text" autocomplete="off"
+                   placeholder="Enter a code" aria-describedby="promo-helper">
+            <span class="rail-input__helper" id="promo-helper">Discounts apply to your order total.</span>
+          </div>
+          <button class="rail-button rail-button--secondary" id="promo-apply">Apply</button>
+        </div>
+
+        <!-- Order cost -->
+        <div class="legacy-totals" id="cart-totals"></div>
+      </section>
+
+      <!-- =============================================================
+           3 · PICKUP TIME
+           ============================================================= -->
+      <section class="legacy-screen" id="screen-time" aria-labelledby="time-heading" hidden>
+        <h1 class="type-display legacy-screen__heading" id="time-heading" tabindex="-1">Pickup time</h1>
+
+        <div class="legacy-quote legacy-quote--block" id="time-quote">
+          <span class="rail-badge rail-badge--label rail-badge--info" id="time-quote-badge">Ready in about 20 min</span>
+          <span class="type-caption legacy-muted" id="time-quote-detail">Based on this restaurant's usual prep time</span>
+        </div>
+
+        <div class="rail-select legacy-field" id="time-select-wrap">
+          <label class="rail-select__label" for="time-select">When do you want it?</label>
+          <button class="rail-select__trigger" id="time-select" aria-haspopup="listbox" aria-expanded="false"
+                  aria-describedby="time-helper">
+            <span class="rail-select__value" id="time-select-value">As soon as possible</span>
+            <span class="rail-select__chevron" aria-hidden="true">&#9662;</span>
+          </button>
+          <ul class="rail-select__dropdown" role="listbox" aria-labelledby="time-select" id="time-options"></ul>
+          <span class="rail-select__helper" id="time-helper">Pick up inside or at the window on Alum Rock.</span>
+        </div>
+
+        <div class="rail-input legacy-field">
+          <label class="rail-input__label" for="pickup-phone">Phone number</label>
+          <input class="rail-input__field" id="pickup-phone" type="tel" inputmode="tel"
+                 autocomplete="tel" placeholder="(408) 555-0148" aria-describedby="phone-helper">
+          <span class="rail-input__helper" id="phone-helper">We text you when it is ready. No account needed.</span>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           4 · TIP
+           ============================================================= -->
+      <section class="legacy-screen" id="screen-tip" aria-labelledby="tip-heading" hidden>
+        <h1 class="type-display legacy-screen__heading" id="tip-heading" tabindex="-1">Add a tip</h1>
+
+        <p class="type-body legacy-lede">
+          100% of your tip goes to the crew at Taquería La Brasa.
+        </p>
+
+        <fieldset class="legacy-tip" id="tip-options">
+          <legend class="type-label legacy-tip__legend">Tip amount</legend>
+          <div class="legacy-tip__grid" id="tip-grid" role="radiogroup" aria-label="Tip amount"></div>
+        </fieldset>
+
+        <div class="rail-input legacy-field" id="tip-custom-wrap" hidden>
+          <label class="rail-input__label" for="tip-custom">Custom tip</label>
+          <input class="rail-input__field" id="tip-custom" type="text" inputmode="decimal" placeholder="0.00">
+          <span class="rail-input__helper">Enter a dollar amount.</span>
+        </div>
+
+        <div class="legacy-totals" id="tip-totals"></div>
+      </section>
+
+      <!-- =============================================================
+           5 · PAY
+           ============================================================= -->
+      <section class="legacy-screen" id="screen-pay" aria-labelledby="pay-heading" hidden>
+        <h1 class="type-display legacy-screen__heading" id="pay-heading" tabindex="-1">Payment</h1>
+
+        <fieldset class="legacy-pay" id="pay-methods">
+          <legend class="type-label legacy-tip__legend">Pay with</legend>
+          <div class="legacy-pay__list" id="pay-list" role="radiogroup" aria-label="Payment method"></div>
+        </fieldset>
+
+        <!-- Itemised breakdown. Legal requires this before the charge. -->
+        <div class="legacy-totals legacy-totals--full" id="pay-totals"></div>
+
+        <label class="rail-checkbox legacy-field" id="pay-utensils-wrap">
+          <input class="rail-checkbox__input" type="checkbox" id="pay-utensils">
+          <span class="rail-checkbox__box" aria-hidden="true"></span>
+          <span class="rail-checkbox__label">Include napkins and utensils</span>
+        </label>
+      </section>
+
+      <!-- =============================================================
+           6 · CONFIRMATION
+           ============================================================= -->
+      <section class="legacy-screen legacy-screen--confirm" id="screen-confirm" aria-labelledby="confirm-heading" hidden>
+        <h1 class="type-display legacy-screen__heading" id="confirm-heading" tabindex="-1">Order placed</h1>
+
+        <div class="legacy-confirm" id="confirm-block">
+          <span class="type-label legacy-muted">Order number</span>
+          <span class="type-display legacy-confirm__number type-mono" id="confirm-number">&mdash;</span>
+        </div>
+
+        <div class="legacy-confirm__detail" id="confirm-detail"></div>
+
+        <button class="rail-button rail-button--secondary rail-button--full-width" id="start-over">
+          Start a new order
+        </button>
+      </section>
+
+    </main>
+
+    <!-- ---------------------------------------------------------------
+         Sticky action bar
+         --------------------------------------------------------------- -->
+    <div class="legacy-actionbar" id="actionbar">
+      <div class="legacy-actionbar__summary" id="actionbar-summary"></div>
+      <button class="rail-button rail-button--primary rail-button--full-width" id="primary-action">
+        Continue
+      </button>
+    </div>
+
+  </div>
+
+  <!-- -----------------------------------------------------------------
+       Item detail sheet — the only place an item can be configured
+       ----------------------------------------------------------------- -->
+  <div class="rail-dialog-backdrop" id="sheet-backdrop" hidden></div>
+  <dialog class="rail-dialog legacy-sheet" id="item-sheet" role="dialog" aria-labelledby="sheet-title" aria-modal="true">
+    <div class="rail-dialog__header">
+      <h2 class="rail-dialog__title" id="sheet-title">Item</h2>
+      <button class="rail-dialog__close" id="sheet-close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="rail-dialog__body" id="sheet-body"></div>
+    <div class="rail-dialog__footer">
+      <button class="rail-dialog__btn rail-dialog__btn--secondary" id="sheet-cancel">Cancel</button>
+      <button class="rail-dialog__btn rail-dialog__btn--primary" id="sheet-add">Add to order</button>
+    </div>
+  </dialog>
+
+  <!-- Confirm dialog — removing an item -->
+  <div class="rail-dialog-backdrop" id="confirm-backdrop" hidden></div>
+  <dialog class="rail-dialog rail-dialog--confirmation" id="confirm-dialog" role="dialog"
+          aria-labelledby="confirm-dialog-title" aria-modal="true">
+    <div class="rail-dialog__body">
+      <h2 class="rail-dialog__title" id="confirm-dialog-title">Remove this item?</h2>
+      <p id="confirm-dialog-body">It will come out of your order.</p>
+    </div>
+    <div class="rail-dialog__footer">
+      <button class="rail-dialog__btn rail-dialog__btn--secondary" id="confirm-cancel">Cancel</button>
+      <button class="rail-dialog__btn rail-dialog__btn--destructive" id="confirm-ok">Remove</button>
+    </div>
+  </dialog>
+
+  <!-- Toasts -->
+  <div class="rail-toast-region" role="status" aria-live="polite" aria-label="Notifications" id="toast-region"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
