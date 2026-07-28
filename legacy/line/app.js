@@ -129,28 +129,27 @@
     node.setAttribute('role', 'listitem');
     node.dataset.ticketId = ticket.id;
 
-    /* Head: number, source, status badge */
+    /* Head: number, source, status badge, elapsed time */
     const head = el('div', 'line-ticket__head');
     head.innerHTML =
       '<div class="line-ticket__ids">' +
         '<span class="line-ticket__number">#' + escapeHtml(ticket.number) + '</span>' +
         '<span class="line-ticket__source">' + escapeHtml(ticket.source) + '</span>' +
       '</div>' +
-      '<span class="rail-badge rail-badge--label' + STATUS_INTENT[ticket.status] + '">' +
-        escapeHtml(STATUS_LABEL[ticket.status]) + '</span>';
+      '<div class="line-ticket__headright">' +
+        '<span class="rail-badge rail-badge--label' + STATUS_INTENT[ticket.status] + '">' +
+          escapeHtml(STATUS_LABEL[ticket.status]) + '</span>' +
+        '<span class="line-elapsed" data-elapsed="' + ticket.id + '">' +
+          clockString(minutes) + '</span>' +
+      '</div>';
     node.appendChild(head);
 
-    /* Meta: elapsed chip, and how many times this ticket has come back */
+    /* Meta: how many times this ticket has come back */
     const meta = el('div', 'line-ticket__meta');
-    meta.innerHTML =
-      '<span class="line-elapsed line-elapsed--' + tier + '" data-elapsed="' + ticket.id + '">' +
-        '<span class="line-elapsed__value">' + clockString(minutes) + '</span>' +
-        '<span class="line-elapsed__band">' + tier + '</span>' +
-      '</span>' +
-      (ticket.recallCount > 0
-        ? '<span class="rail-badge rail-badge--label rail-badge--warning">Recalled &times;' +
-          ticket.recallCount + '</span>'
-        : '');
+    meta.innerHTML = ticket.recallCount > 0
+      ? '<span class="rail-badge rail-badge--label rail-badge--warning">Recalled &times;' +
+        ticket.recallCount + '</span>'
+      : '';
     node.appendChild(meta);
 
     /* Body: items and their modifiers */
@@ -395,13 +394,8 @@
 
     state.tickets.forEach((ticket) => {
       const minutes = elapsedMinutes(ticket);
-      const tier = band(minutes);
-      document.querySelectorAll('[data-elapsed="' + ticket.id + '"]').forEach((chip) => {
-        chip.className = 'line-elapsed line-elapsed--' + tier;
-        const value = chip.querySelector('.line-elapsed__value');
-        const label = chip.querySelector('.line-elapsed__band');
-        if (value) value.textContent = clockString(minutes);
-        if (label) label.textContent = tier;
+      document.querySelectorAll('[data-elapsed="' + ticket.id + '"]').forEach((node) => {
+        node.textContent = clockString(minutes);
       });
     });
   }

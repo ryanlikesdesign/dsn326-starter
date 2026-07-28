@@ -259,6 +259,14 @@ body {
   color: var(--text-secondary);
 }
 
+.line-ticket__headright {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-gap-sm);
+  flex-shrink: 0;
+}
+
 .line-ticket__meta {
   display: flex;
   align-items: center;
@@ -267,41 +275,18 @@ body {
   padding: var(--space-inset-sm) var(--space-inset-sm) 0;
 }
 
-/* Elapsed time: a chip, so the band is carried by position and a word
-   as well as by colour. */
+.line-ticket__meta:empty {
+  display: none;
+}
+
+/* Elapsed time. Sits in the corner of the ticket head. */
 .line-elapsed {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 2px var(--space-inset-sm);
-  background-color: var(--surface-subtle);
-  border-radius: var(--radius-sm);
-}
-
-.line-elapsed__value {
   font-family: 'JetBrains Mono', monospace;
-  font-size: var(--type-mono-size);
-  line-height: var(--type-mono-line);
-  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-primary);
+  white-space: nowrap;
 }
-
-.line-elapsed__band {
-  font-family: 'Inter', sans-serif;
-  font-size: var(--type-caption-size);
-  line-height: var(--type-caption-line);
-  font-weight: var(--type-label-weight);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.line-elapsed--ok          .line-elapsed__value,
-.line-elapsed--ok          .line-elapsed__band { color: var(--service-ok); }
-.line-elapsed--approaching .line-elapsed__value,
-.line-elapsed--approaching .line-elapsed__band { color: var(--service-approaching); }
-.line-elapsed--late        .line-elapsed__value,
-.line-elapsed--late        .line-elapsed__band { color: var(--service-late); }
-.line-elapsed--critical    .line-elapsed__value,
-.line-elapsed--critical    .line-elapsed__band { color: var(--service-critical); }
 
 
 /* --- Ticket body ------------------------------------------------------- */
