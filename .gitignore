@@ -1,0 +1,10 @@
+# Instructor answer key. Never ships to a student repo.
+FLAWS.md
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor noise
+.vscode/
+.idea/
