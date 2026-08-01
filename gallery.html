@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="/rail/components/Toast.css">
   <link rel="stylesheet" href="/rail/components/Tabs.css">
   <link rel="stylesheet" href="/rail/components/Ticket.css">
+  <link rel="stylesheet" href="/rail/components/Logo.css">
   <link rel="stylesheet" href="/rail/utilities/reset.css">
   <link rel="stylesheet" href="/rail/layouts/page.css">
 
@@ -213,6 +214,63 @@
   <!-- Gallery container — density classes applied here -->
   <div id="gallery" class="density-comfortable env-standard">
     <div class="gallery-sections">
+
+      <!-- ============================================================
+           0. LOGO
+           ============================================================ -->
+      <section class="gallery-section" id="logo">
+        <h2 class="gallery-section__heading">Logo</h2>
+        <div class="gallery-section__body">
+
+          <div class="gallery-group">
+            <span class="gallery-label">Lockup</span>
+            <svg class="rail-logo" width="137" height="48" viewBox="0 0 137 48" role="img" aria-label="Heard">
+              <g transform="translate(10, 4.445)"><path class="rail-logo__mark" d="M24 1.90527 L10.2393 27.8125 L4.26074 21.834 L1.0791 25.0156 L11.3604 35.2969 L24 11.5 L24 37.5547 L0 37.5547 L0 1.55469 L2.40039 4.55469 L4.7998 1.55469 L7.2002 5.55469 L9.59961 1.55469 L12 4.05469 L14.4004 1.55469 L16.7998 5.05469 L19.2002 1.55469 L21.5996 4.55469 L24 1.55469 L24 1.90527 Z M28.9873 2.10938 L25.9873 7.75977 L22.0127 5.64941 L25.0127 0 L28.9873 2.10938 Z"/></g>
+              <text class="rail-logo__wordmark" x="45" y="42">HEARD</text>
+            </svg>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Lockup &mdash; outline, for one-colour reproduction</span>
+            <svg class="rail-logo rail-logo--outline" width="137" height="48" viewBox="0 0 137 48" role="img" aria-label="Heard">
+              <g transform="translate(8.85, 2.722)"><path class="rail-logo__mark" d="M26.3008 1.79492 L30.0049 3.76367 L26.3008 10.7363 L26.3008 40.4287 L0 40.4287 L0 0 L3.5498 4.43652 L6.08594 1.26855 L8.35059 5.04199 L10.5381 1.39648 L13.1504 4.11621 L15.6992 1.46191 L17.9502 4.74414 L20.2793 1.34863 L22.75 4.43652 L26.3008 0 L26.3008 1.79492 Z M13.9805 6.5752 L13.1504 7.43848 L10.9619 5.16016 L8.35059 9.51367 L5.81445 5.28809 L3.55078 8.11914 L2.30078 6.55762 L2.30078 38.1279 L24 38.1279 L24 15.0684 L12.4727 36.7705 L2.33496 26.6328 L5.30566 23.6631 L11.4277 29.7852 L23.3018 7.42871 L22.75 8.11914 L20.4209 5.20801 L17.9502 8.81152 L15.4004 5.09473 L13.9805 6.5752 Z"/></g>
+              <text class="rail-logo__wordmark" x="45" y="42">HEARD</text>
+            </svg>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Mark &mdash; 48, 24, 16</span>
+            <div style="display:flex; align-items:flex-end; gap:24px;">
+              <svg class="rail-mark rail-mark--48" width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="Heard"><g transform="translate(11, 4.445)"><path d="M24 1.90527 L10.2393 27.8125 L4.26074 21.834 L1.0791 25.0156 L11.3604 35.2969 L24 11.5 L24 37.5547 L0 37.5547 L0 1.55469 L2.40039 4.55469 L4.7998 1.55469 L7.2002 5.55469 L9.59961 1.55469 L12 4.05469 L14.4004 1.55469 L16.7998 5.05469 L19.2002 1.55469 L21.5996 4.55469 L24 1.55469 L24 1.90527 Z M28.9873 2.10938 L25.9873 7.75977 L22.0127 5.64941 L25.0127 0 L28.9873 2.10938 Z"/></g></svg>
+              <svg class="rail-mark rail-mark--24" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Heard"><g transform="translate(5.5, 2.113)"><path d="M11.3643 2.87402 L5.54004 13.8096 L2.63379 10.9033 L0.866211 12.6709 L6.16016 17.9639 L13 5.12305 L13 18.8867 L0 18.8867 L0 0.886719 L1.625 2.88672 L3.25 0.886719 L4.875 3.38672 L6.5 0.886719 L8.125 2.38672 L9.75 0.886719 L11.3643 2.87402 Z M15.1035 1.17383 L14.1035 3.05371 L11.8965 1.87988 L12.8965 0 L15.1035 1.17383 Z"/></g></svg>
+              <svg class="rail-mark rail-mark--16" width="16" height="16" viewBox="0 0 16 16" role="img" aria-label="Heard"><g transform="translate(3.5, 2)"><path d="M9 12 L0 12 L0 0 L1.5 2 L3 0 L4.5 2 L6 0 L7.5 2 L9 0 L9 12 Z M3.87793 7.60449 L2.63672 6.36328 L1.36328 7.63672 L4.12207 10.3945 L8.2373 4.5166 L6.7627 3.4834 L3.87793 7.60449 Z"/></g></svg>
+            </div>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Mark &mdash; outline, for etching, embroidery and thermal paper</span>
+            <div style="display:flex; align-items:flex-end; gap:24px;">
+              <svg class="rail-mark rail-mark--48 rail-mark--outline" width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="Heard"><g transform="translate(9.85, 2.722)"><path d="M26.3008 1.79492 L30.0049 3.76367 L26.3008 10.7363 L26.3008 40.4287 L0 40.4287 L0 0 L3.5498 4.43652 L6.08594 1.26855 L8.35059 5.04199 L10.5381 1.39648 L13.1504 4.11621 L15.6992 1.46191 L17.9502 4.74414 L20.2793 1.34863 L22.75 4.43652 L26.3008 0 L26.3008 1.79492 Z M13.9805 6.5752 L13.1504 7.43848 L10.9619 5.16016 L8.35059 9.51367 L5.81445 5.28809 L3.55078 8.11914 L2.30078 6.55762 L2.30078 38.1279 L24 38.1279 L24 15.0684 L12.4727 36.7705 L2.33496 26.6328 L5.30566 23.6631 L11.4277 29.7852 L23.3018 7.42871 L22.75 8.11914 L20.4209 5.20801 L17.9502 8.81152 L15.4004 5.09473 L13.9805 6.5752 Z"/></g></svg>
+              <svg class="rail-mark rail-mark--24 rail-mark--outline" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Heard"><g transform="translate(4.9, 1.31)"><path d="M14.1992 1.17676 L15.6143 1.93164 L14.1992 4.58789 L14.1992 20.29 L0 20.29 L0 0 L2.22461 2.73828 L3.90332 0.672852 L5.47461 3.08887 L6.98438 0.767578 L8.72461 2.37402 L10.4121 0.816406 L11.9746 2.73828 L14.1992 0 L14.1992 1.17676 Z M8.72461 4.00684 L7.21484 2.61328 L5.47461 5.29102 L3.79492 2.70801 L2.22461 4.6416 L1.19922 3.37891 L1.19922 19.0908 L13 19.0908 L13 6.83887 L6.73438 18.6016 L1.53613 13.4033 L3.16309 11.7773 L6.16406 14.7793 L11.7266 4.33691 L10.2861 2.56445 L8.72461 4.00684 Z"/></g></svg>
+              <svg class="rail-mark rail-mark--16 rail-mark--outline" width="16" height="16" viewBox="0 0 16 16" role="img" aria-label="Heard"><g transform="translate(3.05, 0.65)"><path d="M9.90039 13.7998 L0 13.7998 L0 0 L1.9502 2.59961 L3.4502 0.599609 L4.9502 2.59961 L6.4502 0.599609 L7.9502 2.59961 L9.90039 0 L9.90039 13.7998 Z M4.9502 4.09961 L3.4502 2.09961 L1.9502 4.09961 L0.900391 2.69922 L0.900391 12.8994 L9 12.8994 L9 2.69922 L7.9502 4.09961 L6.4502 2.09961 L4.9502 4.09961 Z M8.60547 5.80859 L4.55859 11.5898 L1.88477 8.91504 L3.01562 7.78418 L4.34082 9.10938 L7.29492 4.89062 L8.60547 5.80859 Z"/></g></svg>
+            </div>
+          </div>
+
+          <div class="gallery-group">
+            <span class="gallery-label">Mark &mdash; pass-display chrome. Muted so it never outranks a late ticket.</span>
+            <svg class="rail-mark rail-mark--48 rail-mark--chrome" width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="Heard"><g transform="translate(11, 4.445)"><path d="M24 1.90527 L10.2393 27.8125 L4.26074 21.834 L1.0791 25.0156 L11.3604 35.2969 L24 11.5 L24 37.5547 L0 37.5547 L0 1.55469 L2.40039 4.55469 L4.7998 1.55469 L7.2002 5.55469 L9.59961 1.55469 L12 4.05469 L14.4004 1.55469 L16.7998 5.05469 L19.2002 1.55469 L21.5996 4.55469 L24 1.55469 L24 1.90527 Z M28.9873 2.10938 L25.9873 7.75977 L22.0127 5.64941 L25.0127 0 L28.9873 2.10938 Z"/></g></svg>
+          </div>
+
+          <p class="gallery-note">
+            The three mark sizes are separate drawings, not one drawing scaled.
+            Notch count drops 5 &rarr; 4 &rarr; 3 and the tail stops breaking the
+            edge at 16. Colour comes from <code>--brand-mark</code>, which holds the
+            same hue on both surfaces and only moves a step on the ramp. Switch the
+            mode above and watch the mark stay orange while everything else changes.
+          </p>
+
+        </div>
+      </section>
 
       <!-- ============================================================
            1. BUTTON

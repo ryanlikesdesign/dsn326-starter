@@ -2,12 +2,12 @@
 
 Rail is the design system for **Heard**, a restaurant software platform. Two products share it:
 
-- **Guest** — consumer ordering. Phone-first web, no app. ~400,000 orders a week across 1,400 restaurants.
-- **Line** — kitchen display system. A 15-inch pass display plus a server handheld. 1,400 restaurants.
+- **Guest**: consumer ordering. Phone-first web, no app. ~400,000 orders a week across 1,400 restaurants.
+- **Line**: kitchen display system. A 15-inch pass display plus a server handheld. 1,400 restaurants.
 
 One system, two surfaces. You never build separate components for Guest and Line — you configure the same twelve.
 
-Rail is small on purpose. A system with forty components has an answer for everything, and you learn nothing from working inside it.
+Rail is deliberately small. A system with forty components has an answer for everything, and you learn nothing from working inside it.
 
 **This file is generated from the code.** Every class name below appears in a file under `rail/components/` and every token name below appears in `rail/tokens.css`, both checked mechanically. If you copy markup from here it will be styled. Where a class exists in Rail's markup but has no rule behind it, this file says so.
 
@@ -20,6 +20,7 @@ Rail is small on purpose. A system with forty components has an answer for every
 - [Tokens](#tokens)
 - [The twelve components](#the-twelve-components)
 - [The four patterns](#the-four-patterns)
+- [Logo](#logo)
 - [Layout and utility classes](#layout-and-utility-classes)
 - [Contribution rules](#contribution-rules)
 - [Source of truth](#source-of-truth)
@@ -662,7 +663,7 @@ Worth knowing before you plan around something that isn't there.
 - **No Radio group.** Single-select needs a Select, or a group of Buttons with `role="radio"` styled in your own CSS.
 - **No Header or app bar.** Compose one from layout classes and a Button.
 - **No Tooltip, no Popover, no Accordion, no Table, no Pagination, no Avatar, no Breadcrumb.**
-- **No Empty state and no Loading component** — those are states every component already has.
+- **No Empty state and no Loading component**: those are states every component already has.
 
 If your design needs one of these, that is a contribution proposal, not a workaround. See below.
 
@@ -738,6 +739,41 @@ Rules: bump is the action expo performs a few hundred times a shift, so it gets 
 | Items | ~178px, about five lines at 24px |
 
 Three stacked targets at the `high-glare` floor cost more than a third of the ticket, and a five-item order already scrolls. That is not a bug to fix in this file — it is the collision HEARD-156 and HEARD-178 are both standing on. Every proposal that adds to a ticket has to say what comes off it.
+
+---
+
+## Logo
+
+`rail/components/Logo.css`, with the geometry in `rail/assets/`.
+
+A torn kitchen ticket with the acknowledgment knocked out. The check's long arm leaves the ticket at the right edge and turns from negative to positive as it crosses: inside the ticket it is a hole, outside it is a solid stroke. That transition is the mark, so do not clip it or box it in.
+
+**Two forms.** The **lockup** is mark plus wordmark, for anywhere the reader may not know the brand: marketing, decks, invoices, splash, onboarding, first boot on the pass display. The **mark** stands alone where the brand is already established or there is no room: app icon, favicon, persistent Line chrome, equipment badge, avatars. The mark is never the first branded thing a new user sees.
+
+**Two treatments.** `Solid` is the default. `Outline` drops the ticket to a hairline and fills the check, for embroidery, laser etching and thermal receipts, where a knocked-out channel closes up.
+
+**Three sizes, three drawings.** Never scale one to produce another.
+
+| Size | Notches | Tail |
+|---|---|---|
+| 48 and up | 5 | breaks the edge |
+| 24 | 4 | breaks the edge |
+| 16 | 3 | contained |
+| under 16 | no mark | use a solid `--brand-mark` fill at the platform's badge geometry |
+
+Notch pitch never drops below 4px and depth is always half the pitch. The counts fall out of that rule.
+
+**Colour comes from `--brand-mark`.** Same hue on both surfaces; only the step on the ramp moves — `primary-600` on Guest at 4.80:1 against `surface/default`, `primary-400` on Line at 5.25:1 against its own `surface/default`. Do not draw the logo with `--interactive-default`: on Line it resolves to indigo, so the mark would change colour with the surface, and a brand mark that uses the interactive colour reads as a control.
+
+**The check is brand-only.** Line's job is marking tickets complete, and the obvious way to build that state is an orange check — which would put the logo and a functional status indicator in the same shape and colour on the same screen, four feet from a moving cook. The squared-terminal check does not go in the product icon set. Completion on Line is a bump or a filled bar.
+
+**Clearspace.** Base unit `N` = ticket width ÷ 5. Mark: `2N` on all sides, measured from the tear peaks. Lockup: `1C` on all sides, where `C` is wordmark cap height. App icons and favicons are exempt; the platform supplies its own.
+
+**App icons.** Size to height, not width. The mark is portrait, so in a square frame the ticket should sit at `0.72` of the frame height, which lands its width near `0.48`. Sizing to width leaves the glyph looking lost in the tile. Build foreground-on-field: iOS masks to a squircle and forbids transparency, so the outer silhouette is never notched.
+
+**The wordmark is DM Sans Bold but is not bound to the Display style.** A logotype must not move when the type scale is retuned. Shipped assets carry it outlined.
+
+**The paths are exported from Figma, not redrawn.** If code and Figma disagree here, the asset is stale. Re-export; do not hand-edit the path.
 
 ---
 

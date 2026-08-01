@@ -1,12 +1,12 @@
-# Rail Starter — Heard Design System
+# Rail Starter: Heard Design System
 
-Code starter for DSN 326. Fork it, then build your feature inside it.
+Code starter for DSN 326. Create your repo from it, then build your feature inside it.
 
 No framework, no build step, no install. Plain HTML, CSS and vanilla JavaScript.
 
 ## Quick Start
 
-1. **Fork this repo on GitHub.** Rename it something a stranger could read.
+1. **Create your repo from the course template.** Use **Use this template** on GitHub, not Fork. Rename it something a stranger could read.
 2. **Open it in Bolt:** go to `bolt.new/github.com/YOUR-USERNAME/YOUR-REPO`. Bolt imports the whole thing — `tokens.css`, the twelve components, the Ticket pattern, `RAIL.md`, and the legacy flows.
 3. **Point the AI at the system.** Tell it `rail/tokens.css` and `rail/components/` are the only sources it may use.
 
@@ -136,14 +136,14 @@ Building against the actual component directory is a build in Rail. Building fro
 
 Loaded from Google Fonts in each page's `<head>`:
 
-- **DM Sans** — headings and display text
-- **Inter** — body and UI text
-- **JetBrains Mono** — prices, order numbers, time displays
+- **DM Sans**: headings and display text
+- **Inter**: body and UI text
+- **JetBrains Mono**: prices, order numbers, time displays
 
 ---
 
 <details>
-<summary><strong>Instructor only</strong> — running this locally</summary>
+<summary><strong>Instructor only</strong>: running this locally</summary>
 
 Students never need this. Nothing in the course requires a terminal.
 

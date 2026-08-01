@@ -58,9 +58,9 @@ CSS custom properties use dashes instead of slashes:
 
 ## Two Surfaces
 
-**Guest** — consumer ordering app. Phone-first, warm palette (paprika primary), light backgrounds.
+**Guest**: consumer ordering app. Phone-first, warm palette (paprika primary), light backgrounds.
 
-**Line** — kitchen display + server handheld. Dark palette, cool grays, high contrast. Add `surface-line` class to swap semantic colors.
+**Line**: kitchen display + server handheld. Dark palette, cool grays, high contrast. Add `surface-line` class to swap semantic colors.
 
 ## What NOT to Do
 

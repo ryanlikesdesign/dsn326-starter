@@ -21,7 +21,7 @@ Keeping raw evidence separate from your reading of it is what lets you change yo
 
 ---
 
-## Week 1 — Rail parity check
+## Week 1: Rail parity check
 
 | Token | Figma value | `tokens.css` value | Agree? |
 |---|---|---|---|

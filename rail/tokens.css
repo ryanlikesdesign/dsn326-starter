@@ -153,6 +153,15 @@
   --interactive-subtle:   var(--primary-50);
   --interactive-disabled: var(--neutral-200);
 
+  /* --- Brand --- */
+  /* The logo's colour, and nothing else's. The hue is constant across both
+     surfaces; only the step on the ramp moves, so the mark is recognisable in a
+     dining room and legible under a hood light.
+     Do NOT draw the logo with --interactive-default. On Line that resolves to
+     indigo, and the mark would change colour when the surface changed. It would
+     also make a brand mark look like a control. */
+  --brand-mark: var(--primary-600);   /* 4.80:1 on surface/default */
+
   /* --- Overlay --- */
   --surface-overlay: var(--neutral-900);
 
@@ -497,6 +506,9 @@
   --interactive-pressed:  var(--line-primary-700);
   --interactive-subtle:   var(--line-primary-900);
   --interactive-disabled: var(--line-neutral-700);
+
+  /* Same hue as Guest, two steps up the ramp so it survives a hood light. */
+  --brand-mark: var(--primary-400);   /* 5.25:1 on surface/default, 5.89:1 on surface/subtle */
 
   /* Light-surface error/success values are unreadable on Line's dark grounds
      (2.80:1 and 3.14:1). Override them the way every other colour is overridden. */

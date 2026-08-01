@@ -1,0 +1,109 @@
+/* ============================================================
+   Rail Design System — Logo
+   Heard · Guest + Line
+
+   Two forms:
+     Lockup  — mark + wordmark. Use where the reader may not know the brand.
+     Mark    — standalone. Use where the brand is already established.
+
+   Two treatments:
+     Solid   — filled ticket, check knocked out. The default.
+     Outline — ticket outlined, check solid. For embroidery, etching and
+               thermal paper, where a knocked-out channel fills in.
+
+   The geometry in rail/assets/ is exported from the Figma library, not
+   redrawn. If the two ever disagree, Figma is correct and the asset is
+   stale — re-export rather than editing the path by hand.
+
+   Usage:
+   <!--
+     Lockup. Copy the contents of rail/assets/heard-lockup.svg inline and
+     add the classes; an <img> tag cannot pick up the colour tokens.
+
+     <svg class="rail-logo" width="137" height="48" viewBox="0 0 137 48">
+       <g transform="translate(10, 4.445)">
+         <path class="rail-logo__mark" d="..."/>
+       </g>
+       <text class="rail-logo__wordmark" x="45" y="42">HEARD</text>
+     </svg>
+
+     Outline lockup:
+     <svg class="rail-logo rail-logo--outline" ...>
+
+     Mark. One file per optical size — these are separate drawings, so pick
+     the file that matches the size you are rendering at. Never scale one to
+     produce another.
+
+     <svg class="rail-mark rail-mark--24" width="24" height="24" viewBox="0 0 24 24">
+       <g transform="translate(5.5, 2.113)"><path d="..."/></g>
+     </svg>
+
+     On Line's persistent chrome, add rail-mark--chrome so the logo does not
+     compete with a ticket that is about to go late.
+   -->
+   ============================================================ */
+
+
+/* --- Lockup --- */
+
+.rail-logo {
+  display: block;
+  height: 48px;
+  width: auto;
+}
+
+.rail-logo__mark {
+  fill: var(--brand-mark);
+}
+
+.rail-logo__wordmark {
+  fill: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.75px;
+}
+
+/* Single-colour reproduction: everything drops to ink. */
+.rail-logo--outline .rail-logo__mark {
+  fill: var(--text-primary);
+}
+
+
+/* --- Mark --- */
+
+.rail-mark {
+  display: block;
+  fill: var(--brand-mark);
+}
+
+.rail-mark--outline {
+  fill: var(--text-primary);
+}
+
+/* Optical sizes. Each maps to its own drawing in rail/assets/. */
+.rail-mark--48 { width: 48px; height: 48px; }
+.rail-mark--24 { width: 24px; height: 24px; }
+.rail-mark--16 { width: 16px; height: 16px; }
+
+
+/* --- Pass-display chrome ---
+   A persistent mark sitting in the corner of the Line display all shift must
+   not be the brightest orange on the screen. Full-strength brand competes
+   with service state, and service state is the thing that has to win. */
+
+.rail-mark--chrome {
+  fill: var(--text-tertiary);
+}
+
+
+/* --- On photography ---
+   Neither brand step holds against mid-tone imagery. Two sanctioned
+   treatments: knock the whole mark out in white, or set it in a solid chip.
+   Brand colour directly on a photograph is not one of them. */
+
+.rail-logo--on-image .rail-logo__mark,
+.rail-logo--on-image .rail-logo__wordmark,
+.rail-mark--on-image {
+  fill: #FFFFFF;
+}
