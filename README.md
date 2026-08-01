@@ -7,7 +7,7 @@ No framework, no build step, no install. Plain HTML, CSS and vanilla JavaScript.
 ## Quick Start
 
 1. **Create your repo from the course template.** Use **Use this template** on GitHub, not Fork. Rename it something a stranger could read.
-2. **Open it in Bolt:** go to `bolt.new/github.com/YOUR-USERNAME/YOUR-REPO`. Bolt imports the whole thing — `tokens.css`, the twelve components, the Ticket pattern, `RAIL.md`, and the legacy flows.
+2. **Open it in Bolt:** go to `bolt.new/github.com/YOUR-USERNAME/YOUR-REPO`. Bolt imports the whole thing — `tokens.css`, the twelve components, the Ticket pattern, the logo, `RAIL.md`, and the legacy flows.
 3. **Point the AI at the system.** Tell it `rail/tokens.css` and `rail/components/` are the only sources it may use.
 
 To just look at the files, open `gallery.html` on GitHub Pages, or click any file in the GitHub web editor. You never need a terminal in this course.
@@ -31,8 +31,10 @@ rail/
     Toast.css
     Tabs.css
     Ticket.css            ← A pattern, not a thirteenth component
+    Logo.css              ← The mark and lockup. Colour comes from --brand-mark
   layouts/page.css        ← Page-level layout helpers
   utilities/reset.css     ← Browser reset
+  assets/                 ← Logo geometry. Don't redraw these
 
 legacy/
   guest/                  ← Heard Guest checkout as it ships today
