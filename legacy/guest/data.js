@@ -257,7 +257,8 @@ const MENU = [
         groups: ['drinkSize'],
         /* G12 — the Line 86 board marked Horchata off 12 minutes ago. The
            stated cache window is 4 minutes. Guest still sells it, the demo
-           group order contains three, and nothing on either surface says so. */
+           group order holds four across two lines, the previous order holds
+           one more, and nothing on either surface says so. */
         available: true,
       },
       {
