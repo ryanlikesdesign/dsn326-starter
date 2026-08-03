@@ -14,3 +14,4 @@ Thumbs.db
 
 # Instructor answer keys. Generated into the instructor folder, never here.
 INSTRUCTOR-*.md
+.env
