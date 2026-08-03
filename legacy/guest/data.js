@@ -255,6 +255,9 @@ const MENU = [
         price: 4.0,
         description: 'Rice and cinnamon, made in house every morning.',
         groups: ['drinkSize'],
+        /* G12 — the Line 86 board marked Horchata off 12 minutes ago. The
+           stated cache window is 4 minutes. Guest still sells it, the demo
+           group order contains three, and nothing on either surface says so. */
         available: true,
       },
       {
