@@ -287,7 +287,7 @@ Where a cell repeats the `comfortable` value at `service`, that mode does not re
 
 ## The twelve components
 
-One file each in `rail/components/`. Every file carries example markup in a comment at the top — open the file and copy it.
+One file each in `rail/components/` — fourteen CSS files, twelve components: Ticket is a pattern and Logo is a brand asset, and neither is in the twelve. Every file carries example markup in a comment at the top — open the file and copy it.
 
 Class names are BEM: `.rail-button` is the block, `.rail-button--primary` a modifier, `.rail-button__icon` an element.
 
