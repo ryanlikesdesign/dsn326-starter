@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rail conformance check</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 0 auto; max-width: 760px; padding: 24px; color: #1a1a1a; }
+  h1 { font-size: 22px; } h2 { font-size: 17px; margin-top: 28px; }
+  textarea { width: 100%; height: 220px; font: 13px/1.4 ui-monospace, monospace; padding: 12px; box-sizing: border-box; border: 1px solid #bbb; border-radius: 6px; }
+  button { font: inherit; padding: 10px 20px; border-radius: 6px; border: 1px solid #1a1a1a; background: #1a1a1a; color: #fff; margin-top: 12px; cursor: pointer; }
+  .finding { border-left: 4px solid #b4231f; padding: 8px 14px; margin: 10px 0; background: #faf3f2; border-radius: 0 6px 6px 0; }
+  .finding code, .ok code { background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+  .ok { border-left: 4px solid #1d7a3e; padding: 8px 14px; margin: 10px 0; background: #f1f8f3; border-radius: 0 6px 6px 0; }
+  .note { color: #555; font-size: 14px; }
+  .count { font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>Rail conformance check</h1>
+<p>Paste your build's HTML — view-source on your published page, select all, copy. The check runs in your browser; nothing is uploaded.</p>
+<p class="note">Three checks: <strong>invented Rail classes</strong> (a <code>rail-*</code> class that isn't in canonical Rail), <strong>inline styles</strong> (hardcoded values where a token should be), and <strong>hardcoded values in style blocks</strong> (px sizes and hex colors that bypass <code>var(--…)</code>). A finding is a lead, not a verdict — some are deliberate, and a deliberate one belongs in <code>DECISIONS.md</code> with a reason.</p>
+<textarea id="src" placeholder="&lt;html&gt;… paste the whole page …&lt;/html&gt;" spellcheck="false"></textarea>
+<br><button id="run">Run the check</button>
+<div id="out"></div>
+<script>
+const CANONICAL = new Set(["rail-badge", "rail-badge--brand", "rail-badge--count", "rail-badge--error", "rail-badge--info", "rail-badge--label", "rail-badge--removable", "rail-badge--status", "rail-badge--success", "rail-badge--warning", "rail-badge__remove", "rail-button", "rail-button--destructive", "rail-button--disabled", "rail-button--full-width", "rail-button--icon-leading", "rail-button--icon-only", "rail-button--loading", "rail-button--primary", "rail-button--secondary", "rail-button--tertiary", "rail-button__icon", "rail-button__spinner", "rail-card", "rail-card--disabled", "rail-card--image-leading", "rail-card--image-top", "rail-card--loading", "rail-card__action", "rail-card__actions", "rail-card__body", "rail-card__description", "rail-card__image", "rail-card__meta", "rail-card__skeleton", "rail-card__skeleton--text", "rail-card__skeleton--title", "rail-card__title", "rail-checkbox", "rail-checkbox--disabled", "rail-checkbox--error", "rail-checkbox-group", "rail-checkbox-group__legend", "rail-checkbox__box", "rail-checkbox__input", "rail-checkbox__label", "rail-dialog", "rail-dialog--confirmation", "rail-dialog-backdrop", "rail-dialog__body", "rail-dialog__btn", "rail-dialog__btn--destructive", "rail-dialog__btn--primary", "rail-dialog__btn--secondary", "rail-dialog__close", "rail-dialog__footer", "rail-dialog__header", "rail-dialog__title", "rail-input", "rail-input--disabled", "rail-input--error", "rail-input--filled", "rail-input--success", "rail-input__char-count", "rail-input__field", "rail-input__field--textarea", "rail-input__footer", "rail-input__helper", "rail-input__helper--error", "rail-input__helper--success", "rail-input__label", "rail-list-row", "rail-list-row--disabled", "rail-list-row--selected", "rail-list-row__action", "rail-list-row__content", "rail-list-row__leading", "rail-list-row__primary", "rail-list-row__secondary", "rail-list-row__trailing", "rail-logo", "rail-logo--on-image", "rail-logo--outline", "rail-logo__mark", "rail-logo__wordmark", "rail-mark", "rail-mark--16", "rail-mark--24", "rail-mark--48", "rail-mark--chrome", "rail-mark--on-image", "rail-mark--outline", "rail-select", "rail-select--disabled", "rail-select--error", "rail-select--open", "rail-select__chevron", "rail-select__dropdown", "rail-select__helper", "rail-select__helper--error", "rail-select__label", "rail-select__option", "rail-select__option--disabled", "rail-select__option--selected", "rail-select__trigger", "rail-select__value--placeholder", "rail-stepper", "rail-stepper--disabled", "rail-stepper--max-reached", "rail-stepper--min-reached", "rail-stepper__button", "rail-stepper__button--decrement", "rail-stepper__button--increment", "rail-stepper__value", "rail-switch", "rail-switch--disabled", "rail-switch__input", "rail-switch__label", "rail-switch__thumb", "rail-switch__track", "rail-tab", "rail-tab--active", "rail-tab--disabled", "rail-tab-panel", "rail-tabs", "rail-tabs--segmented", "rail-tabs--underline", "rail-ticket", "rail-ticket--bumped", "rail-ticket--incoming", "rail-ticket--ready", "rail-ticket--recalled", "rail-ticket--started", "rail-ticket-rail", "rail-ticket__action", "rail-ticket__action--bump", "rail-ticket__action--recall", "rail-ticket__action--void", "rail-ticket__actions", "rail-ticket__danger", "rail-ticket__elapsed", "rail-ticket__elapsed--approaching", "rail-ticket__elapsed--critical", "rail-ticket__elapsed--late", "rail-ticket__elapsed--ok", "rail-ticket__header", "rail-ticket__ids", "rail-ticket__item", "rail-ticket__item-name", "rail-ticket__items", "rail-ticket__mod", "rail-ticket__mod--critical", "rail-ticket__mods", "rail-ticket__number", "rail-ticket__qty", "rail-ticket__source", "rail-ticket__timing", "rail-toast", "rail-toast--error", "rail-toast--exiting", "rail-toast--info", "rail-toast--success", "rail-toast--warning", "rail-toast-region", "rail-toast__content", "rail-toast__dismiss", "rail-toast__icon", "rail-toast__message"]);
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+document.getElementById('run').addEventListener('click', () => {
+  const src = document.getElementById('src').value;
+  const out = document.getElementById('out');
+  out.innerHTML = '';
+  if (!src.trim()) { out.innerHTML = '<div class="finding">Nothing pasted.</div>'; return; }
+  const doc = new DOMParser().parseFromString(src, 'text/html');
+  const findings = [];
+
+  // 1. rail-* classes not in canonical Rail
+  const bad = new Map();
+  doc.querySelectorAll('[class]').forEach(el => {
+    el.classList.forEach(c => {
+      if (c.startsWith('rail-') && !CANONICAL.has(c)) bad.set(c, (bad.get(c)||0)+1);
+    });
+  });
+  if (bad.size) {
+    const rows = [...bad.entries()].map(([c,n]) => '<code>'+esc(c)+'</code> ×'+n).join(' · ');
+    findings.push('<div class="finding"><span class="count">'+bad.size+' invented Rail class'+(bad.size>1?'es':'')+':</span> '+rows+'<br><span class="note">Either a typo, or a component Rail doesn\'t have. If it\'s deliberate, it\'s a system decision — extend, create, or work around — and it goes in <code>DECISIONS.md</code> and your Week 6 contribution proposal.</span></div>');
+  }
+
+  // 2. inline style attributes
+  const inline = [...doc.querySelectorAll('[style]')];
+  if (inline.length) {
+    const sample = inline.slice(0,5).map(el => '<code>'+esc('<'+el.tagName.toLowerCase()+' style="'+el.getAttribute('style').slice(0,60)+'…">')+'</code>').join('<br>');
+    findings.push('<div class="finding"><span class="count">'+inline.length+' inline style attribute'+(inline.length>1?'s':'')+'.</span><br>'+sample+'<br><span class="note">Inline styles bypass the token layer entirely — the Rail 1.0.1 patch never reaches them. Move the value to a class and a <code>var(--…)</code>, or record why not.</span></div>');
+  }
+
+  // 3. hardcoded values inside style blocks
+  const hard = [];
+  doc.querySelectorAll('style').forEach(s => {
+    const css = s.textContent;
+    const re = /([a-z-]+)\s*:\s*((?:#[0-9a-fA-F]{3,8}|\d+px))(?![^;{}]*var\()/g;
+    let m; while ((m = re.exec(css)) && hard.length < 40) {
+      if (m[1] === 'max-width' || m[1] === 'min-width') continue;
+      hard.push(m[1]+': '+m[2]);
+    }
+  });
+  if (hard.length) {
+    const counts = {}; hard.forEach(h => counts[h]=(counts[h]||0)+1);
+    const rows = Object.entries(counts).slice(0,12).map(([v,n]) => '<code>'+esc(v)+'</code>'+(n>1?' ×'+n:'')).join(' · ');
+    findings.push('<div class="finding"><span class="count">'+hard.length+' hardcoded value'+(hard.length>1?'s':'')+' in style blocks:</span> '+rows+'<br><span class="note">Each is a place the system can\'t reach. Some are legitimate — a one-off layout width, say. The check is whether you can say which token should have been there, or why none applies.</span></div>');
+  }
+
+  if (!findings.length) {
+    out.innerHTML = '<div class="ok"><strong>Clean pass.</strong> No invented Rail classes, no inline styles, no hardcoded values in style blocks. Say so in your drift audit — a wired check that passes is evidence, and \"I wired a check that fails when a non-Rail class appears\" is a sentence worth having.</div>';
+  } else {
+    out.innerHTML = findings.join('') + '<div class="ok"><span class="note">Each finding is one drift-audit entry: what differed, whose fault, what you did.</span></div>';
+  }
+});
+</script>
+</body>
+</html>
