@@ -146,6 +146,10 @@ const TICKETS = [
     status: 'recalled',
     /* Sent back twice. Nothing on the ticket says so. */
     recallCount: 2,
+    /* L13 — handoff data that exists and never renders. The day expo left a
+       note and an owner; the rail shows neither, and there is no sign-in. */
+    note: 'Do not refire until Table 3 confirms — second remake.',
+    enteredBy: 'Priya (day expo, clocked out 3:45)',
     items: [
       { name: 'Carne Asada Taco', qty: 2, mods: ['Medium rare', 'No onion'] },
       { name: 'Barbacoa Burrito', qty: 1, mods: ['Black beans'] },
