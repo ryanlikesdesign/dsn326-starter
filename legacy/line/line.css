@@ -320,7 +320,7 @@ body {
 }
 
 /* Modifiers sit under the item they belong to, one step down the type
-   scale. Same weight as the item name, same colour as the item name. */
+   scale. Same weight as the item name, same color as the item name. */
 .line-item__mods {
   display: flex;
   flex-direction: column;

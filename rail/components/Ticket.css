@@ -16,7 +16,7 @@
    screen and the seventh always does not.
 
    Elapsed time uses the service scale — service/ok, /approaching,
-   /late, /critical. Colour never carries that alone: every band also
+   /late, /critical. Color never carries that alone: every band also
    ships a badge with a word in it. The rail is a shared screen in a
    bright room and half the people reading it are doing so at an angle.
 
@@ -136,7 +136,7 @@
 /* ------------------------------------------------------------
    Status
    Background tint only. Every ticket also carries a badge with the
-   status written on it — see the usage block. Colour never carries
+   status written on it — see the usage block. Color never carries
    this alone.
    ------------------------------------------------------------ */
 
@@ -270,7 +270,7 @@
 /* ------------------------------------------------------------
    Modifiers
    The thing that gets missed on a long ticket, so the thing that is
-   loudest. Its own colour, its own weight, its own rule down the
+   loudest. Its own color, its own weight, its own rule down the
    side. Not a smaller version of the item name.
    ------------------------------------------------------------ */
 
@@ -292,7 +292,7 @@
 }
 
 /* For a modifier the kitchen cannot get wrong. Pairs with a word —
-   never rely on the colour to say "allergy". */
+   never rely on the color to say "allergy". */
 .rail-ticket__mod--critical {
   color: var(--service-critical);
   text-transform: uppercase;
@@ -305,7 +305,7 @@
    Bump is the action expo performs a few hundred times a shift and
    it is recoverable, so it takes the comfortable target. Recall is
    recoverable and rarer, so it takes the floor. Void cannot be
-   undone, so it is separated, coloured away from the other two, and
+   undone, so it is separated, colored away from the other two, and
    never lands under a thumb aimed at bump.
    ------------------------------------------------------------ */
 

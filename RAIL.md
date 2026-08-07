@@ -619,7 +619,7 @@ Primary and secondary truncate to one line by design — that is right for a rai
 |---|---|
 | `.rail-toast-region` | Live region. Top-right; top-center under 480px. |
 | `.rail-toast` | One toast. |
-| `.rail-toast--success` · `.rail-toast--error` · `.rail-toast--info` · `.rail-toast--warning` | Variants. Coloured left border plus a subtle background. |
+| `.rail-toast--success` · `.rail-toast--error` · `.rail-toast--info` · `.rail-toast--warning` | Variants. Colored left border plus a subtle background. |
 | `.rail-toast__icon` | Icon slot. |
 | `.rail-toast__content` | Text column. |
 | `.rail-toast__message` | The message. |

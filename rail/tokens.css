@@ -146,7 +146,7 @@
   /* primary-500 (#E84E1A) is 3.79:1 on white — below the 4.5:1 floor this file
      documents. Interactive surfaces step one down the ramp so Rail passes its
      own standard. The brand ramp itself is unchanged; primary-500 is still the
-     brand colour and is still used where it sits on a dark or subtle ground. */
+     brand color and is still used where it sits on a dark or subtle ground. */
   --interactive-default:  var(--primary-600);   /* 5.05:1 on white */
   --interactive-hover:    var(--primary-500);
   --interactive-pressed:  var(--primary-700);
@@ -154,11 +154,11 @@
   --interactive-disabled: var(--neutral-200);
 
   /* --- Brand --- */
-  /* The logo's colour, and nothing else's. The hue is constant across both
-     surfaces; only the step on the ramp moves, so the mark is recognisable in a
+  /* The logo's color, and nothing else's. The hue is constant across both
+     surfaces; only the step on the ramp moves, so the mark is recognizable in a
      dining room and legible under a hood light.
      Do NOT draw the logo with --interactive-default. On Line that resolves to
-     indigo, and the mark would change colour when the surface changed. It would
+     indigo, and the mark would change color when the surface changed. It would
      also make a brand mark look like a control. */
   --brand-mark: var(--primary-600);   /* 4.80:1 on surface/default */
 
@@ -511,7 +511,7 @@
   --brand-mark: var(--primary-400);   /* 5.25:1 on surface/default, 5.89:1 on surface/subtle */
 
   /* Light-surface error/success values are unreadable on Line's dark grounds
-     (2.80:1 and 3.14:1). Override them the way every other colour is overridden. */
+     (2.80:1 and 3.14:1). Override them the way every other color is overridden. */
   --text-error:     #FCA5A5;
   --text-success:   #86EFAC;
 

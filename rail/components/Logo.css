@@ -18,7 +18,7 @@
    Usage:
    <!--
      Lockup. Copy the contents of rail/assets/heard-lockup.svg inline and
-     add the classes; an <img> tag cannot pick up the colour tokens.
+     add the classes; an <img> tag cannot pick up the color tokens.
 
      <svg class="rail-logo" width="137" height="48" viewBox="0 0 137 48">
        <g transform="translate(10, 4.445)">
@@ -64,7 +64,7 @@
   letter-spacing: -0.75px;
 }
 
-/* Single-colour reproduction: everything drops to ink. */
+/* Single-color reproduction: everything drops to ink. */
 .rail-logo--outline .rail-logo__mark {
   fill: var(--text-primary);
 }
@@ -100,7 +100,7 @@
 /* --- On photography ---
    Neither brand step holds against mid-tone imagery. Two sanctioned
    treatments: knock the whole mark out in white, or set it in a solid chip.
-   Brand colour directly on a photograph is not one of them. */
+   Brand color directly on a photograph is not one of them. */
 
 .rail-logo--on-image .rail-logo__mark,
 .rail-logo--on-image .rail-logo__wordmark,
