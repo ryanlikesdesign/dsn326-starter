@@ -31,7 +31,7 @@ rail/
     Toast.css
     Tabs.css
     Ticket.css            ← A pattern, not a thirteenth component
-    Logo.css              ← The mark and lockup. Colour comes from --brand-mark
+    Logo.css              ← The mark and lockup. Color comes from --brand-mark
   layouts/page.css        ← Page-level layout helpers
   utilities/reset.css     ← Browser reset
   assets/                 ← Logo geometry. Don't redraw these
@@ -83,7 +83,7 @@ Rail has three independent axes. Set the first two on your outermost container, 
 <div id="app" class="density-service env-high-glare surface-line">
 ```
 
-**Density** changes spacing and type sizes. **Environment** changes target sizes, focus rings and the contrast floor. **Surface** swaps the whole colour palette. They are independent — that's the whole point. See `RAIL.md` for why.
+**Density** changes spacing and type sizes. **Environment** changes target sizes, focus rings and the contrast floor. **Surface** swaps the whole color palette. They are independent — that's the whole point. See `RAIL.md` for why.
 
 ## Using Components
 
@@ -116,7 +116,7 @@ Every component file has HTML examples in a comment at the top. Open the file, c
 3. Point the AI at `rail/tokens.css` and `rail/components/`
 4. Say: "Use ONLY these components and tokens. Do not invent values."
 
-Building against the actual component directory is a build in Rail. Building from a pasted token file is a build that happens to use some of Rail's colours, and the Week 5 drift audit has nothing to compare against.
+Building against the actual component directory is a build in Rail. Building from a pasted token file is a build that happens to use some of Rail's colors, and the Week 5 drift audit has nothing to compare against.
 
 ## Using with Claude
 
@@ -127,10 +127,10 @@ Building against the actual component directory is a build in Rail. Building fro
 
 ## The Rules
 
-- Use only tokens from `tokens.css` — never hardcode colours, spacing or type sizes
+- Use only tokens from `tokens.css` — never hardcode colors, spacing or type sizes
 - Use only the twelve components — never build from scratch what Rail already has
 - Set the correct density and environment for your surface
-- Colour never carries meaning alone — pair it with an icon, a label or a position
+- Color never carries meaning alone — pair it with an icon, a label or a position
 - Touch targets: 44px minimum at `standard`, 56px minimum at `high-glare`
 - Don't edit anything in `rail/`. If your design needs something Rail doesn't have, that's a decision with a cost — it goes in `DECISIONS.md` and eventually in a contribution proposal
 

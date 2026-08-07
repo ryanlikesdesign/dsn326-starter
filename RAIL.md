@@ -35,7 +35,7 @@ Rail has three independent axes, applied as classes on a container. Components i
 |---|---|---|
 | **Density** | `density-comfortable` · `density-compact` · `density-service` | Spacing and type size **only** |
 | **Environment** | `env-standard` · `env-high-glare` | Target sizes, focus ring, contrast floor |
-| **Surface** | *(default is Guest)* · `surface-line` | The whole semantic colour palette, plus radius |
+| **Surface** | *(default is Guest)* · `surface-line` | The whole semantic color palette, plus radius |
 
 ### Where each is used
 
@@ -91,25 +91,25 @@ Density answers *how much fits and how far away is the reader*. Environment answ
 
 ## Tokens
 
-Never hardcode a colour, a space or a type size. Use `var(--token-name)`.
+Never hardcode a color, a space or a type size. Use `var(--token-name)`.
 
 Token names use dashes where Figma uses slashes: Figma `space/inset/md` → CSS `var(--space-inset-md)`.
 
-### Colour — primitives
+### Color — primitives
 
 Raw values. **Never reference these directly in a component.** Use the semantic tokens below.
 
 | Scale | Tokens |
 |---|---|
-| Neutral (warm grey, Guest) | `--neutral-50` `--neutral-100` `--neutral-150` `--neutral-200` `--neutral-300` `--neutral-400` `--neutral-500` `--neutral-600` `--neutral-700` `--neutral-800` `--neutral-900` `--neutral-950` |
+| Neutral (warm gray, Guest) | `--neutral-50` `--neutral-100` `--neutral-150` `--neutral-200` `--neutral-300` `--neutral-400` `--neutral-500` `--neutral-600` `--neutral-700` `--neutral-800` `--neutral-900` `--neutral-950` |
 | Primary (paprika, Guest) | `--primary-50` … `--primary-900` |
 | Accent (gold-amber, Guest) | `--accent-50` … `--accent-700` |
 | Feedback hues | `--green-50/500/700` `--yellow-50/500/700` `--red-50/500/700` `--blue-50/500/700` |
-| Line neutral (cool grey) | `--line-neutral-50` … `--line-neutral-950` |
+| Line neutral (cool gray) | `--line-neutral-50` … `--line-neutral-950` |
 | Line primary (muted indigo) | `--line-primary-50` … `--line-primary-900` |
 | Service | see below |
 
-### Colour — the `service` scale
+### Color — the `service` scale
 
 **Line-specific, and the one that teaches the most.** Four states for how close a ticket is to being late.
 
@@ -118,17 +118,17 @@ Raw values. **Never reference these directly in a component.** Use the semantic 
 | `--service-ok` | `#4ADE80` | Inside target |
 | `--service-approaching` | `#F5C518` | Getting close |
 | `--service-late` | `#FB923C` | Past target |
-| `--service-critical` | `#F87171` | Well past, and someone is already apologising |
+| `--service-critical` | `#F87171` | Well past, and someone is already apologizing |
 
 Light-surface variants exist for the rare case where service state has to appear on a light background — a manager report, a Guest-side status:
 
 `--service-ok-light` `#166534` · `--service-approaching-light` `#854D0E` · `--service-late-light` `#9A3412` · `--service-critical-light` `#991B1B`
 
-> **`--interactive-default` is `--primary-600`, not `--primary-500`.** `--primary-500` `#E84E1A` is the brand colour and it is 3.79:1 against white — below the 4.5:1 floor this system documents. Interactive surfaces step one down the ramp so a button label passes. The brand ramp itself is unchanged.
+> **`--interactive-default` is `--primary-600`, not `--primary-500`.** `--primary-500` `#E84E1A` is the brand color and it is 3.79:1 against white — below the 4.5:1 floor this system documents. Interactive surfaces step one down the ramp so a button label passes. The brand ramp itself is unchanged.
 
-**The scale has to work without colour.** It pairs with a shape, a word or a position signal in every component that uses it. See `--service-*` in `rail/components/Ticket.css`, where each elapsed band ships alongside a Badge with the band written on it.
+**The scale has to work without color.** It pairs with a shape, a word or a position signal in every component that uses it. See `--service-*` in `rail/components/Ticket.css`, where each elapsed band ships alongside a Badge with the band written on it.
 
-### Colour — semantic
+### Color — semantic
 
 These are what components reference. The right-hand column is what they become under `surface-line`.
 
@@ -492,7 +492,7 @@ Binary on/off, applied immediately. Use it for 86'ing an item — that has to be
 
 Intents apply to `.rail-badge--label`, `.rail-badge--removable` and `.rail-badge--status`. Badge is not interactive; the remove button inside `.rail-badge--removable` is.
 
-**A Badge is how you stop colour carrying meaning alone.** A status tint plus a Badge with the status written in it satisfies WCAG 1.4.1. A tint on its own does not.
+**A Badge is how you stop color carrying meaning alone.** A status tint plus a Badge with the status written in it satisfies WCAG 1.4.1. A tint on its own does not.
 
 ---
 
@@ -595,7 +595,7 @@ Primary and secondary truncate to one line by design — that is right for a rai
 
 **Rail does not trap focus for you.** `showModal()` gives you the focus trap and the Escape key for free; if you use the `open` attribute instead, you own both.
 
-**Put the dialog inside your axis container.** `showModal()` promotes it to the browser's top layer, but custom properties inherit down the DOM tree, not the top layer — a dialog placed as a sibling of your `surface-line` container renders in Guest's colours.
+**Put the dialog inside your axis container.** `showModal()` promotes it to the browser's top layer, but custom properties inherit down the DOM tree, not the top layer — a dialog placed as a sibling of your `surface-line` container renders in Guest's colors.
 
 > It is called Dialog. There is no `.rail-modal`, no `.rail-dialog--sheet` and no `.rail-dialog--fullscreen`.
 
@@ -617,7 +617,7 @@ Primary and secondary truncate to one line by design — that is right for a rai
 
 | Class | What it is |
 |---|---|
-| `.rail-toast-region` | Live region. Top-right; top-centre under 480px. |
+| `.rail-toast-region` | Live region. Top-right; top-center under 480px. |
 | `.rail-toast` | One toast. |
 | `.rail-toast--success` · `.rail-toast--error` · `.rail-toast--info` · `.rail-toast--warning` | Variants. Coloured left border plus a subtle background. |
 | `.rail-toast__icon` | Icon slot. |
@@ -716,14 +716,14 @@ Requires `density-service env-high-glare surface-line` on an ancestor. Ticket wi
 | `.rail-ticket__item-name` | Item name. Wraps — overrides List Row's truncation. |
 | `.rail-ticket__qty` | Quantity, mono. |
 | `.rail-ticket__mods` | Modifier group, with a rule down the side. |
-| `.rail-ticket__mod` | One modifier. Its own colour and weight. |
+| `.rail-ticket__mod` | One modifier. Its own color and weight. |
 | `.rail-ticket__mod--critical` | An allergy or anything the kitchen cannot get wrong. |
 | `.rail-ticket__actions` | Action column. |
 | `.rail-ticket__action` | Base for a ticket action. |
 | `.rail-ticket__action--bump` | Bump. `--target-comfortable`, 64px. |
 | `.rail-ticket__action--recall` | Recall. `--target-min`, 56px. |
 | `.rail-ticket__danger` | Separator holding the unrecoverable action. |
-| `.rail-ticket__action--void` | Void. Separated, and coloured away from the other two. |
+| `.rail-ticket__action--void` | Void. Separated, and colored away from the other two. |
 
 `--rail-ticket-width` is set on `.rail-ticket-rail` and scoped to the pattern. It is not a system token and it is not in `tokens.css`.
 
@@ -763,9 +763,9 @@ A torn kitchen ticket with the acknowledgment knocked out. The check's long arm 
 
 Notch pitch never drops below 4px and depth is always half the pitch. The counts fall out of that rule.
 
-**Colour comes from `--brand-mark`.** Same hue on both surfaces; only the step on the ramp moves — `primary-600` on Guest at 4.80:1 against `surface/default`, `primary-400` on Line at 5.25:1 against its own `surface/default`. Do not draw the logo with `--interactive-default`: on Line it resolves to indigo, so the mark would change colour with the surface, and a brand mark that uses the interactive colour reads as a control.
+**Color comes from `--brand-mark`.** Same hue on both surfaces; only the step on the ramp moves — `primary-600` on Guest at 4.80:1 against `surface/default`, `primary-400` on Line at 5.25:1 against its own `surface/default`. Do not draw the logo with `--interactive-default`: on Line it resolves to indigo, so the mark would change color with the surface, and a brand mark that uses the interactive color reads as a control.
 
-**The check is brand-only.** Line's job is marking tickets complete, and the obvious way to build that state is an orange check — which would put the logo and a functional status indicator in the same shape and colour on the same screen, four feet from a moving cook. The squared-terminal check does not go in the product icon set. Completion on Line is a bump or a filled bar.
+**The check is brand-only.** Line's job is marking tickets complete, and the obvious way to build that state is an orange check — which would put the logo and a functional status indicator in the same shape and color on the same screen, four feet from a moving cook. The squared-terminal check does not go in the product icon set. Completion on Line is a bump or a filled bar.
 
 **Clearspace.** Base unit `N` = ticket width ÷ 5. Mark: `2N` on all sides, measured from the tear peaks. Lockup: `1C` on all sides, where `C` is wordmark cap height. App icons and favicons are exempt; the platform supplies its own.
 
@@ -784,7 +784,7 @@ From `rail/layouts/page.css` and `rail/utilities/reset.css`. Not components, but
 | Class | What it does |
 |---|---|
 | `.page-header` | Padded header with a bottom border. |
-| `.page-main` | Centred content column, max 1200px. |
+| `.page-main` | Centered content column, max 1200px. |
 | `.page-section` | Padded section; consecutive sections get a top border. |
 | `.form-layout` | Vertical form, `--space-stack-md` gaps. |
 | `.form-layout__section` | Group inside a form. |
@@ -798,7 +798,7 @@ From `rail/layouts/page.css` and `rail/utilities/reset.css`. Not components, but
 | `.list-detail-layout__detail` | The detail pane. |
 | `.visually-hidden` | Hidden on screen, present for screen readers. |
 
-`reset.css` also gives every focusable element a `:focus-visible` ring from `--focus-ring-width` and `--border-focus`, and honours `prefers-reduced-motion`.
+`reset.css` also gives every focusable element a `:focus-visible` ring from `--focus-ring-width` and `--border-focus`, and honors `prefers-reduced-motion`.
 
 ---
 
@@ -814,7 +814,7 @@ Marisol owns the system. These are hers.
 >
 > **Marisol reviews additions at the start of each sprint.** She says no by default.
 >
-> **Colour never carries meaning alone.** Not on Guest, and especially not on Line.
+> **Color never carries meaning alone.** Not on Guest, and especially not on Line.
 >
 > **`service` and `high-glare` are not suggestions.** If your Line screen looks roomy on a laptop, it is right.
 >
@@ -840,11 +840,11 @@ Figma and code will disagree. When they do:
 
 | Question | Winner | Why |
 |---|---|---|
-| A colour value | **Figma** | The library is the origin for the palette. |
+| A color value | **Figma** | The library is the origin for the palette. |
 | A type size, line-height or weight | **Figma** | Same. |
 | A token's **name** | **Figma** | A rename in code is the fix. Adding an alias leaves two names for one value, which is worse than the bug. |
 | A space value | **Figma** | |
-| Anything computed at runtime | **Code** | Resolved density values, resolved environment values, focus behaviour, what a state actually does, what a component does at a breakpoint. Figma cannot express these; the browser is the answer. |
+| Anything computed at runtime | **Code** | Resolved density values, resolved environment values, focus behavior, what a state actually does, what a component does at a breakpoint. Figma cannot express these; the browser is the answer. |
 | Whether a component exists at all | **Code** | If it is not in `rail/components/`, you cannot use it, whatever the library shows. |
 
 **Where this matters.** Every token name in Figma should have a match in `tokens.css` with the same value. It does not, in a small number of places, and finding them is Week 1's job. Record both sides. Then name which side you would trust and why, citing this table.
